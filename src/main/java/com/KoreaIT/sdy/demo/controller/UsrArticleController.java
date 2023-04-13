@@ -29,6 +29,17 @@ public class UsrArticleController {
 		}
 	}
 	
+	public Article writeArticle(String title, String body) {
+		int id = lastArticleId+1;
+		
+		Article article = new Article(id, title, body);
+		
+		articles.add(article);
+		lastArticleId++;
+		
+		return article;
+	}
+	
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
 	public Article getArticle() {
@@ -43,16 +54,6 @@ public class UsrArticleController {
 		return articles;
 	}
 	
-	public Article writeArticle(String title, String body) {
-		int id = lastArticleId+1;
-		
-		Article article = new Article(id, title, body);
-		
-		articles.add(article);
-		lastArticleId++;
-		
-		return article;
-	}
 	
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
@@ -60,6 +61,47 @@ public class UsrArticleController {
 		Article article = writeArticle(title, body);
 		
 		return article.getId() + "번 게시글이 생성되었습니다.";
+	}
+	
+	@RequestMapping("/usr/article/doDelete")
+	@ResponseBody
+	public String doDelete(int id) {
+		Article foundArticle = null;
+		
+		for(Article article : articles) {
+			if(article.getId()==id) {
+				foundArticle=article;
+				break;
+			}
+		}
+		if(foundArticle==null) {
+			return id + "번 게시글은 존재하지 않습니다."; 
+		}
+		else {
+			articles.remove(foundArticle);
+			return id + "번 게시글이 삭제되었습니다.";
+		}
+	}
+	
+	@RequestMapping("/usr/article/doModify")
+	@ResponseBody
+	public String doModify(int id, String title, String body) {
+		Article foundArticle = null;
+		
+		for(Article article : articles) {
+			if(article.getId()==id) {
+				foundArticle=article;
+				break;
+			}
+		}
+		if(foundArticle==null) {
+			return id + "번 게시글은 존재하지 않습니다."; 
+		}
+		else {
+			foundArticle.setTitle(title);
+			foundArticle.setBody(body);
+			return id + "번 게시글이 수정되었습니다. " + foundArticle;
+		}
 	}
 	
 }
