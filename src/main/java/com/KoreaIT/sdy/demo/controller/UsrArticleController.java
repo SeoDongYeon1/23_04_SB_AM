@@ -13,6 +13,7 @@ public class UsrArticleController {
 	int lastArticleId;
 	List<Article> articles; 
 	
+	// 생성자
 	public UsrArticleController() {
 		lastArticleId = 0;
 		articles = new ArrayList<>();
@@ -20,6 +21,7 @@ public class UsrArticleController {
 		makeTestData();
 	}
 	
+	// 서비스 메서드
 	private void makeTestData() {
 		for(int i = 1; i <= 10; i++) {
 			String title = "제목"+i;
@@ -40,6 +42,26 @@ public class UsrArticleController {
 		return article;
 	}
 	
+	private Article getArticleById(int id) {
+		for(Article article : articles) {
+			if(article.getId()==id) {
+				return article;
+			}
+		}
+		return null;
+	}
+	
+	private void deleteArticle(int id) {
+		Article article = getArticleById(id);
+		articles.remove(article);
+	}
+
+	private void modifyArticle(int id, String title, String body) {
+		Article article = getArticleById(id);
+		article.setTitle(title);
+		article.setBody(body);
+	}
+	
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
 	public Article getArticle() {
@@ -54,7 +76,6 @@ public class UsrArticleController {
 		return articles;
 	}
 	
-	
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public String doAdd(String title, String body) {
@@ -66,42 +87,29 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(int id) {
-		Article foundArticle = null;
+		Article article = getArticleById(id);
 		
-		for(Article article : articles) {
-			if(article.getId()==id) {
-				foundArticle=article;
-				break;
-			}
-		}
-		if(foundArticle==null) {
+		if(article==null) {
 			return id + "번 게시글은 존재하지 않습니다."; 
 		}
 		else {
-			articles.remove(foundArticle);
+			deleteArticle(id);
 			return id + "번 게시글이 삭제되었습니다.";
 		}
 	}
-	
+
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(int id, String title, String body) {
-		Article foundArticle = null;
+		Article article = getArticleById(id);
 		
-		for(Article article : articles) {
-			if(article.getId()==id) {
-				foundArticle=article;
-				break;
-			}
-		}
-		if(foundArticle==null) {
+		if(article==null) {
 			return id + "번 게시글은 존재하지 않습니다."; 
 		}
 		else {
-			foundArticle.setTitle(title);
-			foundArticle.setBody(body);
-			return id + "번 게시글이 수정되었습니다. " + foundArticle;
+			modifyArticle(id, title, body);
+			return id + "번 게시글이 수정되었습니다. " + article;
 		}
 	}
-	
+
 }
