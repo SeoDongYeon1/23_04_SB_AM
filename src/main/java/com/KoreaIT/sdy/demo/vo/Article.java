@@ -1,5 +1,7 @@
 package com.KoreaIT.sdy.demo.vo;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,8 @@ import lombok.NoArgsConstructor;
 public class Article {
 	//@Getter 쓸 필요없어짐
 	private int id;
+	private LocalDateTime regDate;
+	private LocalDateTime updateDate;
 	private String title;
 	private String body;
 	

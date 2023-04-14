@@ -33,14 +33,17 @@ public class UsrArticleController {
 		return articleService.getArticles();
 	}
 	
-	@RequestMapping("/usr/article/doAdd")
+	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doAdd(String title, String body) {
-		Article article = articleService.writeArticle(title, body);
+	public Object doWrite(String title, String body) {
+		int id = articleService.writeArticle(title, body);
 		
-		return article.getId() + "번 게시글이 생성되었습니다.";
+		Article article = articleService.getArticleById(id);
+		
+		return article.getId() + "번 글이 생성되었습니다.";
+		
 	}
-	
+
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(int id) {
