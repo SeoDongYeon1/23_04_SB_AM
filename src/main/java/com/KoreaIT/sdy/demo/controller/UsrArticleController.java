@@ -15,6 +15,7 @@ public class UsrArticleController {
 	@Autowired // articleService = new ArticleService();를 안해도 된다. Autowired가 연결시켜주는거
 	private ArticleService articleService;
 	
+	// 액션 메서드
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
 	public Object getArticle(int id) {

@@ -1,66 +1,42 @@
 package com.KoreaIT.sdy.demo.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.KoreaIT.sdy.demo.repository.ArticleRepository;
 import com.KoreaIT.sdy.demo.vo.Article;
 
 @Service
 public class ArticleService {
-	private int lastArticleId;
-	private List<Article> articles;
-
+	@Autowired
+	private ArticleRepository articleRepository;
+	
 	// 생성자
-	public ArticleService() {
-		lastArticleId = 0;
-		articles = new ArrayList<>();
-		makeTestData();
+	public ArticleService(ArticleRepository articleRepository) { //articleRepository = new ArticleRepository() 같은 의미
+		this.articleRepository = articleRepository;
+		articleRepository.makeTestData();
 	}
 
 	// 서비스 메서드
-	public void makeTestData() {
-		for (int i = 1; i <= 10; i++) {
-			String title = "제목" + i;
-			String body = "내용" + i;
-
-			writeArticle(title, body);
-		}
-	}
-
 	public Article writeArticle(String title, String body) {
-		int id = lastArticleId + 1;
-
-		Article article = new Article(id, title, body);
-
-		articles.add(article);
-		lastArticleId++;
-
-		return article;
+		return articleRepository.writeArticle(title, body);
 	}
 
 	public Article getArticleById(int id) {
-		for (Article article : articles) {
-			if (article.getId() == id) {
-				return article;
-			}
-		}
-		return null;
+		return articleRepository.getArticleById(id);
 	}
 
 	public void deleteArticle(int id) {
-		Article article = getArticleById(id);
-		articles.remove(article);
+		articleRepository.deleteArticle(id);
 	}
 
 	public void modifyArticle(int id, String title, String body) {
-		Article article = getArticleById(id);
-		article.setTitle(title);
-		article.setBody(body);
+		articleRepository.modifyArticle(id, title, body);
 	}
 
 	public List<Article> getArticles() {
-		return articles;
+		return articleRepository.getArticles();
 	}
 }
