@@ -64,9 +64,12 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public Article getArticle() {
-		Article article = new Article(1,"ㅎㅇ","asd");
+	public Object getArticle(int id) {
+		Article article = getArticleById(id);
 		
+		if(article==null) {
+			return id + "번 게시글은 존재하지 않습니다."; 
+		}
 		return article;
 	}
 	
@@ -100,7 +103,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public Object doModify(int id, String title, String body) {
 		Article article = getArticleById(id);
 		
 		if(article==null) {
