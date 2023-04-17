@@ -1,6 +1,5 @@
 package com.KoreaIT.sdy.demo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.sdy.demo.repository.MemberRepository;
@@ -8,27 +7,38 @@ import com.KoreaIT.sdy.demo.vo.Member;
 
 @Service
 public class MemberService {
-	@Autowired
 	private MemberRepository memberRepository;
-	
-	// 생성자
+
 	public MemberService(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
 	}
 
-	// 서비스 메서드
-//	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
-//		
-//		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
-//	}
-	
 	public int doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+		// 로그인 아이디 중복체크
+		Member existsMember = getMemberByLoginId(loginId);
+
+		if (existsMember != null) {
+			return -1;
+		}
+		
+		// 이름 + 이메일 중복체크
+		existsMember = getMemberByNameAndEmail(name, email);
+		
+		if(existsMember != null) {
+			return -2;
+		}
+
 		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+
 		return memberRepository.getLastInsertId();
 	}
 
-	public Member getMemberByloginId(String loginId) {
-		Member member = memberRepository.getMemberByloginId(loginId);
+	private Member getMemberByNameAndEmail(String name, String email) {
+		return memberRepository.getMemberByNameAndEmail(name, email);
+	}
+	
+	public Member getMemberByLoginId(String loginId) {
+		Member member = memberRepository.getMemberByLoginId(loginId);
 		
 		return member;
 	}
