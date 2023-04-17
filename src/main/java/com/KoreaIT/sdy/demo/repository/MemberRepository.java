@@ -9,7 +9,7 @@ public interface MemberRepository {
 	
 	//public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
 	
-	public int doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
+	public void doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
 
 	public Member getMemberByLoginId(String loginId);
 

@@ -50,7 +50,7 @@ public class UsrMemberController {
 
 			Member member = memberService.getMemberById(id);
 
-			return member;
+			return member + "회원가입 되었습니다.";
 		}
 	
 	@RequestMapping("/usr/member/doLogin")
@@ -67,5 +67,4 @@ public class UsrMemberController {
 		}
 		return member.getNickname()+ "님 로그인 되었습니다.";
 	}
-
 }
