@@ -14,23 +14,18 @@ public class UsrMemberController {
 	private MemberService memberService;
 	
 	// 액션 메서드
-	// loginId로 가져오는버전
-//	@RequestMapping("/usr/member/doJoin")
-//	@ResponseBody
-//	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
-//		memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
-//		
-//		Member member = memberService.getMemberByloginId(loginId);
-//		return "회원가입되었습니다" + member;
-//	}
-	
-	// logindId 대신 id 버전
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public Member doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+		Member member = memberService.getMemberByloginId(loginId);
+		
+		if(member!=null) {
+			return "이미 사용중인 아이디입니다.";
+		}
+		
 		int id = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 		
-		Member member = memberService.getMemberById(id);
+		member = memberService.getMemberById(id);
 		return member;
 	}
 	
