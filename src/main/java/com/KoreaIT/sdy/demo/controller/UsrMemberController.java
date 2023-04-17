@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.sdy.demo.service.MemberService;
+import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.Member;
 
 @Controller
@@ -17,26 +18,27 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
 	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
-		Member member = memberService.getMemberByloginId(loginId);
 		
-		if(loginId == null || loginId.length()==0) {
+		if(Ut.empty(loginId)) {
 			return "아이디를 입력해주세요.";
 		}
-		if(loginPw == null || loginPw.length()==0) {
+		if(Ut.empty(loginPw)) {
 			return "비밀번호를 입력해주세요.";
 		}
-		if(name == null || name.length()==0) {
+		if(Ut.empty(name)) {
 			return "이름을 입력해주세요.";
 		}
-		if(nickname == null || nickname.length()==0) {
+		if(Ut.empty(nickname)) {
 			return "닉네임을 입력해주세요.";
 		}
-		if(cellphoneNum == null || cellphoneNum.length()==0) {
+		if(Ut.empty(cellphoneNum)) {
 			return "휴대폰 번호를 입력해주세요.";
 		}
-		if(email == null || email.length()==0) {
+		if(Ut.empty(email)) {
 			return "이메일을 입력해주세요.";
 		}
+		
+		Member member = memberService.getMemberByloginId(loginId);
 		
 		if(member!=null) {
 			return "이미 사용중인 아이디입니다.";
