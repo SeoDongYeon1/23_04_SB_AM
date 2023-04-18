@@ -42,7 +42,7 @@ public class UsrMemberController {
 			ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 			if (joinRd.isFail()) {
-				return (ResultData<Integer>) joinRd;
+				return joinRd;
 			}
 
 			Member member = memberService.getMemberById(joinRd.getData1());
