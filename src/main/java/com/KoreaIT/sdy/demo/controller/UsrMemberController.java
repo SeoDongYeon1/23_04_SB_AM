@@ -63,24 +63,24 @@ public class UsrMemberController {
 		}
 		
 		if (isLogined) {
-			return ResultData.from("F-1", "이미 로그인 상태입니다.");
+			return ResultData.from("F-A", "이미 로그인 상태입니다.");
 		}
 		
 		if (Ut.empty(loginId)) {
-			return ResultData.from("F-2", "아이디를 입력해주세요");
+			return ResultData.from("F-1", "아이디를 입력해주세요");
 		}
 		if (Ut.empty(loginPw)) {
-			return ResultData.from("F-3", "비밀번호를 입력해주세요");
+			return ResultData.from("F-2", "비밀번호를 입력해주세요");
 		}
 		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if(member==null) {
-			return ResultData.from("F-4", "아이디 또는 비밀번호를 확인해주세요.");
+			return ResultData.from("F-3", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 		
 		if(member.getLoginPw().equals(loginPw)==false) {
-			return ResultData.from("F-5", "아이디 또는 비밀번호를 확인해주세요.");
+			return ResultData.from("F-4", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 		httpsession.setAttribute("loginedMemberId", member.getId());
 		return ResultData.from("S-1", Ut.f("%s님 로그인 되었습니다.", member.getNickname()));
@@ -96,10 +96,9 @@ public class UsrMemberController {
 		}
 		
 		if (isLogined==false) {
-			return ResultData.from("F-1", "로그인 후 이용해주세요.");
+			return ResultData.from("F-A", "로그인 후 이용해주세요.");
 		}
-		Member member = memberService.getMemberById((int)httpsession.getAttribute("loginedMemberId"));
 		httpsession.removeAttribute("loginedMemberId");
-		return ResultData.from("S-1", Ut.f("%s님 로그아웃되었습니다.", member.getNickname()));
+		return ResultData.from("S-1", "로그아웃되었습니다.");
 	}
 }

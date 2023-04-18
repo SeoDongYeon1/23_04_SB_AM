@@ -28,24 +28,30 @@ CREATE TABLE `member`(
     delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
+# 게시물 작성시 작성자 정보 남기려고 article 테이블에 memberId 추가
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
 # 게시물 테스트데이터 생성
 INSERT INTO article 
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 1',
-`body` = '내용 1';
+`body` = '내용 1',
+memberId = 1;
 
 INSERT INTO article 
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 2',
-`body` = '내용 2';
+`body` = '내용 2',
+memberId = 2;
 
 INSERT INTO article 
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 3',
-`body` = '내용 3';
+`body` = '내용 3',
+memberId = 3;
 
 
 # 회원 테스트데이터 생성
@@ -79,7 +85,6 @@ loginPw = 'test2',
 nickname = '회원2',
 cellphoneNum = '01067896789',
 email = 'zxc@gmail.com';
-
 
 SELECT * FROM article ORDER BY id DESC;
 SELECT * FROM `member` ORDER BY id DESC;
