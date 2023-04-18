@@ -86,4 +86,20 @@ public class UsrMemberController {
 		return ResultData.from("S-1", Ut.f("%s님 로그인 되었습니다.", member.getNickname()));
 	}
 	
+	@RequestMapping("/usr/member/doLogout")
+	@ResponseBody
+	public ResultData<Member> doLogout(HttpSession httpsession) {
+		boolean isLogined = false;
+		
+		if(httpsession.getAttribute("loginedMemberId")!=null) {
+			isLogined = true;
+		}
+		
+		if (isLogined==false) {
+			return ResultData.from("F-1", "로그인 후 이용해주세요.");
+		}
+		Member member = memberService.getMemberById((int)httpsession.getAttribute("loginedMemberId"));
+		httpsession.removeAttribute("loginedMemberId");
+		return ResultData.from("S-1", Ut.f("%s님 로그아웃되었습니다.", member.getNickname()));
+	}
 }
