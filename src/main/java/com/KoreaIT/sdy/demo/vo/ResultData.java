@@ -35,4 +35,8 @@ public class ResultData {
 		// 출력형태 -> "fail": true || false
 	}
 
+	public static ResultData newData(ResultData joinRd, Object newData) {
+		return from(joinRd.getResultCode(), joinRd.getMsg(), newData);
+	}
+
 }
