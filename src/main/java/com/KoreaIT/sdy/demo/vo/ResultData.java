@@ -23,12 +23,16 @@ public class ResultData {
 		return rd;
 	}
 	
-	public boolean isSuccess() { // 출력형태 -> "success": true || false
+	public boolean isSuccess() { 
+		// private boolean success한 것과 같다.
 		return resultCode.startsWith("S-");
+		// 출력형태 -> "success": true || false 
 	}
 	
-	public boolean isFail() { // 출력형태 -> "fail": true || false
+	public boolean isFail() { 
+		// private boolean fail한 것과 같다.
 		return isSuccess()==false;
+		// 출력형태 -> "fail": true || false
 	}
 
 }
