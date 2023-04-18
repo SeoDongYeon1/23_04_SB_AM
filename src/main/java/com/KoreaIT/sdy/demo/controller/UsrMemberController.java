@@ -1,5 +1,7 @@
 package com.KoreaIT.sdy.demo.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,7 @@ import com.KoreaIT.sdy.demo.vo.ResultData;
 public class UsrMemberController {
 		@Autowired
 		private MemberService memberService;
-
+		
 		@RequestMapping("/usr/member/doJoin")
 		@ResponseBody
 		public ResultData<?> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
@@ -52,16 +54,36 @@ public class UsrMemberController {
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public Object doLogin(String loginId, String loginPw) {
+	public ResultData<Member> doLogin(HttpSession httpsession, String loginId, String loginPw) {
+		
+		boolean isLogined = false;
+		
+		if(httpsession.getAttribute("loginedMemberId")!=null) {
+			isLogined = true;
+		}
+		
+		if (isLogined) {
+			return ResultData.from("F-1", "이미 로그인 상태입니다.");
+		}
+		
+		if (Ut.empty(loginId)) {
+			return ResultData.from("F-2", "아이디를 입력해주세요");
+		}
+		if (Ut.empty(loginPw)) {
+			return ResultData.from("F-3", "비밀번호를 입력해주세요");
+		}
+		
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if(member==null) {
-			return "아이디 또는 비밀번호를 확인해주세요.";
+			return ResultData.from("F-4", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 		
 		if(member.getLoginPw().equals(loginPw)==false) {
-			return "아이디 또는 비밀번호를 확인해주세요.";
+			return ResultData.from("F-5", "아이디 또는 비밀번호를 확인해주세요.");
 		}
-		return member.getNickname()+ "님 로그인 되었습니다.";
+		httpsession.setAttribute("loginedMemberId", member.getId());
+		return ResultData.from("S-1", Ut.f("%s님 로그인 되었습니다.", member.getNickname()));
 	}
+	
 }

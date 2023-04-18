@@ -36,8 +36,8 @@ public class ResultData<DT> {
 		// 출력형태 -> "fail": true || false
 	}
 
-	public static <DT>  ResultData<DT> newData(ResultData<?> joinRd, DT newData) {
-		return from(joinRd.getResultCode(), joinRd.getMsg(), newData);
+	public static <DT>  ResultData<DT> newData(ResultData<?> Rd, DT newData) {
+		return from(Rd.getResultCode(), Rd.getMsg(), newData);
 	}
 
 }

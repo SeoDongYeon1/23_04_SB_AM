@@ -1,7 +1,5 @@
 package com.KoreaIT.sdy.demo.vo;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,8 +10,8 @@ import lombok.NoArgsConstructor;
 public class Member {
 	//@Getter 쓸 필요없어짐
 	private int id;
-	private LocalDateTime regDate;
-	private LocalDateTime updateDate;
+	private String regDate;
+	private String updateDate;
 	private String loginId;
 	private String loginPw;
 	private String name;
@@ -22,5 +20,5 @@ public class Member {
 	private String email;
 	private int authLevel;
 	private int delStatus;
-	private LocalDateTime delDate;
+	private String delDate;
 }
