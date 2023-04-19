@@ -101,7 +101,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData<Article> doModify(HttpSession httpSession, int id, String title, String body) {
+	public ResultData<?> doModify(HttpSession httpSession, int id, String title, String body) {
 		boolean isLogined = false;
 		int loginedMemberId = -1;
 		
@@ -120,13 +120,14 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시글은 존재하지 않습니다.", id)); 
 		}
 		
-		if(loginedMemberId != article.getMemberId()) {
-			return ResultData.from("F-2", Ut.f("%d번 게시글에 권한이 없습니다.", id)); 
+		ResultData<String> actorCanModifyRd = articleService.actorCanModifyRd(loginedMemberId, article);
+		
+		if(actorCanModifyRd.isFail()) {
+			return actorCanModifyRd;
 		}
 		
-		articleService.modifyArticle(id, title, body);
 		article = articleService.getArticleById(id);
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), article); 
+		return articleService.modifyArticle(id, title, body); 
 	}
 
 }
