@@ -22,7 +22,7 @@ public class UsrArticleController {
 	
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
-	public String getArticle(int id, Model model) {
+	public String showDetail(int id, Model model) {
 		Article article = articleService.getArticleById(id);
 		
 		model.addAttribute("article", article);
@@ -31,7 +31,7 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String getArticles(Model model) {
+	public String showList(Model model) {
 		List<Article> articles = articleService.getArticles();
 		
 		model.addAttribute("articles", articles);

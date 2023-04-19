@@ -8,11 +8,21 @@
 <title>Article List</title>
 </head>
 <body>
-	<h1>게시글 목록</h1>
+	<h1>LIST</h1>
+		<header>
+				<a href="/">로고</a>
+
+				<ul>
+						<li>
+								<a href="/">HOME</a>
+						</li>
+						<li>
+								<a href="../article/list">LIST</a>
+						</li>
+				</ul>
+		</header>
 	
 	<hr />
-	
-	<a href="../home/main">메인페이지</a>
 	
 	<div>
 		<table style="border-collapse: collapse; width: 700px; " border = 2px >

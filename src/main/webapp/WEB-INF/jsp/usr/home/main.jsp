@@ -8,7 +8,19 @@
 </head>
 <body>
 
-	<h1>MAIN</h1>
-	<a href="../article/list">게시글 리스트</a>
+	<h1>Main Page</h1>
+		<header>
+				<a href="/">로고</a>
+
+				<ul>
+						<li>
+								<a href="/">HOME</a>
+						</li>
+						<li>
+								<a href="../article/list">LIST</a>
+						</li>
+				</ul>
+		</header>
+		<hr />
 </body>
 </html>
