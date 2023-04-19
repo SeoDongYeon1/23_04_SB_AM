@@ -26,7 +26,7 @@ public class ArticleService {
 		
 		int id = articleRepository.getLastInsertId();
 		
-		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었습니다.",id), id);
+		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었습니다.",id), "id", id);
 				
 	}
 
@@ -43,10 +43,10 @@ public class ArticleService {
 		
 		Article article = getArticleById(id);
 		
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), article); 
+		return ResultData.from("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), "article", article); 
 	}
 
-	public ResultData<String> actorCanModifyRd(int loginedMemberId, Article article) {
+	public ResultData<Article> actorCanModifyRd(int loginedMemberId, Article article) {
 		
 		if(loginedMemberId != article.getMemberId()) {
 			return ResultData.from("F-1", Ut.f("해당 게시글에 권한이 없습니다.")); 

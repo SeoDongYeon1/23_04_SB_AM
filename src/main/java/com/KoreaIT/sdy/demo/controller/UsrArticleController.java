@@ -28,7 +28,7 @@ public class UsrArticleController {
 		if(article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다",id));
 		}
-		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.",id), article);
+		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.",id), "article", article);
 	}
 	
 	@RequestMapping("/usr/article/getArticles")
@@ -36,7 +36,7 @@ public class UsrArticleController {
 	public ResultData<List<Article>> getArticles() {
 		List<Article> articles = articleService.getArticles();
 		
-		return ResultData.from("S-1", "Article List", articles);
+		return ResultData.from("S-1", "Article List", "List<Article>", articles);
 	}
 	
 	@RequestMapping("/usr/article/doWrite")
@@ -67,7 +67,7 @@ public class UsrArticleController {
 		
 		Article article = articleService.getArticleById(id);
 		
-		return ResultData.newData(writeArticleRd, article);
+		return ResultData.newData(writeArticleRd, "article", article);
 	}
 
 	@RequestMapping("/usr/article/doDelete")
@@ -96,12 +96,12 @@ public class UsrArticleController {
 		}
 		
 		articleService.deleteArticle(id);
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 삭제되었습니다.", id), id); 
+		return ResultData.from("S-1", Ut.f("%d번 게시글이 삭제되었습니다.", id), "id", id); 
 	}
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData<?> doModify(HttpSession httpSession, int id, String title, String body) {
+	public ResultData<Article> doModify(HttpSession httpSession, int id, String title, String body) {
 		boolean isLogined = false;
 		int loginedMemberId = -1;
 		
@@ -120,7 +120,7 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시글은 존재하지 않습니다.", id)); 
 		}
 		
-		ResultData<String> actorCanModifyRd = articleService.actorCanModifyRd(loginedMemberId, article);
+		ResultData<Article> actorCanModifyRd = articleService.actorCanModifyRd(loginedMemberId, article);
 		
 		if(actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
