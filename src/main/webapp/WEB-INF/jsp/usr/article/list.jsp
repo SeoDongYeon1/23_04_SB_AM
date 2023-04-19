@@ -5,8 +5,8 @@
 <%@ include file="../common/head.jspf" %>
 	<hr />
 	
-	<div>
-		<table style="border-collapse: collapse; width: 700px; " border = 2px >
+	<div class="mt-8 text-xl">
+		<table class="table-box-type-1">
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
