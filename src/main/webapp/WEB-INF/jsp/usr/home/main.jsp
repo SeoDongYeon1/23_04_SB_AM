@@ -5,6 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>메인 페이지</title>
+
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
+
 </head>
 <body>
 
