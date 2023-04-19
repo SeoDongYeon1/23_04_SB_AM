@@ -12,8 +12,10 @@
 	
 	<hr />
 	
+	<a href="../home/main">메인페이지</a>
+	
 	<div>
-		<table style="border-collapse: collapse; border-color: green; width: 700px; " border = 2 >
+		<table style="border-collapse: collapse; width: 700px; " border = 2px >
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
