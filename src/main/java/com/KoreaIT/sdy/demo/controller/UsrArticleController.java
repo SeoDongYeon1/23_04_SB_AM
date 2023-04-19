@@ -96,7 +96,7 @@ public class UsrArticleController {
 		}
 		
 		articleService.deleteArticle(id);
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 삭제되었습니다.", id), "id", id); 
+		return ResultData.from("S-1", Ut.f("%d번 게시글이 삭제되었습니다.", id),"id", id); 
 	}
 
 	@RequestMapping("/usr/article/doModify")

@@ -90,3 +90,9 @@ SELECT * FROM article ORDER BY id DESC;
 SELECT * FROM `member` ORDER BY id DESC;
 
 SELECT LAST_INSERT_ID();
+
+SELECT a.*, m.name AS 'extra__wrtier'
+FROM article a
+INNER JOIN `member` m
+ON a.memberId = m.id
+ORDER BY id DESC;
