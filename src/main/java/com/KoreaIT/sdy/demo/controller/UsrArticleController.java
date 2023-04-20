@@ -3,7 +3,6 @@ package com.KoreaIT.sdy.demo.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,7 +51,6 @@ public class UsrArticleController {
 		if (rq.isLogined()==false) {
 			return ResultData.from("F-A", "로그인 후 이용해주세요.");
 		}
-		
 		if(Ut.empty(title)) {
 			return ResultData.from("F-1", "제목을 입력해주세요.");
 		}
@@ -69,7 +67,7 @@ public class UsrArticleController {
 		return ResultData.newData(writeArticleRd, "article", article);
 	}
 
-	@RequestMapping("/usr/article/doDelete")
+	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public String doDelete(HttpServletRequest req, int id) {
 		Rq rq = new Rq(req);
@@ -82,10 +80,13 @@ public class UsrArticleController {
 		if (article==null) {
 			return Ut.jsHistroyBack("F-1", "게시글이 존재하지 않습니다.");
 		}
-		
+		if (article.getMemberId() != rq.getLoginedMemberId()) {
+			return Ut.jsHistroyBack("F-2", Ut.f("%d번 글에 대한 권한이 없습니다", id));
+		}
 		
 		articleService.deleteArticle(id);
-		return Ut.f("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list')</script>", id); 
+		return Ut.jsReplace(Ut.f("%d번 글을 삭제 했습니다", id), "../article/list");
+		//return Ut.f("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list')</script>", id); 
 	}
 
 	@RequestMapping("/usr/article/modify")
