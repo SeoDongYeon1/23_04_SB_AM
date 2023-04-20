@@ -19,20 +19,14 @@
 				<th>${article.id }</th>
 				<th><a href="detail?id=${article.id }">${article.title }</a></th>
 				<th>${article.regDate.substring(0,10) }</th>
-				<th>${article.memberId }</th>
+				<th>${article.extra__writer }</th>
 			</tr>
 
 		</c:forEach>
 		</table>
 	</div>
 	
-	<style type="text/css">
-	.table-box-type-1 tr > th > a {
-		text-decoration: none;
-		font-size: 17px;
-		font-weight: bold;
-	}
-	
+	<style type="text/css">	
 	a:hover {
 		text-decoration: underline;
 	}

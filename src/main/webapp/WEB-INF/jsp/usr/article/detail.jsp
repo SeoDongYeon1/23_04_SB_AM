@@ -34,9 +34,11 @@
 			
 			<tr>
 				<th>작성자</th>
-				<th>${article.memberId }</th>
+				<th>${article.extra__writer }</th>
 			</tr>
 		</table>
+		<a href="delete?id=${article.id }">삭제</a>
+		<a href="modify?id=${article.id }">수정</a>
 	</div>
 	
 	<div class="btns">
@@ -48,6 +50,10 @@
 		margin-left: auto;
 		margin-right: auto;
 		width: 500px;
+	}
+	
+	a:hover {
+		text-decoration: underline;
 	}
 	
 	.btns {

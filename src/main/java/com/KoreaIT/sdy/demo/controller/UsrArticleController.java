@@ -70,33 +70,21 @@ public class UsrArticleController {
 		return ResultData.newData(writeArticleRd, "article", article);
 	}
 
-	@RequestMapping("/usr/article/doDelete")
+	@RequestMapping("/usr/article/delete")
 	@ResponseBody
-	public ResultData<Integer> doDelete(HttpSession httpSession, int id) {
-		boolean isLogined = false;
-		int loginedMemberId = -1;
-		
-		if(httpSession.getAttribute("loginedMemberId")!=null) {
-			isLogined = true;
-			loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
-		}
-		
-		if (isLogined==false) {
-			return ResultData.from("F-A", "로그인 후 이용해주세요.");
-		}
-		
-		Article article = articleService.getArticleById(id);
-		
-		if(article==null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시글은 존재하지 않습니다.", id)); 
-		}
-		
-		if(loginedMemberId != article.getMemberId()) {
-			return ResultData.from("F-2", Ut.f("%d번 게시글에 권한이 없습니다.", id)); 
-		}
+	public String doDelete(HttpSession httpSession, int id) {
+//		boolean isLogined = false;
+//		
+//		if(httpSession.getAttribute("loginedMemberId")!=null) {
+//			isLogined = true;
+//		}
+//		
+//		if (isLogined==false) {
+//			return "<script>alert('로그인 이용해주세요.'); location.replace('list')</script>";
+//		}
 		
 		articleService.deleteArticle(id);
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 삭제되었습니다.", id),"id", id); 
+		return String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list')</script>", id); 
 	}
 
 	@RequestMapping("/usr/article/doModify")

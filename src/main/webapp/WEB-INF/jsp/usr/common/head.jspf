@@ -24,7 +24,7 @@
 
 		<h1 style="text-align: center; font-size: 35px;">${pageTitle }</h1>
 		<header>
-				<div class=" h-20 flex container mx-auto text-4xl">
+				<div class=" h-20 flex container mx-auto text-2xl font-bold">
 						<a href="#" class=" flex items-center px-3">
 								<span>로고</span>
 						</a>
