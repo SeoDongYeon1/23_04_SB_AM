@@ -29,7 +29,7 @@ public class UsrArticleController {
 			loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
 		}
 		
-		Article article = articleService.getForPrintArticle(id);
+		Article article = articleService.getForPrintArticle(loginedMemberId, id);
 		
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", loginedMemberId);
@@ -80,10 +80,51 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public String doDelete(HttpSession httpSession, int id) {
+		Article article = articleService.getForPrintArticle(id);
+		
+		boolean isLogined = false;
+		int loginedMemberId = -1;
+		
+		if(httpSession.getAttribute("loginedMemberId")!=null) {
+			isLogined = true;
+			loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
+		}
+		
+		if (isLogined==false) {
+			return Ut.jsHistroyBack("F-A", "로그인 후 이용해주세요.");
+		}
+		
+		if (article==null) {
+			return Ut.jsHistroyBack("F-1", "게시글이 존재하지 않습니다.");
+		}
+		
+		
 		articleService.deleteArticle(id);
-		return String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list')</script>", id); 
+		return Ut.f("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list')</script>", id); 
 	}
 
+	@RequestMapping("/usr/article/modify")
+	public String modify(HttpSession httpSession, int id, String title, String body) {
+		boolean isLogined = false;
+		int loginedMemberId = -1;
+		
+		Article article = articleService.getForPrintArticle(id);
+		if(httpSession.getAttribute("loginedMemberId")!=null) {
+			isLogined = true;
+			loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
+		}
+		
+		if (isLogined==false) {
+			return Ut.jsHistroyBack("F-A", "로그인 후 이용해주세요.");
+		}
+		
+		if (article==null) {
+			return Ut.jsHistroyBack("F-1", "게시글이 존재하지 않습니다.");
+		}
+		
+		return "usr/article/modify";
+	}
+	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public ResultData<Article> doModify(HttpSession httpSession, int id, String title, String body) {

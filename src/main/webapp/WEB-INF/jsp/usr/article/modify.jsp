@@ -8,4 +8,10 @@
 <%@ include file="../common/head.jspf" %>
 	<hr />
 	
+	<form method="post" action="doModify">
+	<input type="text" />
+	
+	</form>
+	
+	
 <%@ include file="../common/foot.jspf" %>

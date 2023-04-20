@@ -18,4 +18,22 @@ public class Ut {
 		return String.format(format, args);
 	}
 
+	public static String jsHistroyBack(String ResultCode, String msg) {
+		
+		if(msg==null) {
+			msg="";
+		}
+		
+		// """ """사용하면 자바스크립트를 사용할 수 있다.
+		return Ut.f("""
+				<script>
+					const msg = '%s'.trim();
+					if ( msg.length > 0 ) {
+						alert(msg);
+					}
+					history.back();
+				</script>
+				""", msg);
+	}
+
 }

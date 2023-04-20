@@ -47,11 +47,16 @@
 	
 	<div class="btns">
 		<button class= "btn-text-link hover:underline" type="button" onclick="history.back()">뒤로가기</button>
-		<%if(loginedMemberId==article.getMemberId()) {%>
+		
+		<!-- ver1 -->
+		<c:if test="${article.actorCanDelete }">
 			<a class= "btn-text-link hover:underline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="delete?id=${article.id }">삭제</a>
+		</c:if>
+		
+		<!-- ver2 -->
+		<%if(loginedMemberId==article.getMemberId()) {%>
 			<a class= "btn-text-link hover:underline" href="modify?id=${article.id }">수정</a>
 		<%}%>
-		
 	</div>
 	
 	<!-- 커스텀 -->
