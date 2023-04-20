@@ -22,10 +22,17 @@ public class UsrArticleController {
 	
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(int id, Model model) {
+	public String showDetail(HttpSession httpSession, int id, Model model) {
+		int loginedMemberId = -1;
+		
+		if(httpSession.getAttribute("loginedMemberId")!=null) {
+			loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
+		}
+		
 		Article article = articleService.getArticleById(id);
 		
 		model.addAttribute("article", article);
+		model.addAttribute("loginedMemberId", loginedMemberId);
 		
 		return "usr/article/detail";
 	}
@@ -80,7 +87,7 @@ public class UsrArticleController {
 //		}
 //		
 //		if (isLogined==false) {
-//			return "<script>alert('로그인 이용해주세요.'); location.replace('list')</script>";
+//			return "<script>alert('로그인 후 이용해주세요.'); history.back()</script>";
 //		}
 		
 		articleService.deleteArticle(id);

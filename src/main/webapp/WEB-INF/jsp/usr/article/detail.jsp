@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="Article Detail"/>
 <%@ include file="../common/head.jspf" %>
@@ -37,14 +38,15 @@
 				<th>${article.extra__writer }</th>
 			</tr>
 		</table>
-		<a href="delete?id=${article.id }">삭제</a>
-		<a href="modify?id=${article.id }">수정</a>
 	</div>
 	
 	<div class="btns">
-		<button type="button" onclick="history.back()">뒤로가기</button>
+		<button class= "btn-text-link hover:underline" type="button" onclick="history.back()">뒤로가기</button>
+		<a class= "btn-text-link hover:underline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="delete?id=${article.id }">삭제</a>
+		<a class= "btn-text-link hover:underline" href="modify?id=${article.id }">수정</a>
 	</div>
 	
+	<!-- 커스텀 -->
 	<style type="text/css">
 	.table-box-type-1 {
 		margin-left: auto;
@@ -52,12 +54,12 @@
 		width: 500px;
 	}
 	
-	a:hover {
-		text-decoration: underline;
-	}
-	
 	.btns {
 		text-align: center;
+	}
+	
+	.btns > .btn-text-link:hover{
+		color: deepskyblue;
 	}
 	</style>
 
