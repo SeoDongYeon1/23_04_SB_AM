@@ -29,7 +29,7 @@ public class UsrArticleController {
 			loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
 		}
 		
-		Article article = articleService.getArticleById(id);
+		Article article = articleService.getForPrintArticle(id);
 		
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", loginedMemberId);
@@ -39,7 +39,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/list")
 	public String showList(Model model) {
-		List<Article> articles = articleService.getArticles();
+		List<Article> articles = articleService.getForPrintArticles();
 		
 		model.addAttribute("articles", articles);
 		
@@ -72,7 +72,7 @@ public class UsrArticleController {
 		
 		int id = (int) writeArticleRd.getData1();
 		
-		Article article = articleService.getArticleById(id);
+		Article article = articleService.getForPrintArticle(id);
 		
 		return ResultData.newData(writeArticleRd, "article", article);
 	}
@@ -80,16 +80,6 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public String doDelete(HttpSession httpSession, int id) {
-//		boolean isLogined = false;
-//		
-//		if(httpSession.getAttribute("loginedMemberId")!=null) {
-//			isLogined = true;
-//		}
-//		
-//		if (isLogined==false) {
-//			return "<script>alert('로그인 후 이용해주세요.'); history.back()</script>";
-//		}
-		
 		articleService.deleteArticle(id);
 		return String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list')</script>", id); 
 	}
@@ -109,7 +99,7 @@ public class UsrArticleController {
 			return ResultData.from("F-A", "로그인 후 이용해주세요.");
 		}
 		
-		Article article = articleService.getArticleById(id);
+		Article article = articleService.getForPrintArticle(id);
 		
 		if(article==null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시글은 존재하지 않습니다.", id)); 
@@ -121,7 +111,7 @@ public class UsrArticleController {
 			return actorCanModifyRd;
 		}
 		
-		article = articleService.getArticleById(id);
+		article = articleService.getForPrintArticle(id);
 		return articleService.modifyArticle(id, title, body); 
 	}
 

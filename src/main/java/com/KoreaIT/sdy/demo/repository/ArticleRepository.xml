@@ -13,7 +13,7 @@
 		memberId = #{memberId}
 	</insert>
 
-	<select id="getArticles" resultType="Article">
+	<select id="getForPrintArticles" resultType="Article">
 		SELECT a.*, m.name AS 'extra__writer'
 		FROM article a
 		INNER JOIN `member` m
@@ -22,6 +22,12 @@
 	</select>
 
 	<select id="getArticleById" resultType="Article">
+		SELECT *
+		FROM article
+		WHERE id = #{id}
+		
+	</select>
+	<select id="getForPrintArticle" resultType="Article">
 		SELECT a.*, m.name AS 'extra__writer'
 		FROM article a
 		INNER JOIN `member` m

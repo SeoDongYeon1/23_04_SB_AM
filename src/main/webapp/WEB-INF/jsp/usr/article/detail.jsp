@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.KoreaIT.sdy.demo.vo.Article"%>
+<%
+	Article article = (Article) request.getAttribute("article");
+	int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="Article Detail"/>
@@ -42,8 +47,11 @@
 	
 	<div class="btns">
 		<button class= "btn-text-link hover:underline" type="button" onclick="history.back()">뒤로가기</button>
-		<a class= "btn-text-link hover:underline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="delete?id=${article.id }">삭제</a>
-		<a class= "btn-text-link hover:underline" href="modify?id=${article.id }">수정</a>
+		<%if(loginedMemberId==article.getMemberId()) {%>
+			<a class= "btn-text-link hover:underline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="delete?id=${article.id }">삭제</a>
+			<a class= "btn-text-link hover:underline" href="modify?id=${article.id }">수정</a>
+		<%}%>
+		
 	</div>
 	
 	<!-- 커스텀 -->
