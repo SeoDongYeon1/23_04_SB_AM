@@ -27,14 +27,20 @@
 	</div>
 	
 	<style type="text/css">
-	a {
+	.table-box-type-1 tr > th > a {
 		text-decoration: none;
 		font-size: 17px;
 		font-weight: bold;
 	}
 	
 	a:hover {
-		color: #9a9ba1;
+		text-decoration: underline;
+	}
+	
+	.table-box-type-1 {
+		margin-left: auto;
+		margin-right: auto;
+		width: 700px;
 	}
 	</style>
 	

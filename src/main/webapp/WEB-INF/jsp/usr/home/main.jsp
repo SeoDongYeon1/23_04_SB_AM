@@ -5,15 +5,4 @@
 <%@ include file="../common/head.jspf" %>
 		<hr />
 		
-	<style type="text/css">
-		a {
-			text-decoration: none;
-			font-size: 17px;
-			font-weight: bold;
-		}
-		
-		a:hover {
-			color: #9a9ba1;
-		}
-	</style>
 <%@ include file="../common/foot.jspf" %>

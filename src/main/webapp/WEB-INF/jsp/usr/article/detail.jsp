@@ -3,26 +3,55 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="Article Detail"/>
 <%@ include file="../common/head.jspf" %>
-		<hr />
+	<hr />
 	
-	<div>
-		<div>번호: ${article.id }</div>
-		<div>제목: ${article.title }</div>
-		<div>내용: ${article.body }</div>
-		<div>작성날짜: ${article.regDate }</div>
-		<div>수정날짜: ${article.updateDate }</div>
-		<div>작성자: ${article.memberId }</div>
+	<div class="mt-8 text-xl">
+		<table class="table-box-type-1">
+			<tr>
+				<th>번호</th>
+				<th>${article.id }</th>
+			</tr>
+			
+			<tr>
+				<th>제목</th>
+				<th>${article.title }</th>
+			</tr>
+			
+			<tr>
+				<th>내용</th>
+				<th>${article.body }</th>
+			</tr>
+			
+			<tr>
+				<th>작성날짜</th>
+				<th>${article.regDate.substring(0,10) }</th>
+			</tr>
+			
+			<tr>
+				<th>수정날짜</th>
+				<th>${article.updateDate.substring(0,10) }</th>
+			</tr>
+			
+			<tr>
+				<th>작성자</th>
+				<th>${article.memberId }</th>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="btns">
+		<button type="button" onclick="history.back()">뒤로가기</button>
 	</div>
 	
 	<style type="text/css">
-	a {
-		text-decoration: none;
-		font-size: 17px;
-		font-weight: bold;
+	.table-box-type-1 {
+		margin-left: auto;
+		margin-right: auto;
+		width: 500px;
 	}
 	
-	a:hover {
-		color: #9a9ba1;
+	.btns {
+		text-align: center;
 	}
 	</style>
 
