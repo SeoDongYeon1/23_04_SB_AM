@@ -48,9 +48,6 @@ public class UsrArticleController {
 	public String doWrite(HttpServletRequest req, String title, String body) {
 		Rq rq = (Rq) req.getAttribute("rq");
 		
-		if (rq.isLogined()==false) {
-			return "<script>alert('로그인 후 이용해주세요.'); location.replace('list')</script>";
-		}
 		if(Ut.empty(title)) {
 			return "<script>alert('제목을 입력해주세요.'); location.replace('list')</script>";
 		}
@@ -68,14 +65,11 @@ public class UsrArticleController {
 		//return ResultData.newData(writeArticleRd, "article", article);
 	}
 
-	@RequestMapping("/usr/article/delete")
+	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(HttpServletRequest req, int id) {
 		Rq rq = (Rq) req.getAttribute("rq");
 		
-		if (rq.isLogined()==false) {
-			return Ut.jsHistroyBack("F-A", "로그인 후 이용해주세요.");
-		}
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		if (article==null) {
@@ -94,10 +88,6 @@ public class UsrArticleController {
 	public String modify(HttpServletRequest req, int id, String title, String body) {
 		Rq rq = (Rq) req.getAttribute("rq");
 		
-		if (rq.isLogined()==false) {
-			return Ut.jsHistroyBack("F-A", "로그인 후 이용해주세요.");
-		}
-		
 		Article article = articleService.getForPrintArticle(id);
 		
 		if (article==null) {
@@ -111,10 +101,6 @@ public class UsrArticleController {
 	@ResponseBody
 	public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
 		Rq rq = (Rq) req.getAttribute("rq");
-		
-		if (rq.isLogined()==false) {
-			return ResultData.from("F-A", "로그인 후 이용해주세요.");
-		}
 		
 		Article article = articleService.getForPrintArticle(id);
 		
