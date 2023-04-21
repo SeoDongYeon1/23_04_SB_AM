@@ -6,13 +6,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.KoreaIT.sdy.demo.vo.Rq;
+
 @Component
-public class BeforeActionInterceptor implements HandlerInterceptor{
-	
+public class BeforeActionInterceptor implements HandlerInterceptor {
+
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
-		System.out.println("========실행됨?=========");
+		
+		Rq rq = new Rq(req);
+		req.setAttribute("rq", rq);
+		
 		return HandlerInterceptor.super.preHandle(req, resp, handler);
-		//prehandle로 찾아간다.
 	}
+
 }

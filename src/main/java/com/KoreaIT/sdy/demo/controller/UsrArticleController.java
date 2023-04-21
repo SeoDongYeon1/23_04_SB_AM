@@ -24,7 +24,7 @@ public class UsrArticleController {
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, int id, Model model) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq) req.getAttribute("rq");
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
@@ -45,17 +45,17 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData<Article> doWrite(HttpServletRequest req, String title, String body) {
-		Rq rq = new Rq(req);
+	public String doWrite(HttpServletRequest req, String title, String body) {
+		Rq rq = (Rq) req.getAttribute("rq");
 		
 		if (rq.isLogined()==false) {
-			return ResultData.from("F-A", "로그인 후 이용해주세요.");
+			return "<script>alert('로그인 후 이용해주세요.'); location.replace('list')</script>";
 		}
 		if(Ut.empty(title)) {
-			return ResultData.from("F-1", "제목을 입력해주세요.");
+			return "<script>alert('제목을 입력해주세요.'); location.replace('list')</script>";
 		}
 		if(Ut.empty(body)) {
-			return ResultData.from("F-2", "내용을 입력해주세요.");
+			return "<script>alert('내용을 입력해주세요.'); location.replace('list')</script>";
 		}
 		
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId());
@@ -64,18 +64,19 @@ public class UsrArticleController {
 		
 		Article article = articleService.getForPrintArticle(id);
 		
-		return ResultData.newData(writeArticleRd, "article", article);
+		return "ㅎㅇ";
+		//return ResultData.newData(writeArticleRd, "article", article);
 	}
 
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public String doDelete(HttpServletRequest req, int id) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq) req.getAttribute("rq");
 		
 		if (rq.isLogined()==false) {
 			return Ut.jsHistroyBack("F-A", "로그인 후 이용해주세요.");
 		}
-		Article article = articleService.getForPrintArticle(id);
+		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		if (article==null) {
 			return Ut.jsHistroyBack("F-1", "게시글이 존재하지 않습니다.");
@@ -91,7 +92,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/modify")
 	public String modify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq) req.getAttribute("rq");
 		
 		if (rq.isLogined()==false) {
 			return Ut.jsHistroyBack("F-A", "로그인 후 이용해주세요.");
@@ -109,7 +110,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq) req.getAttribute("rq");
 		
 		if (rq.isLogined()==false) {
 			return ResultData.from("F-A", "로그인 후 이용해주세요.");
