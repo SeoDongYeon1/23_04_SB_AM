@@ -122,6 +122,10 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시글은 존재하지 않습니다.", id)); 
 		}
 		
+		if (article.getMemberId() != rq.getLoginedMemberId()) {
+			return ResultData.from("F-2", Ut.f("%d번 글에 대한 권한이 없습니다", id));
+		}
+		
 		ResultData<Article> actorCanModifyRd = articleService.actorCanModifyRd(rq.getLoginedMemberId(), article);
 		
 		if(actorCanModifyRd.isFail()) {
