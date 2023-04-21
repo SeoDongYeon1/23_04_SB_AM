@@ -50,7 +50,7 @@
 		
 		<!-- ver1 -->
 		<c:if test="${article.actorCanDelete }">
-			<a class= "btn-text-link hover:underline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="delete?id=${article.id }">삭제</a>
+			<a class= "btn-text-link hover:underline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="doDelete?id=${article.id }">삭제</a>
 		</c:if>
 		
 		<!-- ver2 -->
