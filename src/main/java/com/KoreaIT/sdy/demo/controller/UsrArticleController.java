@@ -79,10 +79,10 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		if (article==null) {
-			return Ut.jsHistroyBack("F-1", "게시글이 존재하지 않습니다.");
+			return Ut.jsHistroyBack("F-E", "게시글이 존재하지 않습니다.");
 		}
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
-			return Ut.jsHistroyBack("F-2", Ut.f("%d번 글에 대한 권한이 없습니다", id));
+			return Ut.jsHistroyBack("F-1", Ut.f("%d번 글에 대한 권한이 없습니다", id));
 		}
 		
 		articleService.deleteArticle(id);
@@ -91,37 +91,45 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/modify")
-	public String modify(HttpServletRequest req, int id, String title, String body) {
+	public String showModify(HttpServletRequest req, Model model, int id) {
 		Rq rq = (Rq) req.getAttribute("rq");
 		
-		Article article = articleService.getForPrintArticle(id);
+		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		if (article==null) {
-			return Ut.jsHistroyBack("F-1", "게시글이 존재하지 않습니다.");
+			return Ut.jsHistroyBackOnView(req, Ut.f("%d번 게시글은 존재하지 않습니다.", id));
 		}
+		
+		ResultData<String> actorCanModifyRd = articleService.actorCanModifyRd(rq.getLoginedMemberId(), article);
+		
+		if(actorCanModifyRd.isFail()) {
+			return Ut.jsHistroyBackOnView(req, actorCanModifyRd.getMsg());
+		}
+		
+		model.addAttribute("article", article);
 		
 		return "usr/article/modify";
 	}
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
+	public String doModify(HttpServletRequest req, int id, String title, String body) {
 		Rq rq = (Rq) req.getAttribute("rq");
 		
 		Article article = articleService.getForPrintArticle(id);
 		
 		if(article==null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시글은 존재하지 않습니다.", id)); 
+			return Ut.jsHistroyBack("F-E", Ut.f("%d번 게시글은 존재하지 않습니다.", id)); 
 		}
 		
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
-			return ResultData.from("F-2", Ut.f("%d번 글에 대한 권한이 없습니다", id));
+			return Ut.jsHistroyBack("F-1", Ut.f("%d번 글에 대한 권한이 없습니다", id));
 		}
 		
-		ResultData<Article> actorCanModifyRd = articleService.actorCanModifyRd(rq.getLoginedMemberId(), article);
+		ResultData<String> actorCanModifyRd = articleService.actorCanModifyRd(rq.getLoginedMemberId(), article);
 		
 		if(actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+			return Ut.jsHistroyBack(actorCanModifyRd.getResultCode(), actorCanModifyRd.getMsg());
 		}
 		
 		article = articleService.getForPrintArticle(id);

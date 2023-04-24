@@ -72,18 +72,16 @@ public class ArticleService {
 		articleRepository.deleteArticle(id);
 	}
 
-	public ResultData<Article> modifyArticle(int id, String title, String body) {
+	public String modifyArticle(int id, String title, String body) {
 		articleRepository.modifyArticle(id, title, body);
 		
-		Article article = getForPrintArticle(id);
-		
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), "article", article); 
+		return Ut.jsReplace(Ut.f("%d번 게시글이 수정되었습니다.", id),Ut.f("../article/detail?id=%d", id)); 
 	}
 
-	public ResultData<Article> actorCanModifyRd(int loginedMemberId, Article article) {
+	public ResultData<String> actorCanModifyRd(int loginedMemberId, Article article) {
 		
 		if(loginedMemberId != article.getMemberId()) {
-			return ResultData.from("F-1", Ut.f("해당 게시글에 권한이 없습니다.")); 
+			return ResultData.from("F-1", Ut.f("%d번 게시글에 권한이 없습니다.", article.getId()));
 		}
 		return ResultData.from("S-1", "수정 가능");
 	}

@@ -1,17 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.KoreaIT.sdy.demo.vo.Article"%>
-
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="Article Modify"/>
 <%@ include file="../common/head.jspf" %>
 	<hr />
 	
-	<form method="post" action="doModify">
-	<input type="text" />
-	
-	</form>
+	<div style="text-align:center;">
+		<div style="font-weight:bold; font-size: 17px;">
+			${article.id }번 게시글 수정
+		</div>
+		<form style="width: 550px; height: 600px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doModify">
+			<br />
+			<div style="display: inline-block; text-align:left;">
+				<input value= "${article.id }" type="hidden" name="id"/>
+				<div style="text-align: right; font-size:14px; font-weight:bold">
+					작성날짜 : ${article.regDate }
+					<br />
+					수정날짜 : ${article.updateDate }
+					<br />
+					작성자 : ${article.extra__writer }
+				</div>
+				<div style="font-size: 17px; font-weight: bold; ">
+					제목
+					<br />
+					<input style="border-radius: 8px; width: 500px; border: 2px solid black;" type="text" value="${article.title }" name="title"/>
+				</div>
+				<br />
+				<div style="font-size: 17px; font-weight: bold; ">
+					내용
+					<br />
+					<textarea style="border: 2px solid black; border-radius: 8px; width: 500px; height: 300px;" name="body">${article.body }</textarea>
+				</div>
+				<br />
+			</div>
+			<br />
+			<br />
+			<div style="border-radius: 8px; border: 2px solid black; display: inline-block; width: 200px;">
+				<button style="padding: 0 65px; " type="submit">수정하기</button>
+			</div>
+		</form>
+	</div>
 	
 	
 <%@ include file="../common/foot.jspf" %>

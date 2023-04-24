@@ -1,5 +1,7 @@
 package com.KoreaIT.sdy.demo.util;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class Ut {
 
 	public static boolean empty(Object obj) {
@@ -54,6 +56,13 @@ public class Ut {
 				</script>
 				""", msg, uri);
 
+	}
+
+	public static String jsHistroyBackOnView(HttpServletRequest req, String msg) {
+		req.setAttribute("msg", msg);
+		req.setAttribute("historyBack", true);
+		
+		return "usr/common/js";
 	}
 
 }
