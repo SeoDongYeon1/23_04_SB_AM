@@ -86,24 +86,21 @@ public class UsrMemberController {
 		if (member.getLoginPw().equals(loginPw) == false) {
 			return Ut.jsHistroyBack("F-4", "아이디 또는 비밀번호를 확인해주세요.");
 		}
-		httpSession.setAttribute("loginedMemberId", member.getId());
+		
+		rq.login(member);
 		return Ut.jsReplace(Ut.f("%s님 로그인 되었습니다.", member.getNickname()), "../article/list");
 	}
 
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpSession httpsession) {
-		boolean isLogined = false;
+	public String doLogout(HttpServletRequest req) {
+		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (httpsession.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
-		}
-
-		if (isLogined == false) {
+		if (rq.isLogined() == false) {
 			return Ut.jsHistroyBack("F-A", "로그인 후 이용해주세요.");
 		}
 		
-		httpsession.removeAttribute("loginedMemberId");
+		rq.logout();
 		return Ut.jsReplace("로그아웃되었습니다.", "../home/main");
 	}
 }

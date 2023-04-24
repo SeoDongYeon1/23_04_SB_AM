@@ -43,6 +43,12 @@ public class UsrArticleController {
 		return "usr/article/list";
 	}
 	
+	@RequestMapping("/usr/article/write")
+	public String write(HttpServletRequest req, String title, String body) {
+		
+		return "usr/article/write";
+	}
+	
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
 	public String doWrite(HttpServletRequest req, String title, String body) {
