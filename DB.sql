@@ -86,8 +86,53 @@ nickname = '회원2',
 cellphoneNum = '01067896789',
 email = 'zxc@gmail.com';
 
-SELECT * FROM article ORDER BY id DESC;
-SELECT * FROM `member` ORDER BY id DESC;
+# 게시판 테이블 생성
+CREATE TABLE board(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `code` CHAR(100) NOT NULL UNIQUE COMMENT 'Notice(공지사항), Free(자유게시판), QnA(질의응답), ...',
+    `name` CHAR(100) NOT NULL UNIQUE COMMENT '게시판 이름',
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1= 삭제 후)',
+    delDate DATETIME COMMENT '삭제 날짜'
+);
+
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'Notice',
+`name` = '공지사항';
+
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'Free',
+`name` = '자유';
+
+INSERT INTO board 
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'QnA',
+`name` = '질의응답';
+
+ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER memberId;
+
+UPDATE article
+SET boardId = 1
+WHERE id IN(1,2);
+
+UPDATE article
+SET boardId = 2
+WHERE id = 3;
+
+####################################################################
+
+# 검색용
+DESC article;
+
+SELECT * FROM article;
+SELECT * FROM `member`;
+SELECT * FROM board;
 
 SELECT LAST_INSERT_ID();
 
@@ -96,3 +141,4 @@ FROM article a
 INNER JOIN `member` m
 ON a.memberId = m.id
 ORDER BY id DESC;
+
