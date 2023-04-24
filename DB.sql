@@ -107,7 +107,7 @@ INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
 `code` = 'Free',
-`name` = '자유';
+`name` = '자유게시판';
 
 INSERT INTO board 
 SET regDate = NOW(),
@@ -140,5 +140,14 @@ SELECT a.*, m.name AS 'extra__wrtier'
 FROM article a
 INNER JOIN `member` m
 ON a.memberId = m.id
-ORDER BY id DESC;
+ORDER BY a.id DESC;
+
+SELECT a.*, m.name AS 'extra__wrtier', b.name AS 'board_name'
+FROM article a
+INNER JOIN board b
+ON a.boardId = b.id
+INNER JOIN `member` m
+ON a.memberId = m.id
+WHERE b.id = 2
+ORDER BY a.id DESC;
 

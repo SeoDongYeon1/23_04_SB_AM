@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.sdy.demo.service.ArticleService;
+import com.KoreaIT.sdy.demo.service.BoardService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.Article;
+import com.KoreaIT.sdy.demo.vo.Board;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -20,6 +22,8 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 public class UsrArticleController {
 	@Autowired // articleService = new ArticleService();를 안해도 된다. Autowired가 연결시켜주는거
 	private ArticleService articleService;
+	@Autowired
+	private BoardService boardService;
 	
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
@@ -35,10 +39,19 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model) {
+	public String showList(HttpServletRequest req, Model model, int boardId) {
+		Board board = boardService.getBoardById(boardId);
+		
+		if(board==null) {
+			return Ut.jsHistroyBackOnView(req, "존재하지 않는 게시판입니다.");
+		}
+		
+		Rq rq = (Rq) req.getAttribute("rq");
+		
 		List<Article> articles = articleService.getForPrintArticles();
 		
 		model.addAttribute("articles", articles);
+		model.addAttribute("board", board);
 		
 		return "usr/article/list";
 	}

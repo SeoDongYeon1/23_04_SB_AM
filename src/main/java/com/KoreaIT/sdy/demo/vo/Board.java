@@ -7,19 +7,14 @@ import lombok.NoArgsConstructor;
 @Data // @Data를 해두면 @Getter, @Setter 등등 다 생긴다.
 @AllArgsConstructor // 생성자를 만들때 인자를 기본적으로 생성자에 추가시켜준다. 따로 클래스에 생성자 추가 x
 @NoArgsConstructor  // 생성자를 만들때 인자가 없는 생성자에 추가시켜준다. 따로 클래스에 생성자 추가 x
-public class Article {
+public class Board {
 	//@Getter 쓸 필요없어짐
 	private int id;
 	private String regDate;
 	private String updateDate;
-	private String title;
-	private String body;
-	private int memberId;
-	private int boardId;
-	
-	private String board_name;
-	private String extra__writer;
-	
-	private boolean actorCanDelete;
+	private String code;
+	private String name;
+	private boolean delStatus;
+	private String delDate;
 	
 }

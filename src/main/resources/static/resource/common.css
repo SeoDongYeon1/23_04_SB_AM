@@ -14,3 +14,20 @@ html > body {
 	border: 2px solid black;
 	padding: 10px;
 }
+
+header > div > ul > li{
+	position: relative;
+}
+
+header > div > ul > li > ul {
+	display: none;
+}
+
+header > div > ul > li:hover > ul {
+	display: block;
+	position: absolute;
+}
+
+header > div > ul > li > ul > li > a{
+	white-space: nowrap;
+}

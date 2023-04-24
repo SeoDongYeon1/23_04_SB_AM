@@ -14,11 +14,14 @@
 	</insert>
 
 	<select id="getForPrintArticles" resultType="Article">
-		SELECT a.*, m.name AS 'extra__writer'
+		SELECT a.*, m.name AS 'extra__wrtier', b.name AS 'board_name'
 		FROM article a
+		INNER JOIN board b
+		ON a.boardId = b.id
 		INNER JOIN `member` m
 		ON a.memberId = m.id
-		ORDER BY id DESC;
+		WHERE b.id = #{boarId}
+		ORDER BY a.id DESC;
 	</select>
 
 	<select id="getArticleById" resultType="Article">
