@@ -10,26 +10,25 @@
 		<div style="font-weight:bold; font-size: 17px;">
 			로그인
 		</div>
-		<form style="width: 400px; height: 300px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doLogin">
+		<form style="width: 350px; height: 270px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doLogin">
 			<br />
 			<div style="display: inline-block; text-align:left;">
-				<div style="font-size: 17px; font-weight: bold; ">
+				<div style="font-size: 15px; font-weight: bold; ">
 					아이디
 					<br />
-					<input style="border-radius: 8px; width: 200px; border: 2px solid black;" type="text" placeholder="아이디" name="loginId" autocomplete="on" required/>
+					<input class="input input-bordered w-full max-w-xs" style="height: 30px; border-radius: 8px; width: 230px; border: 2px solid black;" type="text" placeholder="아이디" name="loginId" autocomplete="on" required/>
 				</div>
 				<br />
-				<div style="font-size: 17px; font-weight: bold;">
+				<div style="font-size: 15px; font-weight: bold;">
 					비밀번호
 					<br />
-					<input style="border-radius: 8px; width: 200px; border: 2px solid black;" type="password" placeholder="비밀번호" name="loginPw" autocomplete="off" required/>
+					<input class="input input-bordered w-full max-w-xs" style="height: 30px; border-radius: 8px; width: 230px; border: 2px solid black;" type="password" placeholder="비밀번호" name="loginPw" autocomplete="off" required/>
 				</div>
 				<br />
 			</div>
 			<br />
-			<br />
-			<div style="border-radius: 8px; border: 2px solid black; display: inline-block; width: 200px;">
-				<button style="padding:0 73px;" type="submit">로그인</button>
+			<div style="border-radius: 8px; display: inline-block; width: 200px;">
+				<button class="btn btn-outline" style="padding: 0 40px; " type="submit">로그인</button>
 			</div>
 		</form>
 	</div>

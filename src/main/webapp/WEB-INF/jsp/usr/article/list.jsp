@@ -6,7 +6,7 @@
 	<hr />
 	
 	<div class="mt-8 text-xl">
-		<table class="table-box-type-1">
+		<table class="table-box-type-1 table table-zebra w-full">
 			<tr>
 				<th>번호</th>
 				<th>제목</th>

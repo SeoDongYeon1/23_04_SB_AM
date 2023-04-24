@@ -55,8 +55,13 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/login")
 	public String showLogin(HttpServletRequest req, String loginId, String loginPw) {
-		
-		
+		if(loginId!=null && loginId!="") {
+			return Ut.f("""
+					<script>
+					const loginId = '%s';
+					</script>
+					""", loginId);
+		}
 		return "usr/member/login";
 	}
 

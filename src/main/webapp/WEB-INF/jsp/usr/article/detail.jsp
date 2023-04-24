@@ -12,7 +12,7 @@
 	<hr />
 	
 	<div class="mt-8 text-xl">
-		<table class="table-box-type-1">
+		<table class="table-box-type-1 table table-zebra w-full">
 			<tr>
 				<th>번호</th>
 				<th>${article.id }</th>
@@ -44,18 +44,18 @@
 			</tr>
 		</table>
 	</div>
-	
+	<br />
 	<div class="btns">
-		<button class= "btn-text-link hover:underline" type="button" onclick="history.back()">뒤로가기</button>
+		<button class= "btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
 		
 		<!-- ver1 -->
 		<c:if test="${article.actorCanDelete }">
-			<a class= "btn-text-link hover:underline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="doDelete?id=${article.id }">삭제</a>
+			<a class= "btn btn-outline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="doDelete?id=${article.id }">삭제</a>
 		</c:if>
 		
 		<!-- ver2 -->
 		<%if(loginedMemberId==article.getMemberId()) {%>
-			<a class= "btn-text-link hover:underline" href="modify?id=${article.id }">수정</a>
+			<a class= "btn btn-outline" href="modify?id=${article.id }">수정</a>
 		<%}%>
 	</div>
 	
@@ -69,10 +69,6 @@
 	
 	.btns {
 		text-align: center;
-	}
-	
-	.btns > .btn-text-link:hover{
-		color: deepskyblue;
 	}
 	</style>
 

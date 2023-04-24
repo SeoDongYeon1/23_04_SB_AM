@@ -9,7 +9,7 @@
 		<div style="font-weight:bold; font-size: 17px;">
 			${article.id }번 게시글 수정
 		</div>
-		<form style="width: 550px; height: 600px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doModify">
+		<form style="width: 550px; height: 620px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doModify">
 			<br />
 			<div style="display: inline-block; text-align:left;">
 				<input value= "${article.id }" type="hidden" name="id"/>
@@ -23,20 +23,20 @@
 				<div style="font-size: 17px; font-weight: bold; ">
 					제목
 					<br />
-					<input style="border-radius: 8px; width: 500px; border: 2px solid black;" type="text" value="${article.title }" name="title"/>
+					<input class="input input-bordered w-full max-w-xs" style="border-radius: 8px; width: 500px; border: 2px solid black;" type="text" value="${article.title }" name="title"/>
 				</div>
 				<br />
-				<div style="font-size: 17px; font-weight: bold; ">
+				<div style="font-size: 17px; font-weight: bold;">
 					내용
 					<br />
-					<textarea style="border: 2px solid black; border-radius: 8px; width: 500px; height: 300px;" name="body">${article.body }</textarea>
+					<textarea class="textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; width: 500px; height: 300px;" name="body">${article.body }</textarea>
 				</div>
 				<br />
 			</div>
 			<br />
 			<br />
-			<div style="border-radius: 8px; border: 2px solid black; display: inline-block; width: 200px;">
-				<button style="padding: 0 65px; " type="submit">수정하기</button>
+			<div style="border-radius: 8px; display: inline-block; width: 200px;">
+				<button class="btn btn-outline" style="padding: 0 40px; " type="submit">수정하기</button>
 			</div>
 		</form>
 	</div>
