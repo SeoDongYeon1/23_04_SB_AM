@@ -12,20 +12,33 @@
 		<div style="font-weight:bold; font-size: 17px;">
 			게시글 작성
 		</div>
-		<form style="width: 550px; height: 620px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doWrite">
+		<form style="width: 550px; height: 680px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doWrite" onsubmit = "return Submit(this); return false;">
+			<br />
+			<div style="text-align: left; margin: 0 25px; font-weight: bold;">
+				작성자: ${rq.loginedMember.nickname }
+			</div>
+			<br />
+			<div style="margin-left:25px; text-align: left; ">
+				<select style="border-color: black;" id="boardId" class="select select-ghost w-full max-w-xs">
+				  <option disabled selected>게시판 선택</option>
+					<option class="notice" value="1">공지사항</option>
+					<option class="free" value="2">자유게시판</option>
+					<option class="qna" value="3">QnA</option>
+				</select>
+			</div>
 			<br />
 			<div style="display: inline-block ; text-align:left;">
-				<input value= "${article.id }" type="hidden" name="id"/>
+				<input class="boardId" value= "${article.boardId }" type="hidden" name="boardId"/>
 				<div style="font-size: 17px; font-weight: bold; ">
 					제목
 					<br />
-					<input class="input input-bordered w-full max-w-xs" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px;" type="text" value="${article.title }" name="title"/>
+					<input class="title input input-bordered w-full max-w-xs" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px;" type="text" value="${article.title }" name="title"/>
 				</div>
 				<br />
 				<div style="font-size: 17px; font-weight: bold;">
 					내용
 					<br />
-					<textarea class="textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px; height: 300px;" name="body">${article.body }</textarea>
+					<textarea class="body textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px; height: 300px;" name="body">${article.body }</textarea>
 				</div>
 				<br />
 			</div>
@@ -36,5 +49,34 @@
 			</div>
 		</form>
 	</div>
+<script>
+	$(document).ready(function() {
+	    $('#boardId').on('change', function() {
+	        $('input[name="boardId"]').val($(this).val());
+	    });
+	});
 
+function Submit(form) {
+    var title = form.title.value.trim();		
+    var body = form.body.value.trim();
+    var boardId = $('input[name="boardId"]').val().trim();
+    
+    if(boardId.length == 0) {
+        alert('게시판을 선택해주세요.');
+        return false;
+    }
+    if(title.length == 0) {
+        alert('제목을 입력해주세요.');
+        form.title.focus(); 
+        return false;
+    }
+    if(body.length == 0) {
+        alert('내용을 입력해주세요.');
+        form.body.focus();	
+        return false;
+    }
+    
+    return true;
+}
+</script>
 <%@ include file="../common/foot.jspf" %>

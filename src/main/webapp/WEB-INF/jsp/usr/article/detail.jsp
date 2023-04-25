@@ -30,12 +30,12 @@
 			
 			<tr>
 				<th>작성날짜</th>
-				<th>${article.regDate.substring(0,10) }</th>
+				<th>${article.regDate }</th>
 			</tr>
 			
 			<tr>
 				<th>수정날짜</th>
-				<th>${article.updateDate.substring(0,10) }</th>
+				<th>${article.updateDate }</th>
 			</tr>
 			
 			<tr>

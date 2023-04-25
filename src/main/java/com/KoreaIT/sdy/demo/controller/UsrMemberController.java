@@ -17,6 +17,9 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 public class UsrMemberController {
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private Rq rq;
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
@@ -55,20 +58,13 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/login")
 	public String showLogin(HttpServletRequest req, String loginId, String loginPw) {
-		if(loginId!=null && loginId!="") {
-			return Ut.f("""
-					<script>
-					const loginId = '%s';
-					</script>
-					""", loginId);
-		}
+		
 		return "usr/member/login";
 	}
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
-		Rq rq = (Rq)req.getAttribute("rq");
+	public String doLogin(String loginId, String loginPw) {
 		
 		if (rq.isLogined()) {
 			return Ut.jsHistroyBack("F-A", "이미 로그인 상태입니다.");
@@ -93,14 +89,13 @@ public class UsrMemberController {
 		}
 		
 		rq.login(member);
-		return Ut.jsReplace(Ut.f("%s님 로그인 되었습니다.", member.getNickname()), "../article/list");
+		return Ut.jsReplace(Ut.f("%s님 로그인 되었습니다.", member.getNickname()), "../home/main");
 	}
 
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpServletRequest req) {
-		Rq rq = (Rq) req.getAttribute("rq");
-
+	public String doLogout() {
+		
 		if (rq.isLogined() == false) {
 			return Ut.jsHistroyBack("F-A", "로그인 후 이용해주세요.");
 		}

@@ -2,8 +2,6 @@ package com.KoreaIT.sdy.demo.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,13 +20,16 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 public class UsrArticleController {
 	@Autowired // articleService = new ArticleService();를 안해도 된다. Autowired가 연결시켜주는거
 	private ArticleService articleService;
+	
+	@Autowired
+	private Rq rq;
+	
 	@Autowired
 	private BoardService boardService;
 	
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(HttpServletRequest req, int id, Model model) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String showDetail(int id, Model model) {
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
@@ -39,17 +40,17 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model, int boardId) {
+	public String showList(Model model, int boardId) {
+		int page = 1;
 		Board board = boardService.getBoardById(boardId);
 		
 		if(board==null) {
-			return Ut.jsHistroyBackOnView(req, "존재하지 않는 게시판입니다.");
+			return rq.jsHistroyBackOnView("존재하지 않는 게시판입니다.");
 		}
-		
-		Rq rq = (Rq) req.getAttribute("rq");
+		int totalPage = articleService.getTotalPage(boardId);
 		
 		int articlesCount = articleService.articlesCount(boardId);
-		List<Article> articles = articleService.getForPrintArticles(boardId);
+		List<Article> articles = articleService.getForPrintArticles(boardId, page);
 		
 		model.addAttribute("articles", articles);
 		model.addAttribute("articlesCount", articlesCount);
@@ -59,15 +60,14 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/write")
-	public String write(HttpServletRequest req, String title, String body) {
+	public String write(String title, String body) {
 		
 		return "usr/article/write";
 	}
 	
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpServletRequest req, String title, String body, String replaceUri) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doWrite(String title, String body, int boardId, String replaceUri) {
 		
 		if(Ut.empty(title)) {
 			return Ut.jsHistroyBack("F-1", "제목을 입력해주세요.");
@@ -76,7 +76,7 @@ public class UsrArticleController {
 			return Ut.jsHistroyBack("F-2", "내용을 입력해주세요.");
 		}
 		
-		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId());
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
 		
 		int id = (int) writeArticleRd.getData1();
 		
@@ -89,8 +89,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(HttpServletRequest req, int id) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doDelete(int id) {
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
@@ -107,19 +106,18 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/modify")
-	public String showModify(HttpServletRequest req, Model model, int id) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String showModify(Model model, int id) {
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
 		if (article==null) {
-			return Ut.jsHistroyBackOnView(req, Ut.f("%d번 게시글은 존재하지 않습니다.", id));
+			return rq.jsHistroyBackOnView(Ut.f("%d번 게시글은 존재하지 않습니다.", id));
 		}
 		
 		ResultData<String> actorCanModifyRd = articleService.actorCanModifyRd(rq.getLoginedMemberId(), article);
 		
 		if(actorCanModifyRd.isFail()) {
-			return Ut.jsHistroyBackOnView(req, actorCanModifyRd.getMsg());
+			return rq.jsHistroyBackOnView(actorCanModifyRd.getMsg());
 		}
 		
 		model.addAttribute("article", article);
@@ -129,8 +127,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doModify(int id, String title, String body) {
 		
 		Article article = articleService.getForPrintArticle(id);
 		

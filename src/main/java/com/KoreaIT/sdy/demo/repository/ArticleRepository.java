@@ -9,9 +9,9 @@ import com.KoreaIT.sdy.demo.vo.Article;
 @Mapper
 public interface ArticleRepository {
 	
-	public void writeArticle(String title, String body, int memberId);
+	public void writeArticle(String title, String body, int memberId, int boardId);
 	
-	public List<Article> getForPrintArticles(int boardId);
+	public List<Article> getForPrintArticles(int boardId, int itemsInAPage, int limitFrom);
 	
 	public Article getForPrintArticle(int id);
 	
