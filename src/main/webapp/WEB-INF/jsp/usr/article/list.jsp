@@ -6,7 +6,8 @@
 <%@ include file="../common/head.jspf" %>
 	<hr />
 	
-	<div class="mt-8 text-xl">
+	<div class="mt-8 text-xl mx-auto px-3">
+		<div style="text-align:center;">${articlesCount }개</div>
 		<table class="table-box-type-1 table table-zebra w-full" style="text-align:center;">
 		
 			<tr>

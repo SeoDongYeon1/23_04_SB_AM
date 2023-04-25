@@ -22,6 +22,8 @@ public interface ArticleRepository {
 	public void modifyArticle(int id, String title, String body);
 
 	public int getLastInsertId();
+
+	public int articlesCount(int boardId);
 	
 	
 }

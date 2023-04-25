@@ -90,4 +90,8 @@ public class ArticleService {
 		return articleRepository.getForPrintArticles(boardId);
 	}
 
+	public int articlesCount(int boardId) {
+		return articleRepository.articlesCount(boardId);
+	}
+
 }

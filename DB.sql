@@ -127,6 +127,16 @@ WHERE id = 3;
 
 ####################################################################
 
+# 게시물 갯수 늘리기
+INSERT INTO article
+(
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2), CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
+FROM article;
+
+SELECT COUNT(*) FROM article; 
+
 # 검색용
 DESC article;
 
@@ -148,6 +158,5 @@ INNER JOIN board b
 ON a.boardId = b.id
 INNER JOIN `member` m
 ON a.memberId = m.id
-WHERE b.id = 2
 ORDER BY a.id DESC;
 
