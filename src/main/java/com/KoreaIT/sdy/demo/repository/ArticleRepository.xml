@@ -25,7 +25,11 @@
 		<if test = "boardId != 0">
 			AND a.boardId = #{boardId}
 		</if>
-		ORDER BY a.id DESC;
+		ORDER BY a.id DESC
+		<if test = "limitFrom > 0">
+			LIMIT #{limitFrom}, #{itemsInAPage};
+		</if>
+		
 	</select>
 	<select id="articlesCount" resultType="int">
 		SELECT COUNT(*) AS cnt

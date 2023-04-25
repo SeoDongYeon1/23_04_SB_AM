@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.sdy.demo.service.ArticleService;
@@ -40,8 +41,8 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId) {
-		int page = 1;
+	public String showList(Model model, @RequestParam(defaultValue="1") int boardId, @RequestParam(defaultValue="1") int page) {
+		
 		Board board = boardService.getBoardById(boardId);
 		
 		if(board==null) {
@@ -50,11 +51,14 @@ public class UsrArticleController {
 		int totalPage = articleService.getTotalPage(boardId);
 		
 		int articlesCount = articleService.articlesCount(boardId);
+		
 		List<Article> articles = articleService.getForPrintArticles(boardId, page);
 		
 		model.addAttribute("articles", articles);
-		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("board", board);
+		model.addAttribute("articlesCount", articlesCount);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("page", page);
 		
 		return "usr/article/list";
 	}

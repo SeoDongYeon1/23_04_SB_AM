@@ -90,7 +90,7 @@ public class ArticleService {
 		int itemsInAPage = getItemsInAPage();
 		int limitFrom = (page - 1) * itemsInAPage;
 		
-		return articleRepository.getForPrintArticles(boardId, itemsInAPage, limitFrom);
+		return articleRepository.getForPrintArticles(boardId, limitFrom, itemsInAPage);
 	}
 
 	public int articlesCount(int boardId) {
@@ -100,7 +100,7 @@ public class ArticleService {
 	public int getTotalPage(int boardId) {
 		int itemsInAPage = getItemsInAPage();
 
-		int totalCnt = articleRepository.articlesCount(boardId);
+		int totalCnt = articlesCount(boardId);
 		int totalPage = (int) Math.ceil((double) totalCnt / itemsInAPage);
 		
 		return totalPage;

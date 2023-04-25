@@ -28,7 +28,7 @@
 			</div>
 			<br />
 			<div style="display: inline-block ; text-align:left;">
-				<input class="boardId" value= "${article.boardId }" type="hidden" name="boardId"/>
+				<input class="boardId" type="hidden" name="boardId"/>
 				<div style="font-size: 17px; font-weight: bold; ">
 					제목
 					<br />
