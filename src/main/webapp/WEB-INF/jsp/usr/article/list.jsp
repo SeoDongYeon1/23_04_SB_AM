@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+int totalPage = (int) request.getAttribute("totalPage");
+int cur_Page = (int) request.getAttribute("page");
 
+
+int displayPage = 10;
+int startPage = ((cur_Page-1)/displayPage)*displayPage+1;
+int endPage = startPage+displayPage-1;
+%>
 <c:set var="pageTitle" value="${board.name }"/>
 <%@ include file="../common/head.jspf" %>
 	<hr />
@@ -28,13 +36,40 @@
 		</table>
 	</div>
 	<div class="pagenation" style="text-align: center; margin-top:20px;">
-		<div class="btn-group">
-		  	<a href="?page=1" class="btn ${page == i ? 'btn-active' : '' }">◀◀</a>
-		<c:forEach begin="1" end="${totalPage }" var="i">
-		  	<a href="?page=${i }" class="btn ${page == i ? 'btn-active' : '' }">${i }</a>
-		</c:forEach>
-		  	<a href="?page=${totalPage }" class="btn ${page == i ? 'btn-active' : '' }">▶▶</a>
-		</div>
+		<%
+		if(cur_Page > 10) {
+			%>
+			<a class = "btn btn-outline first_page" href="list?page=1">◀◀</a>	
+			<%
+		}
+		if(endPage > totalPage)
+		{
+			endPage = totalPage;
+		}
+							
+	    if(startPage > displayPage)
+	    { 
+		%>
+			<a class="btn btn-outline" href="list?page=<%=startPage - 10%>">이전</a>
+		<%
+		}
+	    
+		for(int i=startPage; i <= endPage; i++){%>
+				<a class= "btn btn-outline <%=cur_Page == i ? "btn-active" : "" %>" href="list?page=<%=i%>"><%=i %></a>
+		<%}
+		
+		if(endPage < totalPage)
+		{
+		%>
+			<a class="btn btn-outline" href="list?page=<%=startPage + 10 %>">다음</a>
+		<%
+		}
+		if(cur_Page < totalPage) {
+			%>
+			<a class = "last_page btn btn-outline" href="list?page=<%=totalPage%>">▶▶</a>	
+			<%
+		}
+		%>
 	</div>
 	<style type="text/css">	
 	a:hover {
