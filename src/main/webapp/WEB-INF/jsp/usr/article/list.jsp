@@ -39,7 +39,7 @@ int endPage = startPage+displayPage-1;
 		<%
 		if(cur_Page > 10) {
 			%>
-			<a class = "btn btn-outline first_page" href="list?page=1">◀◀</a>	
+			<a class = "btn btn-outline first_page" href="list?boardId=${boardId }&page=1">◀◀</a>	
 			<%
 		}
 		if(endPage > totalPage)
@@ -50,23 +50,23 @@ int endPage = startPage+displayPage-1;
 	    if(startPage > displayPage)
 	    { 
 		%>
-			<a class="btn btn-outline" href="list?page=<%=startPage - 10%>">이전</a>
+			<a class="btn btn-outline" href="list?boardId=${boardId }&page=<%=startPage - 10%>">이전</a>
 		<%
 		}
 	    
 		for(int i=startPage; i <= endPage; i++){%>
-				<a class= "btn btn-outline <%=cur_Page == i ? "btn-active" : "" %>" href="list?page=<%=i%>"><%=i %></a>
+				<a class= "btn btn-outline <%=cur_Page == i ? "btn-active" : "" %>" href="list?boardId=${boardId }&page=<%=i%>"><%=i %></a>
 		<%}
 		
 		if(endPage < totalPage)
 		{
 		%>
-			<a class="btn btn-outline" href="list?page=<%=startPage + 10 %>">다음</a>
+			<a class="btn btn-outline" href="list?boardId=${boardId }&page=<%=startPage + 10 %>">다음</a>
 		<%
 		}
 		if(cur_Page < totalPage) {
 			%>
-			<a class = "last_page btn btn-outline" href="list?page=<%=totalPage%>">▶▶</a>	
+			<a class = "last_page btn btn-outline" href="list?boardId=${boardId }&page=<%=totalPage%>">▶▶</a>	
 			<%
 		}
 		%>
