@@ -29,9 +29,11 @@
 	</div>
 	<div class="pagenation" style="text-align: center; margin-top:20px;">
 		<div class="btn-group">
-		<c:forEach begin="1" end="10" var="i">
-		  	<a href="?page=${i }" class="btn ${param.page ==i ? 'btn-active' : '' }">${i }</a>
+		  	<a href="?page=1" class="btn ${page == i ? 'btn-active' : '' }">◀◀</a>
+		<c:forEach begin="1" end="${totalPage }" var="i">
+		  	<a href="?page=${i }" class="btn ${page == i ? 'btn-active' : '' }">${i }</a>
 		</c:forEach>
+		  	<a href="?page=${totalPage }" class="btn ${page == i ? 'btn-active' : '' }">▶▶</a>
 		</div>
 	</div>
 	<style type="text/css">	
