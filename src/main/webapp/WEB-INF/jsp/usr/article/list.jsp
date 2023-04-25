@@ -27,7 +27,13 @@
 		</c:forEach>
 		</table>
 	</div>
-	
+	<div class="pagenation" style="text-align: center; margin-top:20px;">
+		<div class="btn-group">
+		<c:forEach begin="1" end="10" var="i">
+		  	<a href="?page=${i }" class="btn ${param.page ==i ? 'btn-active' : '' }">${i }</a>
+		</c:forEach>
+		</div>
+	</div>
 	<style type="text/css">	
 	a:hover {
 		text-decoration: underline;
