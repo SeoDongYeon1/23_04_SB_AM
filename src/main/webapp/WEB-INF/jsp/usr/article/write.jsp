@@ -32,13 +32,13 @@
 				<div style="font-size: 17px; font-weight: bold; ">
 					제목
 					<br />
-					<input class="title input input-bordered w-full max-w-xs" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px;" type="text" value="${article.title }" name="title"/>
+					<input class="title input input-bordered w-full max-w-xs" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px;" type="text" name="title"/>
 				</div>
 				<br />
 				<div style="font-size: 17px; font-weight: bold;">
 					내용
 					<br />
-					<textarea class="body textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px; height: 300px;" name="body">${article.body }</textarea>
+					<textarea class="body textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px; height: 300px;" name="body"></textarea>
 				</div>
 				<br />
 			</div>
