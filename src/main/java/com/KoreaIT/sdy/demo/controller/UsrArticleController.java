@@ -31,7 +31,12 @@ public class UsrArticleController {
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(int id, Model model) {
-		articleService.increaseHitCount(id);
+		
+		ResultData<Integer> increaseHitCountRd = articleService.increaseHitCount(id);
+		
+		if(increaseHitCountRd.isFail()) {
+			return rq.jsHistroyBackOnView(increaseHitCountRd.getMsg());
+		}
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 

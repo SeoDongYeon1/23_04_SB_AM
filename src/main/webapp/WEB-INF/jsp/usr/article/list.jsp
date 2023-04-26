@@ -40,8 +40,8 @@ int endPage = startPage+displayPage-1;
 
 	<div class="pagenation" style="text-align: center; margin-top:20px;">
 		<c:set var="baseUri" value="?boardId=${boardId }" />
-		<c:set var="baseUri" value="${baseUri }&searchKeywordTypeCode=${searchKeywordTypeCode}" />
-		<c:set var="baseUri" value="${baseUri }&searchKeyword=${searchKeyword}" />
+		<c:set var="baseUri" value="${baseUri }&searchKeywordTypeCode=${searchKeywordTypeCode }" />
+		<c:set var="baseUri" value="${baseUri }&searchKeyword=${searchKeyword }" />
 		<%
 		if(cur_Page > 10) {
 			%>
@@ -75,7 +75,7 @@ int endPage = startPage+displayPage-1;
 		%>
 	</div>
 	
-	<form action="">
+	<form method="post" action="list">
 		<input type="hidden" name="boardId" value="${param.boardId }" />
 		<div style="text-align: center; margin-top: 20px;">
 			<div style="display: inline-block; ">
