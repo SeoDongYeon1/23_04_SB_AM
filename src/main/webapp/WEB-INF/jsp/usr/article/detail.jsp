@@ -9,6 +9,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="Article Detail"/>
 <%@ include file="../common/head.jspf" %>
+<script>
+	const params = {}
+	params.id = parseInt('${param.id}');
+</script>
+
+<script>
+	function ArticleDetail__increaseHitCount() {
+		$.get('../article/doIncreaseHitCountRd', {
+			id : params.id,
+			ajaxMode : 'Y'
+		}, function(data) {
+			$('.article-detail__hit-count').empty().html(data.data1);
+		}, 'json');
+	}
+	$(function() {
+		// 실전코드
+		 	ArticleDetail__increaseHitCount();
+		// 연습코드
+		//setTimeout(ArticleDetail__increaseHitCount, 2000);
+	})
+</script>
+
 	<hr />
 	
 	<div class="mt-8 text-xl">
@@ -44,7 +66,7 @@
 			</tr>
 			<tr>
 				<th>조회수</th>
-				<th>${article.hitCount }</th>
+				<th><span class="article-detail__hit-count">${article.hitCount }</span></th>
 			</tr>
 		</table>
 	</div>
@@ -75,5 +97,4 @@
 		text-align: center;
 	}
 	</style>
-
 <%@ include file="../common/foot.jspf" %>

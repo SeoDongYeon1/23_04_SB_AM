@@ -112,5 +112,4 @@ int endPage = startPage+displayPage-1;
 		width: 700px;
 	}
 	</style>
-	
 <%@ include file="../common/foot.jspf" %>

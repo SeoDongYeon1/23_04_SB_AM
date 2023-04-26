@@ -10,6 +10,7 @@
 	
 	if(historyBack) {
 		history.back();
+		location.reload();
 	}
 	
 	var replaceUri = '${replaceUri}'.trim();

@@ -105,10 +105,14 @@ public class ArticleService {
 		int affectedRow = articleRepository.increaseHitCount(id);
 		
 		if(affectedRow == 0) {
-			return ResultData.from("F-1", "해당 게시물은 없음", "affectedRowRd", affectedRow);
+			return ResultData.from("F-1", "해당 게시물은 없습니다.", "affectedRowRd", affectedRow);
 		}
 		
 		return ResultData.from("S-1", "조회수 증가", "affectedRowRd", affectedRow);
+	}
+
+	public int getArticleHitCount(int id) {
+		return articleRepository.getArticleHitCount(id);
 	}
 
 }
