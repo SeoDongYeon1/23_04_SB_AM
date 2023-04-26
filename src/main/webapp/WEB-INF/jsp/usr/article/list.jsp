@@ -74,27 +74,25 @@ int endPage = startPage+displayPage-1;
 		}
 		%>
 	</div>
-	
 	<form action="">
 		<input type="hidden" name="boardId" value="${param.boardId }" />
 		<div style="text-align: center; margin-top: 20px;">
 			<div style="display: inline-block; ">
-			<select data-value="${searchKeywordTypeCode }" style="border-color: black;" name="searchKeywordTypeCode" class="select select-ghost" >
-				<option disabled selected>검색 설정</option>
-				<option value="title">제목</option>
-				<option value="body">내용</option>
-				<option value="title,body">제목+내용</option>
-			</select>
+				<select data-value="${param.searchKeywordTypeCode }" name="searchKeywordTypeCode" class="select select-ghost">
+					<option disabled selected>검색 설정</option>
+					<option value="title">제목</option>
+					<option value="body">내용</option>
+					<option value="title,body">제목+내용</option>
+				</select>
 			</div>
-		<div style="display: inline-block; ">	
-				<div style="font-size: 17px; font-weight: bold; ">
-					<input name="searchKeyword" value="${param.searchKeyword }" class="input input-bordered" type="text" placeholder="검색어를 입력해주세요." maxlength="20" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 300px;"/>
-				</div>
-		</div>		
-		<div style="border-radius: 8px; display: inline-block;">
-				<button class="btn btn-outline" style="padding: 0 20px; " type="submit">검색</button>
+		<div style="display: inline-block;">
+			<div style="font-size: 17px; font-weight: bold; ">
+				<input value="${param.searchKeyword }" maxlength="20" name="searchKeyword" class="input input-bordered" type="text" placeholder="검색어를 입력해주세요" />
+			</div>
 		</div>
-		
+		<div style="border-radius: 8px; display: inline-block;">	
+			<button class="btn btn-ghost" type=submit>검색</button>
+		</div>
 		</div>
 	</form>
 	

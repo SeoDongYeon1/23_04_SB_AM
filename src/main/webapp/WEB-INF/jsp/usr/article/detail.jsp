@@ -81,7 +81,7 @@
 		
 		<!-- ver2 -->
 		<%if(loginedMemberId==article.getMemberId()) {%>
-			<a class= "btn btn-outline" href="modify?id=${article.id }">수정</a>
+			<xred><a class= "" href="modify?id=${article.id }">수정</a></xred>
 		<%}%>
 	</div>
 	
@@ -92,6 +92,8 @@
 		margin-right: auto;
 		width: 500px;
 	}
+	xred{color:red;border:1px solid black;border-radius:5px;background-color:yellow;padding:11px;}
+	xred:hover{background-color:gray;cusor:pointer;text-decoration:underline;color:blue;text-shadow:1px 1px 1px #ffffff;}
 	
 	.btns {
 		text-align: center;
