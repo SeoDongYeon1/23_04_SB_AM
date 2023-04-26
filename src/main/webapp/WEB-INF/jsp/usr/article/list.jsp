@@ -37,37 +37,37 @@ int endPage = startPage+displayPage-1;
 	</div>
 
 	<div class="pagenation" style="text-align: center; margin-top:20px;">
+		<c:set var="baseUri" value="?boardId=${boardId }" />
+		<c:set var="baseUri" value="${baseUri }&searchKeywordTypeCode=${searchKeywordTypeCode}" />
+		<c:set var="baseUri" value="${baseUri }&searchKeyword=${searchKeyword}" />
 		<%
 		if(cur_Page > 10) {
 			%>
-			<a class = "btn btn-outline first_page" href="list?boardId=${boardId }&page=1">◀◀</a>	
+			<a class = "btn btn-outline first_page" href="${baseUri }&page=1">◀◀</a>	
 			<%
 		}
-		if(endPage > totalPage)
-		{
+		if(endPage > totalPage)	{
 			endPage = totalPage;
 		}
 							
-	    if(startPage > displayPage)
-	    { 
+	    if(startPage > displayPage) { 
 		%>
-			<a class="btn btn-outline" href="list?boardId=${boardId }&page=<%=startPage - 10%>">이전</a>
+			<a class="btn btn-outline" href="${baseUri }&page=<%=startPage - 10%>">이전</a>
 		<%
 		}
 	    
 		for(int i=startPage; i <= endPage; i++){%>
-				<a class= "btn btn-outline <%=cur_Page == i ? "btn-active" : "" %>" href="list?boardId=${boardId }&page=<%=i%>"><%=i %></a>
+				<a class= "btn btn-outline <%=cur_Page == i ? "btn-active" : "" %>" href="${baseUri }&page=<%=i%>"><%=i %></a>
 		<%}
 		
-		if(endPage < totalPage)
-		{
+		if(endPage < totalPage)	{
 		%>
-			<a class="btn btn-outline" href="list?boardId=${boardId }&page=<%=startPage + 10 %>">다음</a>
+			<a class="btn btn-outline" href="${baseUri }&page=<%=startPage + 10 %>">다음</a>
 		<%
 		}
 		if(cur_Page < totalPage) {
 			%>
-			<a class = "last_page btn btn-outline" href="list?boardId=${boardId }&page=<%=totalPage%>">▶▶</a>	
+			<a class = "last_page btn btn-outline" href="${baseUri }&page=<%=totalPage%>">▶▶</a>	
 			<%
 		}
 		%>
@@ -85,7 +85,7 @@ int endPage = startPage+displayPage-1;
 		<div style="display: inline-block; ">	
 		<input type="hidden" name="search_option"/>
 				<div style="font-size: 17px; font-weight: bold; ">
-					<input class="search input input-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 300px;" type="text" value="${article.title }" name="title"/>
+					<input class="search input input-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 300px;" type="text" value="${article.title }" name="searchKeyword"/>
 				</div>
 		</div>		
 		<div style="border-radius: 8px; display: inline-block;">

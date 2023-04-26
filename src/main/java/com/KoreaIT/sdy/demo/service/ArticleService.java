@@ -86,11 +86,11 @@ public class ArticleService {
 		return ResultData.from("S-1", "수정 가능");
 	}
 	
-	public List<Article> getForPrintArticles(int boardId, int page) {
+	public List<Article> getForPrintArticles(int boardId, String searchKeywordTypeCode, String searchKeyword, int page) {
 		int itemsInAPage = getItemsInAPage();
 		int limitFrom = (page - 1) * itemsInAPage;
 		
-		return articleRepository.getForPrintArticles(boardId, limitFrom, itemsInAPage);
+		return articleRepository.getForPrintArticles(boardId, limitFrom, itemsInAPage, searchKeywordTypeCode, searchKeyword);
 	}
 
 	public int articlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
