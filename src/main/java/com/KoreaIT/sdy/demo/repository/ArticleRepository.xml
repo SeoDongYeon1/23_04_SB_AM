@@ -15,28 +15,40 @@
 	</insert>
 
 	<select id="getForPrintArticles" resultType="Article">
-		SELECT a.*, m.name AS 'extra__writer', b.name AS 'board_name'
-		FROM article a
-		INNER JOIN board b
-		ON a.boardId = b.id
-		INNER JOIN `member` m
-		ON a.memberId = m.id
-		WHERE 1
-		<if test = "boardId != 0">
-			AND a.boardId = #{boardId}
-		</if>
-		ORDER BY a.id DESC
-		<if test = "limitFrom >= 0">
-			LIMIT #{limitFrom}, #{itemsInAPage};
-		</if>
-		
+	  SELECT a.*, m.name AS 'extra__writer', b.name AS 'board_name'
+	  FROM article a
+	  INNER JOIN board b ON a.boardId = b.id
+	  INNER JOIN `member` m ON a.memberId = m.id
+	  WHERE 1
+	    <if test = "boardId != 0">
+	      AND a.boardId = #{boardId}
+	    </if>
+	    ORDER BY a.id DESC
+	    <if test = "limitFrom >= 0">
+	      LIMIT #{limitFrom}, #{itemsInAPage};
+	    </if>
 	</select>
+	
 	<select id="articlesCount" resultType="int">
 		SELECT COUNT(*) AS cnt
 		FROM article AS A
 		WHERE 1
 		<if test="boardId != 0">
 			AND A.boardId = #{boardId}
+		</if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode =='title'">
+					AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<when test="searchKeywordTypeCode =='body'">
+					AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<otherwise>
+					AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+					OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+				</otherwise>
+			</choose>
 		</if>
 	</select>
 

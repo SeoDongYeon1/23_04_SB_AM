@@ -93,17 +93,8 @@ public class ArticleService {
 		return articleRepository.getForPrintArticles(boardId, limitFrom, itemsInAPage);
 	}
 
-	public int articlesCount(int boardId) {
-		return articleRepository.articlesCount(boardId);
-	}
-
-	public int getTotalPage(int boardId) {
-		int itemsInAPage = getItemsInAPage();
-
-		int totalCnt = articlesCount(boardId);
-		int totalPage = (int) Math.ceil((double) totalCnt / itemsInAPage);
-		
-		return totalPage;
+	public int articlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
+		return articleRepository.articlesCount(boardId, searchKeywordTypeCode, searchKeyword);
 	}
 	
 	public int getItemsInAPage() {
