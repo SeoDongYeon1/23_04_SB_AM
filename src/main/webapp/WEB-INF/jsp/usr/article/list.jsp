@@ -23,6 +23,7 @@ int endPage = startPage+displayPage-1;
 				<th>제목</th>
 				<th>작성날짜</th>
 				<th>작성자</th>
+				<th>조회수</th>
 			</tr>
 		<c:forEach var="article" items="${articles }">
 			<tr>
@@ -30,6 +31,7 @@ int endPage = startPage+displayPage-1;
 				<th><a href="detail?id=${article.id }">${article.title }</a></th>
 				<th>${article.regDate.substring(0,10) }</th>
 				<th>${article.extra__writer }</th>
+				<th>${article.hitCount }</th>
 			</tr>
 
 		</c:forEach>

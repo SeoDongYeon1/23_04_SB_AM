@@ -42,6 +42,10 @@
 				<th>작성자</th>
 				<th>${article.extra__writer }</th>
 			</tr>
+			<tr>
+				<th>조회수</th>
+				<th>${article.hitCount }</th>
+			</tr>
 		</table>
 	</div>
 	<br />

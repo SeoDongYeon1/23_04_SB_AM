@@ -31,12 +31,13 @@ public class UsrArticleController {
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(int id, Model model) {
+		articleService.increaseHitCount(id);
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
-
+		
 		return "usr/article/detail";
 	}
 

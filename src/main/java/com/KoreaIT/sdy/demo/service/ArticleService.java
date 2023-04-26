@@ -101,4 +101,8 @@ public class ArticleService {
 		return 10;
 	}
 
+	public void increaseHitCount(int id) {
+		articleRepository.increaseHitCount(id);
+	}
+
 }
