@@ -42,9 +42,9 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doIncreaseHitCountRd")
 	@ResponseBody
-	public ResultData doIncreaseHitCountRd(int id) {
+	public ResultData<?> doIncreaseHitCountRd(int id) {
 
-		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+		ResultData<?> increaseHitCountRd = articleService.increaseHitCount(id);
 
 		if (increaseHitCountRd.isFail()) {
 			return increaseHitCountRd;
@@ -61,24 +61,25 @@ public class UsrArticleController {
 		Board board = boardService.getBoardById(boardId);
 
 		if (board == null) {
-			return rq.jsHistroyBackOnView("존재하지 않는 게시판입니다.");
+			return rq.jsHistroyBackOnView("없는 게시판이야");
 		}
-		int itemsInAPage = 10;
 
 		int articlesCount = articleService.articlesCount(boardId, searchKeywordTypeCode, searchKeyword);
-		
+
+		int itemsInAPage = 10;
+
 		int totalPage = (int) Math.ceil(articlesCount / (double) itemsInAPage);
-		
-		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordTypeCode, searchKeyword, page);
+
+		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page, searchKeywordTypeCode, searchKeyword);
 
 		model.addAttribute("searchKeywordTypeCode", searchKeywordTypeCode);
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("board", board);
 		model.addAttribute("boardId", boardId);
-		model.addAttribute("articles", articles);
-		model.addAttribute("articlesCount", articlesCount);
-		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("page", page);
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("articlesCount", articlesCount);
+		model.addAttribute("articles", articles);
 
 		return "usr/article/list";
 	}

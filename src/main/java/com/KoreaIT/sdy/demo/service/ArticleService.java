@@ -12,6 +12,7 @@ import com.KoreaIT.sdy.demo.vo.ResultData;
 
 @Service
 public class ArticleService {
+	
 	@Autowired
 	private ArticleRepository articleRepository;
 	
@@ -86,21 +87,16 @@ public class ArticleService {
 		return ResultData.from("S-1", "수정 가능");
 	}
 	
-	public List<Article> getForPrintArticles(int boardId, String searchKeywordTypeCode, String searchKeyword, int page) {
-		int itemsInAPage = getItemsInAPage();
+	public List<Article> getForPrintArticles(int boardId, int itemsInAPage, int page, String searchKeywordTypeCode, String searchKeyword) {
 		int limitFrom = (page - 1) * itemsInAPage;
 		
-		return articleRepository.getForPrintArticles(boardId, limitFrom, itemsInAPage, searchKeywordTypeCode, searchKeyword);
+		return articleRepository.getForPrintArticles(boardId, searchKeywordTypeCode, searchKeyword, limitFrom, itemsInAPage);
 	}
 
 	public int articlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
 		return articleRepository.articlesCount(boardId, searchKeywordTypeCode, searchKeyword);
 	}
 	
-	public int getItemsInAPage() {
-		return 10;
-	}
-
 	public ResultData<Integer> increaseHitCount(int id) {
 		int affectedRow = articleRepository.increaseHitCount(id);
 		
