@@ -18,8 +18,12 @@ public class Article {
 	private int boardId;
 	private int hitCount;
 	
-	private String board_name;
+	private int extra__sumReactionPoint;
+	private int extra__goodReactionPoint;
+	private int extra__badReactionPoint;
+	
 	private String extra__writer;
+	private String board_name;
 	
 	private boolean actorCanDelete;
 	
