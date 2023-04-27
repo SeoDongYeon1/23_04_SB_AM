@@ -17,8 +17,8 @@ public class ReactionService {
 		this.reactionRepository = reactionRepository;
 	}
 
-	public ResultData<?> like_Point(int id, int memberId) {
-		int affectedRow = reactionRepository.like_Point(id, memberId);
+	public ResultData<Integer> GoodPoint(int id, int memberId) {
+		int affectedRow = reactionRepository.GoodPoint(id, memberId);
 		
 		if(affectedRow == 0) {
 			return ResultData.from("F-1", "해당 게시물은 없습니다.", "affectedRowRd", affectedRow);

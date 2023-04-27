@@ -17,19 +17,19 @@ public class UsrReactionController {
 	@Autowired
 	private Rq rq;
 	
-	@RequestMapping("/usr/reaction/doLike_Point")
+	@RequestMapping("/usr/reaction/doGoodPoint")
 	@ResponseBody
-	public ResultData<?> doLike_Point(int id, int memberId) {
+	public ResultData<Integer> doGoodPoint(int id, int memberId) {
 
-		ResultData<?> Like_PointRd = reactionService.like_Point(id, memberId);
+		ResultData<Integer> GoodPointRd = reactionService.GoodPoint(id, memberId);
 
-		if (Like_PointRd.isFail()) {
-			return Like_PointRd;
+		if (GoodPointRd.isFail()) {
+			return GoodPointRd;
 		}
 		
 		int likeCount = reactionService.getArticleLikeCount(id);
 
-		ResultData<?> rd = ResultData.newData(Like_PointRd, "likeCount", likeCount);
+		ResultData<Integer> rd = ResultData.from(GoodPointRd.getResultCode(), GoodPointRd.getMsg(), "likeCount", likeCount);
 		
 		return rd;
 	}

@@ -40,9 +40,9 @@
 	})
 	
 	
-	function doLike(articleId, memberId) {
+	function ArticleDetail__doGoodPoint(articleId, memberId) {
     $.ajax({
-        url: "/usr/reaction/doLike_Point",
+        url: "/usr/reaction/doGoodPoint",
         type: "POST",
         data: {
             id: articleId,
@@ -51,9 +51,9 @@
         dataType: "json",
         success: function(response) {
             // 응답 처리 코드
-            if (response.resultCode === "S-1") {
+            if (response.resultCode == "S-1") {
                 const likeCountElement = $("#likeCount_" + articleId);
-                const newLikeCount = response.data1.likeCount;
+                const newLikeCount = response.data1;
                 likeCountElement.text(newLikeCount);
             }
         },
@@ -109,10 +109,6 @@
 				<th><span class="article-detail__hit-count">${article.hitCount }</span></th>
 			</tr>
 			<tr>
-				<th>좋아요</th>
-				<th>${article.extra__goodReactionPoint }</th>
-			</tr>
-			<tr>
 				<th>싫어요</th>
 				<th>${article.extra__badReactionPoint }</th>
 			</tr>
@@ -125,7 +121,7 @@
 	<br />
 	<div class="btns">
 		<button class= "btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
-		<a href="#" class="btn btn-outline" type="button" onclick="doLike(${article.id}, ${loginedMemberId})">👍 <span id="likeCount_${article.id}">${article.extra__goodReactionPoint}</span></a>
+		<a href="#" class="btn btn-outline" type="button" onclick="ArticleDetail__doGoodPoint(${article.id}, ${loginedMemberId})">👍 <span id="likeCount_${article.id}">${article.extra__goodReactionPoint}</span></a>
 		<button class= "btn btn-outline" type="button" onclick="like_point()">👎</button>
 		
 		<!-- ver1 -->
