@@ -12,6 +12,7 @@
 <script>
 	const params = {}
 	params.id = parseInt('${param.id}');
+	params.memberId = parseInt('${loginedMemberId}');
 </script>
 
 <script>
@@ -37,6 +38,33 @@
 		// 연습코드
 		//setTimeout(ArticleDetail__increaseHitCount, 2000);
 	})
+	
+	
+	function doLike(articleId, memberId) {
+    $.ajax({
+        url: "/usr/reaction/doLike_Point",
+        type: "POST",
+        data: {
+            id: articleId,
+            memberId: memberId
+        },
+        dataType: "json",
+        success: function(response) {
+            // 응답 처리 코드
+            if (response.resultCode === "S-1") {
+                const likeCountElement = $("#likeCount_" + articleId);
+                const newLikeCount = response.data1.likeCount;
+                likeCountElement.text(newLikeCount);
+            }
+        },
+        error: function(xhr, status, error) {
+            // 오류 처리 코드
+        }
+    });
+}
+
+
+	
 </script>
 
 	<hr />
@@ -97,7 +125,8 @@
 	<br />
 	<div class="btns">
 		<button class= "btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
-		<button class= "btn btn-outline" type="button" onclick="like_point()">👍</button>
+		<a href="#" class="btn btn-outline" type="button" onclick="doLike(${article.id}, ${loginedMemberId})">👍 <span id="likeCount_${article.id}">${article.extra__goodReactionPoint}</span></a>
+		<button class= "btn btn-outline" type="button" onclick="like_point()">👎</button>
 		
 		<!-- ver1 -->
 		<c:if test="${article.actorCanDelete }">
