@@ -91,7 +91,7 @@ int endPage = startPage+displayPage-1;
 			</div>
 		</div>
 		<div style="border-radius: 8px; display: inline-block;">	
-			<button class="btn btn-ghost" type=submit>검색</button>
+			<button class="btn btn-ghost" onclick="Search() return false;" type = "submit">검색</button>
 		</div>
 		</div>
 	</form>

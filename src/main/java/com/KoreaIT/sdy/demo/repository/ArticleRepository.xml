@@ -74,10 +74,12 @@
 		
 	</select>
 	<select id="getForPrintArticle" resultType="Article">
-		SELECT a.*, m.name AS 'extra__writer'
+		SELECT a.*, m.name AS 'extra__writer', b.name AS 'board_name'
 		FROM article a
 		INNER JOIN `member` m
 		ON a.memberId = m.id
+		INNER JOIN board b
+		ON a.boardId = b.id
 		WHERE a.id = #{id}
 	</select>
 

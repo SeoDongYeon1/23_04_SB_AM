@@ -36,6 +36,10 @@
 	<div class="mt-8 text-xl">
 		<table class="table-box-type-1 table table-zebra w-full">
 			<tr>
+				<th>게시판</th>
+				<th>${article.board_name }</th>
+			</tr>
+			<tr>
 				<th>번호</th>
 				<th>${article.id }</th>
 			</tr>
@@ -81,7 +85,7 @@
 		
 		<!-- ver2 -->
 		<%if(loginedMemberId==article.getMemberId()) {%>
-			<xred><a class= "" href="modify?id=${article.id }">수정</a></xred>
+			<a class= "btn btn-outline" href="modify?id=${article.id }">수정</a>
 		<%}%>
 	</div>
 	
@@ -92,8 +96,6 @@
 		margin-right: auto;
 		width: 500px;
 	}
-	xred{color:red;border:1px solid black;border-radius:5px;background-color:yellow;padding:11px;}
-	xred:hover{background-color:gray;cusor:pointer;text-decoration:underline;color:blue;text-shadow:1px 1px 1px #ffffff;}
 	
 	.btns {
 		text-align: center;

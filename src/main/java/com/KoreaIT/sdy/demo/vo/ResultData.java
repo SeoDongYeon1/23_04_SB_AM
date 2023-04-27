@@ -9,9 +9,13 @@ public class ResultData<DT> {
 	@Getter
 	private String msg;
 	@Getter
+	private DT data1;
+	@Getter
 	private String data1Name;
 	@Getter
-	private DT data1;
+	private Object data2;
+	@Getter
+	private String data2Name;
 	
 	public static <DT> ResultData<DT> from(String resultCode, String msg) {
 		return from(resultCode, msg, null, null);
@@ -41,6 +45,11 @@ public class ResultData<DT> {
 
 	public static <DT>  ResultData<DT> newData(ResultData<?> Rd, String data1Name, DT newData) {
 		return from(Rd.getResultCode(), Rd.getMsg(), data1Name, newData);
+	}
+
+	public void setData2(String data2Name, Object data2) {
+		this.data2Name = data2Name;
+		this.data2 = data2;
 	}
 
 }

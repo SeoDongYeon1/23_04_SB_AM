@@ -125,6 +125,8 @@ UPDATE article
 SET boardId = 2
 WHERE id = 3;
 
+ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL;
+
 ####################################################################
 
 # 게시물 갯수 늘리기
@@ -148,15 +150,27 @@ SELECT LAST_INSERT_ID();
 
 SELECT a.*, m.name AS 'extra__wrtier'
 FROM article a
-INNER JOIN `member` m
-ON a.memberId = m.id
+inner join `member` m
+on a.memberId = m.id
 ORDER BY a.id DESC;
 
+select a.*, m.name AS 'extra__wrtier', b.name as 'board_name'
+from article a
+inner join board b
+on a.boardId = b.id
+inner join `member` m
+on a.memberId = m.id
+order By a.id desc
+limit 3, 10;
+
+# 게시판별 제목으로 검색하는 쿼리
 SELECT a.*, m.name AS 'extra__wrtier', b.name AS 'board_name'
 FROM article a
 INNER JOIN board b
 ON a.boardId = b.id
 INNER JOIN `member` m
 ON a.memberId = m.id
-ORDER BY a.id DESC;
+where b.id = 1 and a.title like "%녕%"
+ORDER BY a.id DESC
+limit 1, 10;
 
