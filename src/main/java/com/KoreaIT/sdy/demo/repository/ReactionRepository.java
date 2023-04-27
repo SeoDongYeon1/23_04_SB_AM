@@ -8,5 +8,7 @@ public interface ReactionRepository {
 	public int GoodPoint(int id, int memberId);
 
 	public int getArticleLikeCount(int id);
-	
+
+	public Integer checkMember(int id, int memberId);
+
 }

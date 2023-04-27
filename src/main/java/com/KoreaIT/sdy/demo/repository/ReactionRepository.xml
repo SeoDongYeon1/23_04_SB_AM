@@ -20,4 +20,15 @@
 		WHERE relId = #{id}
 	</select>
 	
+	<select id="checkMember" resultType="int">
+		SELECT IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
+		IFNULL(SUM(IF(R.`point` &gt; 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
+		IFNULL(SUM(IF(R.`point` &lt; 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
+		FROM reactionPoint r
+		WHERE memberId = #{memberId} AND relTypeCode = 'article' AND relId = #{id}
+		AND memberId IS NOT NULL AND relId IS NOT NULL
+		GROUP BY relId;
+	</select>
+	
+	
 </mapper>

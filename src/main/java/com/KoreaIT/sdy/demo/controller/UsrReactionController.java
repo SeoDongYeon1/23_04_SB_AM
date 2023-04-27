@@ -19,18 +19,23 @@ public class UsrReactionController {
 	
 	@RequestMapping("/usr/reaction/doGoodPoint")
 	@ResponseBody
-	public ResultData<Integer> doGoodPoint(int id, int memberId) {
+	public ResultData<?> doGoodPoint(int id, int memberId) {
+		
+		ResultData<Boolean> checkMemberRd =  reactionService.checkMember(id, memberId);
+		
+		if(checkMemberRd.isFail()) {
+			return checkMemberRd;
+		}
 
 		ResultData<Integer> GoodPointRd = reactionService.GoodPoint(id, memberId);
-
+			
 		if (GoodPointRd.isFail()) {
 			return GoodPointRd;
 		}
-		
+			
 		int likeCount = reactionService.getArticleLikeCount(id);
-
+			
 		ResultData<Integer> rd = ResultData.from(GoodPointRd.getResultCode(), GoodPointRd.getMsg(), "likeCount", likeCount);
-		
 		return rd;
 	}
 

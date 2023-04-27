@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.sdy.demo.repository.ReactionRepository;
+import com.KoreaIT.sdy.demo.vo.Article;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 
 @Service
@@ -31,6 +32,20 @@ public class ReactionService {
 		return reactionRepository.getArticleLikeCount(id);
 	}
 
-	// 서비스 메서드
+	public ResultData<Boolean> checkMember(int id, int memberId) {
+		Integer GoodPoint = reactionRepository.checkMember(id, memberId);
+		
+		if(GoodPoint==null) {
+			GoodPoint = 0;
+		}
+		
+		if(GoodPoint==1) {
+			return ResultData.from("F-1", "이미 좋아요를 누른 상태입니다.");
+		}
+		else {
+			return ResultData.from("S-1", "좋아요 가능", "true", true);
+		}
+		
+	}
 
 }
