@@ -127,6 +127,63 @@ WHERE id = 3;
 
 ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL;
 
+# reactionPoint 테이블 생성
+CREATE TABLE reactionPoint(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
+    `point` INT(10) NOT NULL
+);
+
+# reactionPoint 테스트 데이터
+# 1번 회원이 1번 글에 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 1,
+`point` = -1;
+
+# 1번 회원이 2번 글에 좋아요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 2,
+`point` = 1;
+
+# 2번 회원이 1번 글에 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`point` = -1;
+
+# 2번 회원이 2번 글에 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 2,
+`point` = -1;
+
+# 3번 회원이 1번 글에 좋아요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`point` = 1;
+
 ####################################################################
 
 # 게시물 갯수 늘리기
@@ -145,23 +202,15 @@ DESC article;
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
+SELECT * FROM reactionPoint;
 
 SELECT LAST_INSERT_ID();
 
 SELECT a.*, m.name AS 'extra__wrtier'
 FROM article a
-inner join `member` m
-on a.memberId = m.id
+INNER JOIN `member` m
+ON a.memberId = m.id
 ORDER BY a.id DESC;
-
-select a.*, m.name AS 'extra__wrtier', b.name as 'board_name'
-from article a
-inner join board b
-on a.boardId = b.id
-inner join `member` m
-on a.memberId = m.id
-order By a.id desc
-limit 3, 10;
 
 # 게시판별 제목으로 검색하는 쿼리
 SELECT a.*, m.name AS 'extra__wrtier', b.name AS 'board_name'
@@ -170,7 +219,20 @@ INNER JOIN board b
 ON a.boardId = b.id
 INNER JOIN `member` m
 ON a.memberId = m.id
-where b.id = 1 and a.title like "%녕%"
+WHERE b.id = 1 AND a.title LIKE "%녕%"
 ORDER BY a.id DESC
-limit 1, 10;
+LIMIT 1, 10;
+
+SELECT A.*, M.name AS 'extra__wrtier',
+IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
+IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
+IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
+FROM article A
+INNER JOIN `member` M
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS R
+ON A.id = R.relId AND R.relTypeCode = 'article'
+GROUP BY A.id
+HAVING 1
+ORDER BY A.id DESC
 
