@@ -223,6 +223,25 @@ WHERE b.id = 1 AND a.title LIKE "%녕%"
 ORDER BY a.id DESC
 LIMIT 1, 10;
 
+# 서브쿼리 버전
+SELECT A.*, 
+IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+IFNULL(SUM(IF(RP.point > 0, RP.point, 0)),0) AS extra__goodReactionPoint,
+IFNULL(SUM(IF(RP.point < 0, RP.point, 0)),0) AS extra__badReactionPoint
+FROM (
+	SELECT A.*, M.nickname AS extra__writerName
+	FROM article AS A
+	LEFT JOIN `member` AS M
+	ON A.memberId= M.id 
+			) AS A
+LEFT JOIN reactionPoint AS RP
+ON RP.relTypeCode = 'article'
+AND A.id = RP.relId
+GROUP BY A.id
+ORDER BY id DESC;
+
+
+# join 버전
 SELECT A.*, M.name AS 'extra__wrtier',
 IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
 IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',

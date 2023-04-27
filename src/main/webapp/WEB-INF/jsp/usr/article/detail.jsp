@@ -80,11 +80,24 @@
 				<th>조회수</th>
 				<th><span class="article-detail__hit-count">${article.hitCount }</span></th>
 			</tr>
+			<tr>
+				<th>좋아요</th>
+				<th>${article.extra__goodReactionPoint }</th>
+			</tr>
+			<tr>
+				<th>싫어요</th>
+				<th>${article.extra__badReactionPoint }</th>
+			</tr>
+			<tr>
+				<th>총합</th>
+				<th>${article.extra__sumReactionPoint }</th>
+			</tr>
 		</table>
 	</div>
 	<br />
 	<div class="btns">
 		<button class= "btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
+		<button class= "btn btn-outline" type="button" onclick="like_point()">👍</button>
 		
 		<!-- ver1 -->
 		<c:if test="${article.actorCanDelete }">
