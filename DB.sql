@@ -30,6 +30,8 @@ CREATE TABLE `member`(
 
 # 게시물 작성시 작성자 정보 남기려고 article 테이블에 memberId 추가
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+ALTER TABLE article CONVERT TO CHARSET UTF8;
+ALTER TABLE `member` CONVERT TO CHARSET UTF8;
 
 # 게시물 테스트데이터 생성
 INSERT INTO article 
@@ -96,6 +98,7 @@ CREATE TABLE board(
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1= 삭제 후)',
     delDate DATETIME COMMENT '삭제 날짜'
 );
+ALTER TABLE board CONVERT TO CHARSET UTF8;
 
 INSERT INTO board 
 SET regDate = NOW(),
@@ -137,6 +140,7 @@ CREATE TABLE reactionPoint(
     relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
     `point` INT(10) NOT NULL
 );
+ALTER TABLE reactionPoint CONVERT TO CHARSET UTF8;
 
 # reactionPoint 테스트 데이터
 # 1번 회원이 1번 글에 싫어요
@@ -252,6 +256,38 @@ ON A.memberId = M.id
 LEFT JOIN reactionPoint AS R
 ON A.id = R.relId AND R.relTypeCode = 'article'
 GROUP BY A.id
-HAVING 1
 ORDER BY A.id DESC
 
+
+select a.id,
+IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
+IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
+IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
+from article a
+inner join reactionPoint R
+ON a.id = R.relId AND R.relTypeCode = 'article'
+where R.relId = 2 AND a.memberId = 2
+GROUP BY a.id;
+
+select a.*, m.name
+from article a
+inner join `member` m
+on a.memberId = m.id
+where a.id = 2 and m.id = 2;
+
+SELECT relId,
+IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
+IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
+IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
+FROM reactionPoint r
+WHERE memberId = 2 AND relTypeCode = 'article' AND relId = 2
+GROUP BY relId;
+
+SELECT 
+IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
+IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
+IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
+FROM reactionPoint r
+WHERE memberId = 2 AND relTypeCode = 'article' AND relId = 2
+AND memberId IS NOT NULL AND relId IS NOT NULL
+GROUP BY relId;
