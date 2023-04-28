@@ -1,5 +1,8 @@
 package com.KoreaIT.sdy.demo.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class Ut {
@@ -85,6 +88,16 @@ public class Ut {
 		req.setAttribute("historyBack", true);
 
 		return "usr/common/js";
+	}
+
+	public static String getEncodedCurrentUri(String currentUri) {
+		
+		try {
+			return URLEncoder.encode(currentUri, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return currentUri;
+		}
 	}
 
 }
