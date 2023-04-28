@@ -120,9 +120,10 @@
 	</div>
 	<br />
 	<div class="btns">
-		<button class= "btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
-		<a href="#" class="btn btn-outline" type="button" onclick="ArticleDetail__doGoodPoint(${article.id}, ${loginedMemberId})">👍 <span id="likeCount_${article.id}">${article.extra__goodReactionPoint}</span></a>
-		<button class= "btn btn-outline" type="button" onclick="like_point()">👎</button>
+		<c:if test="${actorCanMakeReaction }">
+			<a href="#" class="btn btn-outline" type="button" onclick="ArticleDetail__doGoodPoint(${article.id}, ${loginedMemberId})">👍 <span id="likeCount_${article.id}">${article.extra__goodReactionPoint}</span></a>
+			<button class= "btn btn-outline" type="button" onclick="like_point()">👎</button>
+		</c:if>
 		
 		<!-- ver1 -->
 		<c:if test="${article.actorCanDelete }">
@@ -133,6 +134,10 @@
 		<%if(loginedMemberId==article.getMemberId()) {%>
 			<a class= "btn btn-outline" href="modify?id=${article.id }">수정</a>
 		<%}%>
+		
+		<div>
+		<button style="margin-top: 20px;" class= "btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
+		</div>
 	</div>
 	
 	<!-- 커스텀 -->
