@@ -16,7 +16,7 @@ import com.KoreaIT.sdy.demo.util.Ut;
 import lombok.Getter;
 
 @Component
-@Scope(value = "request", proxyMode=ScopedProxyMode.TARGET_CLASS)
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Rq {
 	@Getter
 	private boolean isLogined;
@@ -36,7 +36,7 @@ public class Rq {
 		this.session = req.getSession();
 
 		boolean isLogined = false;
-		int loginedMemberId = -1;
+		int loginedMemberId = 0;
 		Member loginedMember = null;
 
 		if (session.getAttribute("loginedMemberId") != null) {
@@ -48,19 +48,14 @@ public class Rq {
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
 		this.loginedMember = loginedMember;
-		
+
 		this.req.setAttribute("rq", this);
+
 	}
 
-	public void printHistroyBackJs(String msg) throws IOException {
+	public void printHitoryBackJs(String msg) throws IOException {
 		resp.setContentType("text/html; charset=UTF-8");
-		
-		println("<script>");
-		if (!Ut.empty(msg)) {
-			println("alert('" + msg + "')");
-		}
-		println("history.back()");
-		println("</script>");
+		print(Ut.jsHitoryBack("F-B", msg));
 	}
 
 	public void print(String str) {
@@ -70,9 +65,9 @@ public class Rq {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void println(String str) {
-		print(str+"\n");
+		print(str + "\n");
 	}
 
 	public void login(Member member) {
@@ -82,15 +77,42 @@ public class Rq {
 	public void logout() {
 		session.removeAttribute("loginedMemberId");
 	}
-	
-	public String jsHistroyBackOnView(String msg) {
+
+	public String jsHitoryBackOnView(String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
-		
 		return "usr/common/js";
+
 	}
 
-	public void initOnBeforeActionInterceptor() {
-		
+	public String jsHitoryBack(String resultCode, String msg) {
+		return Ut.jsHitoryBack(resultCode, msg);
 	}
+
+	public String jsReplace(String msg, String uri) {
+		return Ut.jsReplace(msg, uri);
+	}
+
+	public String getCurrentUri() {
+		String currentUri = req.getRequestURI();
+		String queryString = req.getQueryString();
+		
+		System.out.println(currentUri);
+		System.out.println(queryString);
+		
+		if (queryString != null && queryString.length() > 0) {
+			currentUri += "?" + queryString;
+		}
+
+		System.out.println(currentUri);
+		return currentUri;
+
+	}
+
+	// Rq 객체 생성 유도
+	// 삭제 x, BeforeActionInterceptor 에서 강제 호출
+	public void initOnBeforeActionInterceptor() {
+
+	}
+
 }

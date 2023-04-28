@@ -67,25 +67,25 @@ public class UsrMemberController {
 	public String doLogin(String loginId, String loginPw) {
 		
 		if (rq.isLogined()) {
-			return Ut.jsHistroyBack("F-A", "이미 로그인 상태입니다.");
+			return rq.jsHitoryBack("F-A", "이미 로그인 상태입니다.");
 		}
 
 		if (Ut.empty(loginId)) {
-			return Ut.jsHistroyBack("F-1", "아이디를 입력해주세요");
+			return rq.jsHitoryBack("F-1", "아이디를 입력해주세요");
 		}
 		
 		if (Ut.empty(loginPw)) {
-			return Ut.jsHistroyBack("F-2", "비밀번호를 입력해주세요");
+			return rq.jsHitoryBack("F-2", "비밀번호를 입력해주세요");
 		}
 
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member == null) {
-			return Ut.jsHistroyBack("F-3", "아이디 또는 비밀번호를 확인해주세요.");
+			return rq.jsHitoryBack("F-3", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 
 		if (member.getLoginPw().equals(loginPw) == false) {
-			return Ut.jsHistroyBack("F-4", "아이디 또는 비밀번호를 확인해주세요.");
+			return rq.jsHitoryBack("F-4", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 		
 		rq.login(member);
@@ -97,7 +97,7 @@ public class UsrMemberController {
 	public String doLogout() {
 		
 		if (rq.isLogined() == false) {
-			return Ut.jsHistroyBack("F-A", "로그인 후 이용해주세요.");
+			return rq.jsHitoryBack("F-A", "로그인 후 이용해주세요.");
 		}
 		
 		rq.logout();

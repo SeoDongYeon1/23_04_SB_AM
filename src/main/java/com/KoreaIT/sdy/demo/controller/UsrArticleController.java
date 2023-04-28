@@ -73,7 +73,7 @@ public class UsrArticleController {
 		Board board = boardService.getBoardById(boardId);
 
 		if (board == null) {
-			return rq.jsHistroyBackOnView("없는 게시판이야");
+			return rq.jsHitoryBackOnView("없는 게시판이야");
 		}
 
 		int articlesCount = articleService.articlesCount(boardId, searchKeywordTypeCode, searchKeyword);
@@ -107,10 +107,10 @@ public class UsrArticleController {
 	public String doWrite(String title, String body, int boardId, String replaceUri) {
 
 		if (Ut.empty(title)) {
-			return Ut.jsHistroyBack("F-1", "제목을 입력해주세요.");
+			return rq.jsHitoryBack("F-1", "제목을 입력해주세요.");
 		}
 		if (Ut.empty(body)) {
-			return Ut.jsHistroyBack("F-2", "내용을 입력해주세요.");
+			return rq.jsHitoryBack("F-2", "내용을 입력해주세요.");
 		}
 
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
@@ -131,10 +131,10 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {
-			return Ut.jsHistroyBack("F-E", "게시글이 존재하지 않습니다.");
+			return Ut.jsHitoryBack("F-E", "게시글이 존재하지 않습니다.");
 		}
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
-			return Ut.jsHistroyBack("F-1", Ut.f("%d번 글에 대한 권한이 없습니다", id));
+			return Ut.jsHitoryBack("F-1", Ut.f("%d번 글에 대한 권한이 없습니다", id));
 		}
 
 		articleService.deleteArticle(id);
@@ -149,13 +149,13 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {
-			return rq.jsHistroyBackOnView(Ut.f("%d번 게시글은 존재하지 않습니다.", id));
+			return rq.jsHitoryBackOnView(Ut.f("%d번 게시글은 존재하지 않습니다.", id));
 		}
 
 		ResultData<String> actorCanModifyRd = articleService.actorCanModifyRd(rq.getLoginedMemberId(), article);
 
 		if (actorCanModifyRd.isFail()) {
-			return rq.jsHistroyBackOnView(actorCanModifyRd.getMsg());
+			return rq.jsHitoryBackOnView(actorCanModifyRd.getMsg());
 		}
 
 		model.addAttribute("article", article);
@@ -170,17 +170,17 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(id);
 
 		if (article == null) {
-			return Ut.jsHistroyBack("F-E", Ut.f("%d번 게시글은 존재하지 않습니다.", id));
+			return Ut.jsHitoryBack("F-E", Ut.f("%d번 게시글은 존재하지 않습니다.", id));
 		}
 
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
-			return Ut.jsHistroyBack("F-1", Ut.f("%d번 글에 대한 권한이 없습니다", id));
+			return Ut.jsHitoryBack("F-1", Ut.f("%d번 글에 대한 권한이 없습니다", id));
 		}
 
 		ResultData<String> actorCanModifyRd = articleService.actorCanModifyRd(rq.getLoginedMemberId(), article);
 
 		if (actorCanModifyRd.isFail()) {
-			return Ut.jsHistroyBack(actorCanModifyRd.getResultCode(), actorCanModifyRd.getMsg());
+			return Ut.jsHitoryBack(actorCanModifyRd.getResultCode(), actorCanModifyRd.getMsg());
 		}
 
 		article = articleService.getForPrintArticle(id);

@@ -4,38 +4,32 @@
 <mapper
 	namespace="com.KoreaIT.sdy.demo.repository.ReactionPointRepository">
 
-	<insert id="GoodPoint">
+	<insert id="addGoodReactionPoint">
 		INSERT INTO reactionPoint
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		memberId = #{memberId},
-		relTypeCode = 'article',
-		relId = #{id},
+		memberId = #{actorId},
+		relTypeCode = #{relTypeCode},
+		relId = #{relId},
 		`point` = 1;
 	</insert>
 	
-	<select id="getArticleLikeCount" resultType="int">
-		SELECT SUM(IF(`point` &gt; 0, `point`, 0))
-		FROM reactionPoint
-		WHERE relId = #{id}
-	</select>
-	
-	<select id="checkMember" resultType="int">
-		SELECT IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
-		IFNULL(SUM(IF(R.`point` &gt; 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
-		IFNULL(SUM(IF(R.`point` &lt; 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
-		FROM reactionPoint r
-		WHERE memberId = #{memberId} AND relTypeCode = 'article' AND relId = #{id}
-		AND memberId IS NOT NULL AND relId IS NOT NULL
-		GROUP BY relId;
-	</select>
+	<insert id="addBadReactionPoint">
+		INSERT INTO reactionPoint
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId = #{actorId},
+		relTypeCode = #{relTypeCode},
+		relId = #{relId},
+		`point` = -1;
+	</insert>
 	
 	<select id="getSumReactionPointByMemberId" resultType="int">
-		SELECT IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
-		IFNULL(SUM(IF(R.`point` &gt; 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
-		IFNULL(SUM(IF(R.`point` &lt; 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
-		FROM reactionPoint AS R
-		WHERE memberId = #{actorId} AND relTypeCode = #{relTypeCode} AND relId = #{relId}
+		SELECT IFNULL(SUM(RP.point),0)
+		FROM reactionPoint AS RP
+		WHERE RP.relTypeCode = #{relTypeCode}
+		AND RP.relId = #{relId}
+		AND RP.memberId = #{actorId}
 	</select>
 	
 </mapper>

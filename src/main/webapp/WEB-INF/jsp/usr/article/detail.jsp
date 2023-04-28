@@ -42,7 +42,7 @@
 	
 	function ArticleDetail__doGoodPoint(articleId, memberId) {
     $.ajax({
-        url: "/usr/reaction/doGoodPoint",
+        url: "/usr/reactionPoint/doGoodReaction",
         type: "POST",
         data: {
             id: articleId,
@@ -117,11 +117,8 @@
 	</div>
 	<br />
 	<div class="btns">
-		<c:if test="${actorCanMakeReaction }">
-			<a href="#" class="btn btn-outline" type="button" onclick="ArticleDetail__doGoodPoint(${article.id}, ${loginedMemberId})">👍 <span id="likeCount_${article.id}">${article.goodReactionPoint}</span></a>
-			<button class= "btn btn-outline" type="button" onclick="like_point()">👎</button>
-		</c:if>
-		
+		<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri }" class="btn btn-outline" type="button">👍 <span id="likeCount_${article.id}">${article.goodReactionPoint}</span></a>
+		<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri }" class="btn btn-outline" type="button">👎 <span id="DisLikeCount_${article.id}">${article.badReactionPoint}</span></a>
 		<!-- ver1 -->
 		<c:if test="${article.actorCanDelete }">
 			<a class= "btn btn-outline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="doDelete?id=${article.id }">삭제</a>
