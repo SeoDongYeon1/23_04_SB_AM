@@ -58,14 +58,25 @@ public class ReactionPointService {
 	}
 
 	public ResultData deleteGoodReactionPoint(int actorId, String relTypeCode, int relId) {
-		reactionPointRepository.deleteGoodReactionPoint(actorId, relTypeCode, relId);
+		reactionPointRepository.deleteReactionPoint(actorId, relTypeCode, relId);
+		
+		switch (relTypeCode) {
+		case "article":
+			articleService.decreaseGoodReactionPoint(relId);
+			break;
+		}
+		return ResultData.from("S-1", "좋아요 취소 됨");
+	}
+
+	public ResultData deleteBadReactionPoint(int actorId, String relTypeCode, int relId) {
+		reactionPointRepository.deleteReactionPoint(actorId, relTypeCode, relId);
 		
 		switch (relTypeCode) {
 		case "article":
 			articleService.decreaseBadReactionPoint(relId);
 			break;
 		}
-		return ResultData.from("S-1", "좋아요 취소 됨");
+		return ResultData.from("S-1", "싫어요 취소 됨");
 	}
 
 }

@@ -14,7 +14,7 @@
 		`point` = 1;
 	</insert>
 	
-	<delete id="deleteGoodReactionPoint">
+	<delete id="deleteReactionPoint">
 		DELETE FROM reactionPoint
 		WHERE memberId = #{actorId} 
 		AND relTypeCode = #{relTypeCode}

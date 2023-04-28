@@ -39,10 +39,10 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		
-		ResultData actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
+		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
 		model.addAttribute("article", article);
-		model.addAttribute("actorCanMakeReaction", actorCanMakeReaction);
+		model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		
 		return "usr/article/detail";
