@@ -188,33 +188,78 @@ relTypeCode = 'article',
 relId = 1,
 `point` = 1;
 
-####################################################################
 
-# 게시물 갯수 늘리기
-INSERT INTO article
-(
-    regDate, updateDate, memberId, boardId, title, `body`
-)
-SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2)+1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
-FROM article;
+# 게시물 테이블에 추천 관련 컬럼 추가
+ALTER TABLE article ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL;
+ALTER TABLE article ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL;
 
-SELECT COUNT(*) FROM article; 
+# 기존 게시물의 good,bad ReactionPoint 필드의 값을 채운다
+UPDATE article AS A
+INNER JOIN (
+    SELECT RP.relTypeCode, RP.relId,
+    SUM(IF(RP.point > 0, RP.point,0)) AS goodReactionPoint,
+    SUM(IF(RP.point < 0, RP.point * -1,0)) AS badReactionPoint
+    FROM reactionPoint AS RP
+    GROUP BY RP.relTypeCode, RP.relId
+) AS RP_SUM
+ON A.id = RP_SUM.relId
+SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
+A.badReactionPoint = RP_SUM.badReactionPoint;
 
-# 검색용
-DESC article;
+###########################################################################
 
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
 
+SELECT *
+FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
+
+SELECT IF(RP.point > 0, '큼','작음')
+FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
+
+# 각 게시물 별 좋아요, 싫어요의 갯수
+SELECT RP.relTypeCode, RP.relId,
+SUM(IF(RP.point > 0, RP.point,0)) AS goodReactionPoint,
+SUM(IF(RP.point < 0, RP.point * -1,0)) AS badReactionPoint
+FROM reactionPoint AS RP
+GROUP BY RP.relTypeCode, RP.relId;
+
+SELECT IFNULL(SUM(RP.point),0)
+FROM reactionPoint AS RP
+WHERE RP.relTypeCode = 'article'
+AND RP.relId = 3
+AND RP.memberId = 2
+
+
+# 게시물 갯수 늘리기
+INSERT INTO article 
+( 
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2) + 1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
+FROM article;
+
+SELECT COUNT(*) FROM article;
+
+DESC article;
+
 SELECT LAST_INSERT_ID();
 
-SELECT a.*, m.name AS 'extra__wrtier'
-FROM article a
-INNER JOIN `member` m
-ON a.memberId = m.id
-ORDER BY a.id DESC;
+SELECT  CONCAT('%' 'abc' '%');
+
+# left join
+SELECT A.*, M.nickname, RP.point
+FROM article AS A
+INNER JOIN `member` AS M 
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP 
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
 
 # 게시판별 제목으로 검색하는 쿼리
 SELECT a.*, m.name AS 'extra__wrtier', b.name AS 'board_name'
@@ -259,29 +304,19 @@ GROUP BY A.id
 ORDER BY A.id DESC
 
 
-select a.id,
+######################################################################
+# 연습용 코드
+
+SELECT a.id,
 IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
 IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
 IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
-from article a
-inner join reactionPoint R
+FROM article a
+INNER JOIN reactionPoint R
 ON a.id = R.relId AND R.relTypeCode = 'article'
-where R.relId = 2 AND a.memberId = 2
+WHERE R.relId = 2 AND a.memberId = 2
 GROUP BY a.id;
 
-select a.*, m.name
-from article a
-inner join `member` m
-on a.memberId = m.id
-where a.id = 2 and m.id = 2;
-
-SELECT relId,
-IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
-IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
-IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
-FROM reactionPoint r
-WHERE memberId = 2 AND relTypeCode = 'article' AND relId = 2
-GROUP BY relId;
 
 SELECT 
 IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
@@ -289,5 +324,12 @@ IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
 IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
 FROM reactionPoint r
 WHERE memberId = 2 AND relTypeCode = 'article' AND relId = 2
-AND memberId IS NOT NULL AND relId IS NOT NULL
+AND memberId IS NOT NULL AND relId IS NOT NULL 
 GROUP BY relId;
+
+SELECT IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
+IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
+IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
+FROM reactionPoint AS R
+WHERE memberId = 1 AND relTypeCode = 'article' AND relId = 1
+

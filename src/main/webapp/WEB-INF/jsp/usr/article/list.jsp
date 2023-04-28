@@ -33,7 +33,7 @@ int endPage = startPage+displayPage-1;
 				<th>${article.regDate.substring(0,10) }</th>
 				<th>${article.extra__writer }</th>
 				<th>${article.hitCount }</th>
-				<th>${article.extra__goodReactionPoint }</th>
+				<th>${article.goodReactionPoint }</th>
 			</tr>
 
 		</c:forEach>

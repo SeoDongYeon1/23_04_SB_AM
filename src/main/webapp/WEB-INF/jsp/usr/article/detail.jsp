@@ -110,18 +110,15 @@
 			</tr>
 			<tr>
 				<th>싫어요</th>
-				<th>${article.extra__badReactionPoint }</th>
+				<th>${article.badReactionPoint }</th>
 			</tr>
-			<tr>
-				<th>총합</th>
-				<th>${article.extra__sumReactionPoint }</th>
-			</tr>
+
 		</table>
 	</div>
 	<br />
 	<div class="btns">
 		<c:if test="${actorCanMakeReaction }">
-			<a href="#" class="btn btn-outline" type="button" onclick="ArticleDetail__doGoodPoint(${article.id}, ${loginedMemberId})">👍 <span id="likeCount_${article.id}">${article.extra__goodReactionPoint}</span></a>
+			<a href="#" class="btn btn-outline" type="button" onclick="ArticleDetail__doGoodPoint(${article.id}, ${loginedMemberId})">👍 <span id="likeCount_${article.id}">${article.goodReactionPoint}</span></a>
 			<button class= "btn btn-outline" type="button" onclick="like_point()">👎</button>
 		</c:if>
 		
