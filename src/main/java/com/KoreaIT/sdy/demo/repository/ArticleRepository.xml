@@ -127,12 +127,4 @@
 		WHERE id = #{id}
 	</select>
 	
-	<select id="getSumReactionPointByMemberId" resultType="int">
-		SELECT IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
-		IFNULL(SUM(IF(R.`point` &gt; 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
-		IFNULL(SUM(IF(R.`point` &lt; 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
-		FROM reactionPoint AS R
-		WHERE memberId = #{actorId} AND relTypeCode = 'article' AND relId = #{id}
-	</select>
-	
 </mapper>

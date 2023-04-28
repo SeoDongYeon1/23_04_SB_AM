@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-	namespace="com.KoreaIT.sdy.demo.repository.ReactionRepository">
+	namespace="com.KoreaIT.sdy.demo.repository.ReactionPointRepository">
 
 	<insert id="GoodPoint">
 		INSERT INTO reactionPoint
@@ -30,5 +30,12 @@
 		GROUP BY relId;
 	</select>
 	
+	<select id="getSumReactionPointByMemberId" resultType="int">
+		SELECT IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
+		IFNULL(SUM(IF(R.`point` &gt; 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
+		IFNULL(SUM(IF(R.`point` &lt; 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
+		FROM reactionPoint AS R
+		WHERE memberId = #{actorId} AND relTypeCode = #{relTypeCode} AND relId = #{relId}
+	</select>
 	
 </mapper>
