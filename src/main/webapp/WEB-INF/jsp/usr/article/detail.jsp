@@ -108,17 +108,26 @@
 				<th>조회수</th>
 				<th><span class="article-detail__hit-count">${article.hitCount }</span></th>
 			</tr>
-			<tr>
-				<th>싫어요</th>
-				<th>${article.badReactionPoint }</th>
-			</tr>
 
 		</table>
 	</div>
 	<br />
 	<div class="btns">
-		<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri }" class="btn btn-outline" type="button">👍 <span id="likeCount_${article.id}">${article.goodReactionPoint}</span></a>
-		<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri }" class="btn btn-outline" type="button">👎 <span id="DisLikeCount_${article.id}">${article.badReactionPoint}</span></a>
+
+			<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri }" class="btn btn-outline" type="button">
+	  			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="red" viewBox="0 0 24 24" stroke="currentColor">
+	  				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+	  			</svg>
+				<span id="likeCount_${article.id}">${article.goodReactionPoint}</span>
+			</a>
+			
+			<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri }" class="btn btn-outline" type="button">
+			  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18,4h3v10h-3V4z M5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21c0.58,0,1.14-0.24,1.52-0.65L17,14V4H6.57 C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14z" />
+			  </svg>
+			  <span id="DisLikeCount_${article.id}">${article.badReactionPoint}</span>
+			</a>
+
 		<!-- ver1 -->
 		<c:if test="${article.actorCanDelete }">
 			<a class= "btn btn-outline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="doDelete?id=${article.id }">삭제</a>

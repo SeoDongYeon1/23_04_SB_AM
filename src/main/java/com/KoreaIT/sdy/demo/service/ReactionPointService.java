@@ -14,7 +14,7 @@ public class ReactionPointService {
 	@Autowired
 	private ArticleService articleService;
 
-	public ResultData actorCanMakeReaction(int actorId, String relTypeCode, int relId) {
+	public ResultData<Integer> actorCanMakeReaction(int actorId, String relTypeCode, int relId) {
 		if (actorId == 0) {
 			return ResultData.from("F-L", "로그인 후 이용해주세요.");
 		}
@@ -28,7 +28,7 @@ public class ReactionPointService {
 
 	}
 
-	public ResultData addGoodReactionPoint(int actorId, String relTypeCode, int relId) {
+	public ResultData<Integer> addGoodReactionPoint(int actorId, String relTypeCode, int relId) {
 		int affectedRow = reactionPointRepository.addGoodReactionPoint(actorId, relTypeCode, relId);
 
 		if (affectedRow != 1) {
@@ -45,9 +45,13 @@ public class ReactionPointService {
 
 	}
 
-	public ResultData addBadReactionPoint(int actorId, String relTypeCode, int relId) {
-		reactionPointRepository.addBadReactionPoint(actorId, relTypeCode, relId);
-
+	public ResultData<Integer> addBadReactionPoint(int actorId, String relTypeCode, int relId) {
+		int affectedRow = reactionPointRepository.addBadReactionPoint(actorId, relTypeCode, relId);
+		
+		if (affectedRow != 1) {
+			return ResultData.from("F-1", "좋아요 실패");
+		}
+		
 		switch (relTypeCode) {
 		case "article":
 			articleService.increaseBadReactionPoint(relId);
@@ -57,7 +61,7 @@ public class ReactionPointService {
 		return ResultData.from("S-1", "싫어요 처리 됨");
 	}
 
-	public ResultData deleteGoodReactionPoint(int actorId, String relTypeCode, int relId) {
+	public ResultData<String> deleteGoodReactionPoint(int actorId, String relTypeCode, int relId) {
 		reactionPointRepository.deleteReactionPoint(actorId, relTypeCode, relId);
 		
 		switch (relTypeCode) {
@@ -68,7 +72,7 @@ public class ReactionPointService {
 		return ResultData.from("S-1", "좋아요 취소 됨");
 	}
 
-	public ResultData deleteBadReactionPoint(int actorId, String relTypeCode, int relId) {
+	public ResultData<String> deleteBadReactionPoint(int actorId, String relTypeCode, int relId) {
 		reactionPointRepository.deleteReactionPoint(actorId, relTypeCode, relId);
 		
 		switch (relTypeCode) {

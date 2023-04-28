@@ -39,11 +39,22 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
+		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "id", id);
 		
 		model.addAttribute("article", article);
-		model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
+		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
+		model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
+		
+		if (actorCanMakeReactionRd.getResultCode().equals("F-1")) {
+			int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
+
+			if (sumReactionPointByMemberId > 0) {
+				model.addAttribute("actorCanCancelGoodReaction", true);
+			} else {
+				model.addAttribute("actorCanCancelBadReaction", true);
+			}
+		}
 		
 		return "usr/article/detail";
 	}
