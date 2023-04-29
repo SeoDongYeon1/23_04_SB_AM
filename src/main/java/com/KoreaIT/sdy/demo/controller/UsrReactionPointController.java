@@ -42,7 +42,7 @@ public class UsrReactionPointController {
 
 	@RequestMapping("/usr/reactionPoint/doBadReaction")
 	@ResponseBody
-	public ResultData doBadReaction(String relTypeCode, int relId, String replaceUri) {
+	public ResultData doBadReaction(String relTypeCode, int relId) {
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
 		
 		int actorCanMakeReaction = (int) actorCanMakeReactionRd.getData1();

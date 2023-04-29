@@ -77,7 +77,7 @@
             success: function(data) {
                 if (data.resultCode.startsWith('S-')) {
                     var DislikeButton = $('#DislikeButton');
-                    var DislikeeCount = $('#DislikeCount');
+                    var DislikeCount = $('#DislikeCount');
 
                     if (data.resultCode == 'S-1') {
                     	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
@@ -158,8 +158,6 @@
 			  </svg>
 			  <span id="DislikeCount">${article.badReactionPoint}</span>
 			</button>
-			
-
 		</c:if>
 		
 		<!-- ver1 -->
