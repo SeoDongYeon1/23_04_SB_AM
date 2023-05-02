@@ -23,8 +23,8 @@ public class ReplyService {
 		return ResultData.from("S-1", "댓글이 등록되었습니다.");
 	}
 
-	public List<Reply> getReplyByRelId(int relId) {
-		return replyRepository.getReplyByRelId(relId);
+	public List<Reply> getForPrintReplies(int relId) {
+		return replyRepository.getForPrintReplies(relId);
 	}
 
 	

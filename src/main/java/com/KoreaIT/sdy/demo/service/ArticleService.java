@@ -147,4 +147,8 @@ public class ArticleService {
 		return ResultData.from("S-1", "싫어요 감소", "affectedRow", affectedRow);
 	}
 
+	public int getRepliesCount() {
+		return articleRepository.getRepliesCount();
+	}
+
 }

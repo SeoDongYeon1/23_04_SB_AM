@@ -14,7 +14,7 @@
 		`body` = #{body};
 	</insert>
 	
-	<select id="getReplyByRelId" resultType="Reply">
+	<select id="getForPrintReplies" resultType="Reply">
 		SELECT r.*, m.name AS 'extra__writer'
 		FROM reply r
 		INNER JOIN `member` m

@@ -25,6 +25,7 @@ int endPage = startPage+displayPage-1;
 				<th>작성자</th>
 				<th>조회수</th>
 				<th>추천</th>
+				<th>댓글수</th>
 			</tr>
 		<c:forEach var="article" items="${articles }">
 			<tr>

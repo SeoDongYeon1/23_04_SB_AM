@@ -150,4 +150,12 @@
 		WHERE id = #{relId}
 	</update>
 	
+	<select id="getRepliesCount" resultType="Article">
+		SELECT a.*, COUNT(re.id) AS 'repliesCount'
+		FROM article a
+		INNER JOIN reply re
+		ON a.id = re.relId
+		GROUP BY a.id;
+	</select>
+	
 </mapper>

@@ -101,7 +101,7 @@
 	<hr />
 	
 	<div class="mt-8 text-xl">
-		<table class="table-box-type-1 table table-zebra w-full">
+		<table class="table-box-type-1 table table-zebra" style="width: 700px;">
 			<tr>
 				<th>게시판</th>
 				<th>${article.board_name }</th>
@@ -144,6 +144,8 @@
 	</div>
 	<br />
 	<div class="btns">
+		<button class= "btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
+
 		<c:if test="${actorCanMakeReaction}">
 			<button id="likeButton" class="btn btn-outline" type="button" onclick="doGoodReaction(${param.id})">
 			  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -169,9 +171,22 @@
 		<%if(loginedMemberId==article.getMemberId()) {%>
 			<a class= "btn btn-outline" href="modify?id=${article.id }">수정</a>
 		<%}%>
-		
-		<div>
-		<button style="margin-top: 20px;" class= "btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
+	</div>
+	
+	<div class="reply_text">
+		댓글
+		<div class="mt-8 text-xl mx-auto px-3 reply_box">
+			<c:forEach var="reply" items="${replies }"> 
+				<div class="reply_top flex justify-between">
+					<div class="reply_writer">${reply.extra__writer }</div> <div class="reply_regDate">${reply.regDate }</div>
+				</div>
+				<br />
+				<div class="reply_body">
+					${reply.body }
+					<hr />
+					<br />
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 	
@@ -180,16 +195,15 @@
 			<div style="font-weight:bold; font-size: 17px;">
 				댓글
 			</div>
-			<form method= "post" action="../reply/doWrite" onsubmit = "return ReplyWrite__SubmitForm(this); return false;" style="width: 550px; height: 300px; border:2px solid black; display: inline-block;  border-radius: 8px;" >
+			<form method= "post" action="../reply/doWrite" onsubmit = "return ReplyWrite__SubmitForm(this); return false;" style="width: 700px; height: 250px; border:2px solid black; display: inline-block;  border-radius: 8px;" >
 				<br />
 				<input type="hidden" name="relTypeCode" value="article" />
 				<input type="hidden" name="relId" value="${article.id }" />
 				<div style="display: inline-block ; text-align:left;">
-					<br />
 					<div style="font-size: 17px; font-weight: bold;">
 						내용
 						<br />
-						<textarea class="body textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px; height: 80px;" name="body"></textarea>
+						<textarea class="body textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 650px; height: 80px;" name="body"></textarea>
 					</div>
 					<br />
 				</div>
@@ -200,21 +214,6 @@
 			</form>
 		</div>
 	</c:if>
-	
-	<div class="mt-8 text-xl mx-auto px-3">
-		<table class="table-box-type-1 table table-zebra w-full" style="text-align:left;">
-		<c:forEach var="reply" items="${replys }">
-			<tr>
-				<th>${reply.extra__writer } ${reply.regDate }</th>
-			</tr>
-			<tr>
-				<th>${reply.body }</th>
-			</tr>
-		
-		</c:forEach>
-		</table>
-	</div>
-	
 <script>
 	let ReplyWrite__SubmitFormDone = false;
 	
@@ -235,6 +234,7 @@
 	    form.submit();
 	}
 </script>	
+
 	<!-- 커스텀 -->
 	<style type="text/css">
 	.table-box-type-1 {
@@ -246,5 +246,32 @@
 	.btns {
 		text-align: center;
 	}
+	
+	.btns > .btn {
+		width: 100px;
+		height: 80px;
+	}
+	
+	.reply_box {
+		border: 2px solid black;
+		text-align: left;
+		font-weight: bold;
+		width: 700px;
+	}
+	
+	.reply_text {
+		font-size: 25px;
+		margin: 20px 0;
+		text-align: center;
+	}
+	
+	.reply_writer .reply_body{
+		font-size: 20px;
+	}
+	
+	.reply_regDate {
+		font-size: 15px;
+	}
+	
 	</style>
 <%@ include file="../common/foot.jspf" %>

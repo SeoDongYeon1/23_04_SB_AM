@@ -11,6 +11,6 @@ public interface ReplyRepository {
 
 	void writeReply(String relTypeCode, int relId, String body, int actorId);
 
-	List<Reply> getReplyByRelId(int relId);
+	List<Reply> getForPrintReplies(int relId);
 
 }

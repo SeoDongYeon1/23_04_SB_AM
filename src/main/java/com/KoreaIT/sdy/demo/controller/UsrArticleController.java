@@ -46,10 +46,10 @@ public class UsrArticleController {
 		
 		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "id", id);
 		
-		List<Reply> replys = replyService.getReplyByRelId(id);
+		List<Reply> replies = replyService.getForPrintReplies(id);
 		
 		model.addAttribute("article", article);
-		model.addAttribute("replys", replys);
+		model.addAttribute("replies", replies);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
 				
@@ -106,7 +106,9 @@ public class UsrArticleController {
 		int totalPage = (int) Math.ceil(articlesCount / (double) itemsInAPage);
 
 		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page, searchKeywordTypeCode, searchKeyword);
-
+		
+		int repliesCount = articleService.getRepliesCount();
+		
 		model.addAttribute("searchKeywordTypeCode", searchKeywordTypeCode);
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("board", board);
@@ -115,6 +117,7 @@ public class UsrArticleController {
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("articles", articles);
+		model.addAttribute("repliesCount", repliesCount);
 
 		return "usr/article/list";
 	}
