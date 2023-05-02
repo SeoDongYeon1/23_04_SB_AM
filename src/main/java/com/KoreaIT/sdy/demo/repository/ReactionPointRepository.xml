@@ -39,4 +39,5 @@
 		AND RP.memberId = #{actorId}
 	</select>
 	
+	
 </mapper>

@@ -29,8 +29,8 @@ int endPage = startPage+displayPage-1;
 		<c:forEach var="article" items="${articles }">
 			<tr>
 				<th><div class="badge badge-outline">${article.id }</div></th>
-				<th class="title">
-					<a href="detail?id=${article.id }">
+				<th>
+					<a class="title" href="detail?id=${article.id }">
 						${article.title } 
 					</a>
 					<c:if test="${article.repliesCount!=0}">
@@ -38,8 +38,6 @@ int endPage = startPage+displayPage-1;
 							(${article.repliesCount })
 						</nav>
 					</c:if>
-					
-					
 				</th>
 				<th>${article.regDate.substring(0,10) }</th>
 				<th>${article.extra__writer }</th>
@@ -120,7 +118,7 @@ int endPage = startPage+displayPage-1;
 	.table-box-type-1 {
 		margin-left: auto;
 		margin-right: auto;
-		width: 700px;
+		width: 800px;
 	}
 	</style>
 <%@ include file="../common/foot.jspf" %>

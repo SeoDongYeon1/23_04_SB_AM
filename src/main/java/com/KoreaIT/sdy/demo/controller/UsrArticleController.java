@@ -44,29 +44,21 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		
-		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "id", id);
+		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
 		List<Reply> replies = replyService.getForPrintReplies(id);
+		
+		
+		if(actorCanMakeReactionRd.isSuccess()) {
+			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
+		}
 		
 		model.addAttribute("article", article);
 		model.addAttribute("replies", replies);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
-				
-		if(actorCanMakeReactionRd.isSuccess()) {
-			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
-		}
-		
-		if (actorCanMakeReactionRd.isFail()) {
-			int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
-
-			if (sumReactionPointByMemberId > 0) {
-			    model.addAttribute("actorCanCancelGoodReaction", true);
-			} 		
-			else if (sumReactionPointByMemberId < 0) {
-			    model.addAttribute("actorCanCancelBadReaction", true);
-			}
-		}
+		model.addAttribute("actorCanCancelGoodReaction", reactionPointService.isAlreadyAddGoodRp(id, "article"));
+		model.addAttribute("actorCanCancelBadReaction", reactionPointService.isAlreadyAddBadRp(id, "article"));
 		
 		return "usr/article/detail";
 	}
