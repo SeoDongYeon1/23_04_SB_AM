@@ -14,4 +14,12 @@
 		`body` = #{body};
 	</insert>
 	
+	<select id="getReplyByRelId" resultType="Reply">
+		SELECT r.*, m.name AS 'extra__writer'
+		FROM reply r
+		INNER JOIN `member` m
+		ON r.memberId = m.id
+		WHERE r.relId = #{relId};
+	</select>
+	
 </mapper>

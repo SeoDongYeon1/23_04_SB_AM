@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.KoreaIT.sdy.demo.service.ArticleService;
 import com.KoreaIT.sdy.demo.service.BoardService;
 import com.KoreaIT.sdy.demo.service.ReactionPointService;
+import com.KoreaIT.sdy.demo.service.ReplyService;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.Article;
 import com.KoreaIT.sdy.demo.vo.Board;
+import com.KoreaIT.sdy.demo.vo.Reply;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -31,6 +33,9 @@ public class UsrArticleController {
 	
 	@Autowired
 	ReactionPointService reactionPointService;
+	
+	@Autowired
+	ReplyService replyService;
 
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
@@ -41,7 +46,10 @@ public class UsrArticleController {
 		
 		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "id", id);
 		
+		List<Reply> replys = replyService.getReplyByRelId(id);
+		
 		model.addAttribute("article", article);
+		model.addAttribute("replys", replys);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
 				
@@ -154,8 +162,6 @@ public class UsrArticleController {
 
 		articleService.deleteArticle(id);
 		return Ut.jsReplace(Ut.f("%d번 글을 삭제 했습니다", id), "../article/list");
-		// return Ut.f("<script>alert('%d번 글이 삭제되었습니다.');
-		// location.replace('list')</script>", id);
 	}
 
 	@RequestMapping("/usr/article/modify")

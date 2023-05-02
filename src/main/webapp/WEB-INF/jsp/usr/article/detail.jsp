@@ -201,6 +201,20 @@
 		</div>
 	</c:if>
 	
+	<div class="mt-8 text-xl mx-auto px-3">
+		<table class="table-box-type-1 table table-zebra w-full" style="text-align:left;">
+		<c:forEach var="reply" items="${replys }">
+			<tr>
+				<th>${reply.extra__writer } ${reply.regDate }</th>
+			</tr>
+			<tr>
+				<th>${reply.body }</th>
+			</tr>
+		
+		</c:forEach>
+		</table>
+	</div>
+	
 <script>
 	let ReplyWrite__SubmitFormDone = false;
 	
