@@ -59,7 +59,7 @@
                         likeCount.text(parseInt(likeCount.text()) + 1);
                     }
                 } else {
-                    alert('오류가 발생했습니다: ' + data.msg);
+                    alert(data.msg);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -87,7 +87,7 @@
                         DislikeCount.text(parseInt(DislikeCount.text()) + 1);
                     }
                 } else {
-                    alert('오류가 발생했습니다: ' + data.msg);
+                    alert(data.msg);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {

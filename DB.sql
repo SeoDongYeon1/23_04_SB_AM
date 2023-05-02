@@ -206,12 +206,61 @@ ON A.id = RP_SUM.relId
 SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
 A.badReactionPoint = RP_SUM.badReactionPoint;
 
+
+# reply 테이블 생성
+CREATE TABLE reply(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
+    `body` TEXT NOT NULL
+);
+
+# 2번 회원이 1번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`body` = '댓글 1';
+
+# 2번 회원이 1번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`body` = "댓글 2";
+
+# 3번 회원이 1번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`body` = "댓글 3";
+
+# 3번 회원이 2번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 2,
+`body` = "댓글 4";
+
 ###########################################################################
 
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
+SELECT * FROM reply;
 
 SELECT *
 FROM reactionPoint AS RP
@@ -311,10 +360,10 @@ SELECT a.id,
 IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
 IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
 IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
-FROM article a
-INNER JOIN reactionPoint R
+from article a
+inner join reactionPoint R
 ON a.id = R.relId AND R.relTypeCode = 'article'
-WHERE R.relId = 2 AND a.memberId = 2
+where R.relId = 2 AND a.memberId = 2
 GROUP BY a.id;
 
 
@@ -333,3 +382,28 @@ IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
 FROM reactionPoint AS R
 WHERE memberId = 1 AND relTypeCode = 'article' AND relId = 1
 
+
+SELECT IFNULL(SUM(R.`point`), 0) AS 'sumReactionPoint',
+IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'goodReactionPoint',
+IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'badReactionPoint'
+FROM reactionPoint AS R
+WHERE memberId = 3 AND relTypeCode = 'article' AND relId = 2
+
+SELECT IFNULL(SUM(RP.point),0)
+FROM reactionPoint AS RP
+WHERE RP.relTypeCode = 'article'
+AND RP.relId = 2
+AND RP.memberId = 3
+
+INSERT INTO reactionPoint
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId = #{actorId},
+		relTypeCode = #{relTypeCode},
+		relId = #{relId},
+		`point` = 1;
+
+select * from reactionPoint;
+SELECT * FROM article;
+delete from reactionPoint
+where memberId = 2 and relTypeCode = 'article' and relId = 3;
