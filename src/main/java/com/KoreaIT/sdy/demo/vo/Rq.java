@@ -118,5 +118,8 @@ public class Rq {
 	public void initOnBeforeActionInterceptor() {
 
 	}
-
+	
+	public boolean isNotLogined() {
+		return !isLogined;
+	}
 }

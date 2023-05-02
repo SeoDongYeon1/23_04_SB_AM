@@ -159,7 +159,7 @@
 			  <span id="DislikeCount">${article.badReactionPoint}</span>
 			</button>
 		</c:if>
-		
+
 		<!-- ver1 -->
 		<c:if test="${article.actorCanDelete }">
 			<a class= "btn btn-outline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="doDelete?id=${article.id }">삭제</a>
@@ -175,6 +175,32 @@
 		</div>
 	</div>
 	
+	<c:if test="${rq.logined }">
+		<div style="text-align:center; margin-top: 30px;">
+			<div style="font-weight:bold; font-size: 17px;">
+				댓글
+			</div>
+			<form style="width: 550px; height: 300px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="../reply/doWrite">
+				<br />
+				<input type="hidden" name="relTypeCode" value="article" />
+				<input type="hidden" name="relId" value="${article.id }" />
+				<div style="display: inline-block ; text-align:left;">
+					<br />
+					<div style="font-size: 17px; font-weight: bold;">
+						내용
+						<br />
+						<textarea class="body textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px; height: 130px;" name="body"></textarea>
+					</div>
+					<br />
+				</div>
+				<br />
+				<div style="border-radius: 8px; display: inline-block; width: 200px;">
+					<button class="btn btn-outline" style="padding: 0 20px;" type="submit">댓글 작성</button>
+				</div>
+			</form>
+		</div>
+	</c:if>
+		
 	<!-- 커스텀 -->
 	<style type="text/css">
 	.table-box-type-1 {
