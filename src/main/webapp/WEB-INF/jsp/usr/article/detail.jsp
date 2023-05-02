@@ -180,7 +180,7 @@
 			<div style="font-weight:bold; font-size: 17px;">
 				댓글
 			</div>
-			<form style="width: 550px; height: 300px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="../reply/doWrite">
+			<form method= "post" action="../reply/doWrite" onsubmit = "return ReplyWrite__SubmitForm(this); return false;" style="width: 550px; height: 300px; border:2px solid black; display: inline-block;  border-radius: 8px;" >
 				<br />
 				<input type="hidden" name="relTypeCode" value="article" />
 				<input type="hidden" name="relId" value="${article.id }" />
@@ -189,7 +189,7 @@
 					<div style="font-size: 17px; font-weight: bold;">
 						내용
 						<br />
-						<textarea class="body textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px; height: 130px;" name="body"></textarea>
+						<textarea class="body textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px; height: 80px;" name="body"></textarea>
 					</div>
 					<br />
 				</div>
@@ -200,7 +200,27 @@
 			</form>
 		</div>
 	</c:if>
+	
+<script>
+	let ReplyWrite__SubmitFormDone = false;
+	
+	function ReplyWrite__SubmitForm(form) {
+		if(ReplyWrite__SubmitFormDone) {
+			return;
+		}
 		
+	    var body = form.body.value.trim();
+	    
+	    if(body.length < 2) {
+	        alert('내용을 2글자 이상 입력해주세요.');
+	        form.body.focus();
+	        return false;
+	    }
+	    
+	    ReplyWrite__SubmitFormDone = true;
+	    form.submit();
+	}
+</script>	
 	<!-- 커스텀 -->
 	<style type="text/css">
 	.table-box-type-1 {
