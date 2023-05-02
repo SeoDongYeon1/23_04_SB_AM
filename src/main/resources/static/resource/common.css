@@ -13,6 +13,13 @@ html > body {
 .table-box-type-1 th{
 	border: 2px solid black;
 	padding: 10px;
+	
+}
+
+.table-box-type-1 th:nth-child(2){
+	border: 2px solid black;
+	padding: 10px;
+	width: 200px;
 }
 
 header > div > ul > li{

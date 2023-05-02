@@ -107,7 +107,15 @@ public class UsrArticleController {
 
 		List<Article> articles = articleService.getForPrintArticles(boardId, itemsInAPage, page, searchKeywordTypeCode, searchKeyword);
 		
-		int repliesCount = articleService.getRepliesCount();
+		List<Article> article_replies = articleService.getRepliesCount();
+		
+		for(Article article : articles) {
+			for(Article article1: article_replies) {
+				if(article.getId()==article1.getId()) {
+					article.setRepliesCount(article1.getRepliesCount());
+				}
+			}
+		}
 		
 		model.addAttribute("searchKeywordTypeCode", searchKeywordTypeCode);
 		model.addAttribute("searchKeyword", searchKeyword);
@@ -117,7 +125,7 @@ public class UsrArticleController {
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("articles", articles);
-		model.addAttribute("repliesCount", repliesCount);
+		model.addAttribute("article_replies", article_replies);
 
 		return "usr/article/list";
 	}

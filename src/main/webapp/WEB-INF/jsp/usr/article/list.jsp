@@ -25,12 +25,22 @@ int endPage = startPage+displayPage-1;
 				<th>작성자</th>
 				<th>조회수</th>
 				<th>추천</th>
-				<th>댓글수</th>
 			</tr>
 		<c:forEach var="article" items="${articles }">
 			<tr>
 				<th><div class="badge badge-outline">${article.id }</div></th>
-				<th><a href="detail?id=${article.id }">${article.title }</a></th>
+				<th class="title">
+					<a href="detail?id=${article.id }">
+						${article.title } 
+					</a>
+					<c:if test="${article.repliesCount!=0}">
+						<nav style="color: red; display: inline-block;">
+							(${article.repliesCount })
+						</nav>
+					</c:if>
+					
+					
+				</th>
 				<th>${article.regDate.substring(0,10) }</th>
 				<th>${article.extra__writer }</th>
 				<th>${article.hitCount }</th>
@@ -103,7 +113,7 @@ int endPage = startPage+displayPage-1;
 	body {
 	  height: 1000px;
 	}
-	a:hover {
+	.title:hover {
 		text-decoration: underline;
 	}
 	

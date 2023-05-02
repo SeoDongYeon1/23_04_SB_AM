@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.KoreaIT.sdy.demo.repository.ArticleRepository;
 import com.KoreaIT.sdy.demo.util.Ut;
 import com.KoreaIT.sdy.demo.vo.Article;
+import com.KoreaIT.sdy.demo.vo.Reply;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 
 @Service
@@ -147,7 +148,7 @@ public class ArticleService {
 		return ResultData.from("S-1", "싫어요 감소", "affectedRow", affectedRow);
 	}
 
-	public int getRepliesCount() {
+	public List<Article> getRepliesCount() {
 		return articleRepository.getRepliesCount();
 	}
 

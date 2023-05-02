@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.KoreaIT.sdy.demo.vo.Article;
+import com.KoreaIT.sdy.demo.vo.Reply;
 
 @Mapper
 public interface ArticleRepository {
@@ -37,6 +38,6 @@ public interface ArticleRepository {
 
 	public int decreaseBadReactionPoint(int relId);
 
-	public int getRepliesCount();
+	public List<Article> getRepliesCount();
 
 }
