@@ -27,10 +27,10 @@
 		<div style="font-weight:bold; font-size: 17px;">
 			댓글 수정
 		</div>
-		<form style="width: 550px; height: 620px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doModify">
+		<form onsubmit="ReplyModify__submit(this) return false;" style="width: 550px; height: 620px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doModify">
 			<br />
 			<div style="display: inline-block; text-align:left;">
-				<input value= "${article.id }" type="hidden" name="id"/>
+				<input value= "${reply.id }" type="hidden" name="id"/>
 				<div style="text-align: right; font-size:14px; font-weight:bold">
 					작성날짜 : ${reply.regDate }
 					<br />
@@ -50,7 +50,7 @@
 			<br />
 			<br />
 			<div style="border-radius: 8px; display: inline-block; width: 200px;">
-				<button class="btn btn-outline" style="padding: 0 40px; " type="submit" onsubmit="ReplyModify__submit(this) return false;">수정하기</button>
+				<button class="btn btn-outline" style="padding: 0 40px; " type="submit" >수정하기</button>
 			</div>
 		</form>
 	</div>

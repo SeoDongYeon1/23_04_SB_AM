@@ -43,4 +43,13 @@
 			WHERE R.id = #{id}
 	</select>
 	
+	<update id="modifyReply">
+		UPDATE reply
+		<set>
+			updateDate= NOW(),
+			<if test="body != null and body != ''">`body` = #{body}</if>
+		</set>		
+		WHERE id = #{id}
+	</update>
+	
 </mapper>
