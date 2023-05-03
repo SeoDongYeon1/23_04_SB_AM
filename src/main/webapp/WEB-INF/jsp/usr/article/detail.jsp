@@ -54,12 +54,7 @@
 		} else {
 			return;
 		}
-		$(function() {
-			checkAddRpBefore();
-		});
 	};
-	
-	
 </script>	
 
 <!-- 리액션 실행 코드 -->
