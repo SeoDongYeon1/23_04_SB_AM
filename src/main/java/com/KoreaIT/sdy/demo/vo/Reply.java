@@ -18,4 +18,10 @@ public class Reply {
 	private int relId;
 	
 	private String extra__writer;
+	
+	public String getForPrintRegDateType1() {
+		return regDate.substring(0, 16).replace(" ", "<br>");
+	}
+	
+
 }

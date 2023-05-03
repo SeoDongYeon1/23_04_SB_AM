@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.KoreaIT.sdy.demo.repository.ReplyRepository;
 import com.KoreaIT.sdy.demo.util.Ut;
+import com.KoreaIT.sdy.demo.vo.Article;
 import com.KoreaIT.sdy.demo.vo.Reply;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 
@@ -23,10 +24,8 @@ public class ReplyService {
 		return ResultData.from("S-1", "댓글이 등록되었습니다.");
 	}
 
-	public List<Reply> getForPrintReplies(int relId) {
-		return replyRepository.getForPrintReplies(relId);
+	public List<Reply> getForPrintReplies(int relId, String relTypeCode) {
+		return replyRepository.getForPrintReplies(relId, relTypeCode);
 	}
-
-	
 
 }

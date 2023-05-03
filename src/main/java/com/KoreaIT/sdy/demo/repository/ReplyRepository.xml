@@ -19,7 +19,8 @@
 		FROM reply r
 		INNER JOIN `member` m
 		ON r.memberId = m.id
-		WHERE r.relId = #{relId};
+		WHERE r.relId = #{relId}
+		AND relTypeCode = #{relTypeCode};
 	</select>
 	
 </mapper>

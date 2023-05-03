@@ -36,4 +36,21 @@ public class UsrReplyController {
 
 		return Ut.jsReplace(writeReplyRd.getMsg(), replaceUri);
 	}
+	
+	@RequestMapping("/usr/reply/doModify")
+	@ResponseBody
+	public String doModify(String relTypeCode, int relId, String body, String replaceUri) {
+		
+		if (Ut.empty(body)) {
+			return rq.jsHitoryBack("F-2", "내용을 입력해주세요.");
+		}
+		
+		ResultData writeReplyRd = replyService.writeReply(relTypeCode, relId, body, rq.getLoginedMemberId());
+		
+		if (Ut.empty(replaceUri)) {
+			replaceUri = Ut.f("../article/detail?id=%d", relId);
+		}
+		
+		return Ut.jsReplace(writeReplyRd.getMsg(), replaceUri);
+	}
 }
