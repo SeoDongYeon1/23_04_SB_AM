@@ -36,4 +36,17 @@
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
+	
+	<update id="modifyMember">
+		UPDATE `member`
+		<set>
+			updateDate= NOW(),
+			<if test="loginPw != null and loginPw != ''">loginPw = #{loginPw},</if>
+			<if test="name != null and name != ''">name = #{name},</if>
+			<if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
+			<if test="cellphoneNum != null and cellphoneNum != ''">cellphoneNum = #{cellphoneNum},</if>
+			<if test="email != null and email != ''">email = #{email}</if>
+		</set>		
+		WHERE id = #{id}
+	</update>
 </mapper>

@@ -10,7 +10,7 @@
 		<div style="font-weight:bold; font-size: 17px;">
 			회원정보 확인
 		</div>
-		<form style="width: 350px; height: 270px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doCheckPw">
+		<form method= "post" action="doCheckPw" onsubmit="MemberCheckPw_submit(this); return false;" style="width: 350px; height: 270px; border:2px solid black; display: inline-block;  border-radius: 8px;" >
 			<br />
 			<div style="display: inline-block; text-align:left;">
 				<div style="font-size: 15px; font-weight: bold; ">
@@ -22,15 +22,31 @@
 				<div style="font-size: 15px; font-weight: bold;">
 					비밀번호
 					<br />
-					<input class="input input-bordered w-full max-w-xs" style="height: 30px; border-radius: 8px; width: 230px; border: 2px solid black;" type="password" placeholder="비밀번호" name="loginPw" autocomplete="off" required/>
+					<input class="input input-bordered w-full max-w-xs" style="height: 30px; border-radius: 8px; width: 230px; border: 2px solid black;" type="password" placeholder="비밀번호" name="loginPw" autocomplete="off"/>
 				</div>
 				<br />
 			</div>
 			<br />
 			<div style="border-radius: 8px; display: inline-block; width: 150px;">
-				<button class="btn btn-outline" style="padding: 0 40px; " type="submit">입력</button>
+				<button class="btn btn-outline" style="padding: 0 40px; " type="submit">확인</button>
 			</div>
 		</form>
 	</div>
 	
+<script>
+let MemberCheckPw_submitDone = false; 
+	
+function MemberCheckPw_submit(form) {
+    var loginPw = form.loginPw.value.trim();
+    
+    if(loginPw.length == 0) {
+        alert('비밀번호를 입력해주세요.');
+        form.loginPw.focus(); 
+        return false;
+    }
+    
+    MemberCheckPw_submitDone = true;
+    form.submit();
+}
+</script>
 <%@ include file="../common/foot.jspf" %>

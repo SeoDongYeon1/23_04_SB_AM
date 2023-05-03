@@ -53,5 +53,9 @@ public class MemberService {
 		return member;
 	}
 
+	public void modifyMember(int id, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+		memberRepository.modifyMember(id, loginPw, name, nickname, cellphoneNum, email);
+	}
+
 
 }

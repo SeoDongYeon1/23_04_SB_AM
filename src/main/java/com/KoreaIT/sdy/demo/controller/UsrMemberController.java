@@ -66,10 +66,6 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw) {
-		
-		if (rq.isLogined()) {
-			return rq.jsHitoryBack("F-A", "이미 로그인 상태입니다.");
-		}
 
 		if (Ut.empty(loginId)) {
 			return rq.jsHitoryBack("F-1", "아이디를 입력해주세요");
@@ -117,5 +113,47 @@ public class UsrMemberController {
 		model.addAttribute("member", member);
 		
 		return "usr/member/checkPw";
+	}
+	
+	@RequestMapping("/usr/member/doCheckPw")
+	@ResponseBody
+	public String doCheckPw(String loginPw) {
+		
+		if (Ut.empty(loginPw)) {
+			return rq.jsHitoryBack("F-1", "비밀번호를 입력해주세요");
+		}
+		
+		Member member = rq.getLoginedMember();
+
+		if (member.getLoginPw().equals(loginPw) == false) {
+			return rq.jsHitoryBack("F-2", "비밀번호가 틀렸습니다.");
+		}
+		
+		return rq.jsReplace(Ut.f("%s님 회원정보 수정 페이지로 이동합니다.", member.getName()), "../member/modify");
+	}
+	
+	@RequestMapping("/usr/member/modify")
+	public String modify(Model model) {
+		
+		Member member = rq.getLoginedMember();
+		
+		model.addAttribute("member", member);
+		
+		return "usr/member/modify";
+	}
+	
+	@RequestMapping("/usr/member/doModify")
+	@ResponseBody
+	public String doModify(int id, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+		
+		Member member = memberService.getMemberById(id);
+		
+		if (member == null) {
+			return Ut.jsHitoryBack("F-E", "존재하지 않는 회원입니다.");
+		}
+		
+		memberService.modifyMember(id, loginPw, name, nickname, cellphoneNum, email);
+
+		return Ut.jsReplace(Ut.f("%s님 회원정보가 수정되었습니다.", member.getName()), "../member/profile");
 	}
 }
