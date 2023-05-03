@@ -115,22 +115,22 @@ public class UsrMemberController {
 		return "usr/member/checkPw";
 	}
 	
-	@RequestMapping("/usr/member/doCheckPw")
-	@ResponseBody
-	public String doCheckPw(String loginPw) {
-		
-		if (Ut.empty(loginPw)) {
-			return rq.jsHitoryBack("F-1", "비밀번호를 입력해주세요");
-		}
-		
-		Member member = rq.getLoginedMember();
-
-		if (member.getLoginPw().equals(loginPw) == false) {
-			return rq.jsHitoryBack("F-2", "비밀번호가 틀렸습니다.");
-		}
-		
-		return rq.jsReplace(Ut.f("%s님 회원정보 수정 페이지로 이동합니다.", member.getName()), "../member/modify");
-	}
+//	@RequestMapping("/usr/member/doCheckPw")
+//	@ResponseBody
+//	public String doCheckPw(String loginPw) {
+//		
+//		if (Ut.empty(loginPw)) {
+//			return rq.jsHitoryBack("F-1", "비밀번호를 입력해주세요");
+//		}
+//		
+//		Member member = rq.getLoginedMember();
+//
+//		if (member.getLoginPw().equals(loginPw) == false) {
+//			return rq.jsHitoryBack("F-2", "비밀번호가 틀렸습니다.");
+//		}
+//		
+//		return rq.jsReplace("../member/modify");
+//	}
 	
 	@RequestMapping("/usr/member/modify")
 	public String modify(Model model) {

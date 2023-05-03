@@ -92,6 +92,10 @@ public class Rq {
 	public String jsReplace(String msg, String uri) {
 		return Ut.jsReplace(msg, uri);
 	}
+	
+	public String jsReplace(String uri) {
+		return Ut.jsReplace(uri);
+	}
 
 	public String getCurrentUri() {
 		String currentUri = req.getRequestURI();

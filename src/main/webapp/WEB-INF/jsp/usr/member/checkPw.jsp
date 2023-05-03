@@ -3,14 +3,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="LOGIN"/>
 <%@ include file="../common/head.jspf" %>
+<%@ page import="com.KoreaIT.sdy.demo.vo.Member" %>
 	<hr />
 	<br />
 	<br />
+<%
+Member member = (Member) request.getAttribute("member");
+String loginPw = member.getLoginPw();
+%>
+<script type="text/javascript">
+let MemberCheckPw__submitDone = false; 
+
+function MemberCheckPw__submit(form) {
+	if (MemberCheckPw__submitDone) {
+		return;
+	}
+    
+	form.loginPw.value = form.loginPw.value.trim();
+	
+    if (form.loginPw.value.length==0) {
+    	alert('비밀번호를 입력해주세요.');
+		form.loginPw.focus();
+		return;
+	}
+    if(form.loginPw.value !== '<%=loginPw%>') {
+        alert('비밀번호를 확인해주세요.');
+        form.loginPw.focus(); 
+        return;
+    }
+    
+    MemberCheckPw__submitDone = true;
+    form.submit();
+}
+</script>	
+	
 	<div style="text-align:center;">
 		<div style="font-weight:bold; font-size: 17px;">
 			회원정보 확인
 		</div>
-		<form method= "post" action="doCheckPw" onsubmit="MemberCheckPw_submit(this); return false;" style="width: 350px; height: 270px; border:2px solid black; display: inline-block;  border-radius: 8px;" >
+		<form method= "POST" action="modify" onsubmit="MemberCheckPw__submit(this); return false;" style="width: 350px; height: 270px; border:2px solid black; display: inline-block;  border-radius: 8px;" >
 			<br />
 			<div style="display: inline-block; text-align:left;">
 				<div style="font-size: 15px; font-weight: bold; ">
@@ -33,20 +64,5 @@
 		</form>
 	</div>
 	
-<script>
-let MemberCheckPw_submitDone = false; 
-	
-function MemberCheckPw_submit(form) {
-    var loginPw = form.loginPw.value.trim();
-    
-    if(loginPw.length == 0) {
-        alert('비밀번호를 입력해주세요.');
-        form.loginPw.focus(); 
-        return false;
-    }
-    
-    MemberCheckPw_submitDone = true;
-    form.submit();
-}
-</script>
+
 <%@ include file="../common/foot.jspf" %>
