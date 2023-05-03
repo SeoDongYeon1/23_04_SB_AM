@@ -44,7 +44,7 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		
-		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
+		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
 		List<Reply> replies = replyService.getForPrintReplies(id);
 		
@@ -57,8 +57,8 @@ public class UsrArticleController {
 		model.addAttribute("replies", replies);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
-		model.addAttribute("actorCanCancelGoodReaction", reactionPointService.isAlreadyAddGoodRp(id, "article"));
-		model.addAttribute("actorCanCancelBadReaction", reactionPointService.isAlreadyAddBadRp(id, "article"));
+		model.addAttribute("isAlreadyAddGoodRp", reactionPointService.isAlreadyAddGoodRp(id, "article"));
+		model.addAttribute("isAlreadyAddBadRp", reactionPointService.isAlreadyAddBadRp(id, "article"));
 		
 		return "usr/article/detail";
 	}

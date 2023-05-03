@@ -17,7 +17,11 @@ public class ReactionPointService {
 	@Autowired
 	private Rq rq;
 
-	public ResultData<Integer> actorCanMakeReaction(int actorId, String relTypeCode, int relId) {
+	public ResultData actorCanMakeReaction(int actorId, String relTypeCode, int relId) {
+		if (actorId == 0) {
+			return ResultData.from("F-L", "로그인 후 이용해주세요.");
+		}
+		
 		int sumReactionPointByMemberId = reactionPointRepository.getSumReactionPointByMemberId(actorId, relTypeCode, relId);
 		
 		if(sumReactionPointByMemberId != 0) {
@@ -83,8 +87,8 @@ public class ReactionPointService {
 		return ResultData.from("S-1", "싫어요 취소 됨");
 	}
 	
-	public boolean isAlreadyAddGoodRp(int articleId, String relTypeCode) {
-		int getPointTypeCodeByMemberId = getSumReactionPointByMemberId(articleId, relTypeCode, rq.getLoginedMemberId());
+	public boolean isAlreadyAddGoodRp(int relId, String relTypeCode) {
+		int getPointTypeCodeByMemberId = getSumReactionPointByMemberId(rq.getLoginedMemberId(), relTypeCode, relId);
 
 		if (getPointTypeCodeByMemberId > 0) {
 			return true;
@@ -92,8 +96,8 @@ public class ReactionPointService {
 		return false;
 	}
 
-	public boolean isAlreadyAddBadRp(int articleId, String relTypeCode) {
-		int getPointTypeCodeByMemberId = getSumReactionPointByMemberId(articleId, relTypeCode, rq.getLoginedMemberId());
+	public boolean isAlreadyAddBadRp(int relId, String relTypeCode) {
+		int getPointTypeCodeByMemberId = getSumReactionPointByMemberId(rq.getLoginedMemberId(), relTypeCode, relId);
 
 		if (getPointTypeCodeByMemberId < 0) {
 			return true;
@@ -101,8 +105,8 @@ public class ReactionPointService {
 		return false;
 	}
 	
-	private Integer getSumReactionPointByMemberId(int articleId, String relTypeCode, int actorId) {
-	        Integer getSumRP = reactionPointRepository.getSumReactionPointByMemberId(articleId, relTypeCode, actorId);
+	private Integer getSumReactionPointByMemberId(int actorId, String relTypeCode, int relId) {
+	        Integer getSumRP = reactionPointRepository.getSumReactionPointByMemberId(actorId, relTypeCode, relId);
 
 			return (int) getSumRP;
 		}
