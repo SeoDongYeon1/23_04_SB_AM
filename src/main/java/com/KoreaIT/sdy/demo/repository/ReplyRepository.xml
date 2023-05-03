@@ -15,12 +15,24 @@
 	</insert>
 	
 	<select id="getForPrintReplies" resultType="Reply">
-		SELECT r.*, m.name AS 'extra__writer'
-		FROM reply r
-		INNER JOIN `member` m
-		ON r.memberId = m.id
-		WHERE r.relId = #{relId}
-		AND relTypeCode = #{relTypeCode};
+		SELECT R.*, M.nickname AS extra__writer
+		FROM reply AS R
+		LEFT JOIN `member` AS M
+		ON R.memberId = M.id
+		WHERE R.relTypeCode = #{relTypeCode}
+		AND R.relId = #{relId}
+		ORDER BY R.id ASC
 	</select>
+	
+	<select id="getReply" resultType="Reply">
+		SELECT R.*
+		FROM reply AS R
+		WHERE R.id = #{id}
+	</select>
+	
+	<delete id="deleteReply">
+		DELETE FROM reply
+		WHERE id = #{id}
+	</delete>
 	
 </mapper>

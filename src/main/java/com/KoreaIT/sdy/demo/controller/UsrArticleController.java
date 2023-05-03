@@ -46,7 +46,7 @@ public class UsrArticleController {
 		
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
-		List<Reply> replies = replyService.getForPrintReplies(id, "article");
+		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
 		
 		
 		if(actorCanMakeReactionRd.isSuccess()) {

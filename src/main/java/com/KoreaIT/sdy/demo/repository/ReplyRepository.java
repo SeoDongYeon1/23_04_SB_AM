@@ -11,6 +11,10 @@ public interface ReplyRepository {
 
 	void writeReply(String relTypeCode, int relId, String body, int actorId);
 
-	List<Reply> getForPrintReplies(int relId, String relTypeCode);
+	List<Reply> getForPrintReplies(int actorId, String relTypeCode, int relId);
+	
+	Reply getReply(int id);
+	
+	void deleteReply(int id);
 
 }

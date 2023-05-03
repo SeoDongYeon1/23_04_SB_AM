@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.KoreaIT.sdy.demo.service.ReactionPointService;
 import com.KoreaIT.sdy.demo.service.ReplyService;
 import com.KoreaIT.sdy.demo.util.Ut;
+import com.KoreaIT.sdy.demo.vo.Reply;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 import com.KoreaIT.sdy.demo.vo.Rq;
 
@@ -52,5 +52,31 @@ public class UsrReplyController {
 		}
 		
 		return Ut.jsReplace(writeReplyRd.getMsg(), replaceUri);
+	}
+	
+	@RequestMapping("/usr/reply/doDelete")
+	@ResponseBody
+	public String doDelete(int id, String replaceUri) {
+		
+		Reply reply = replyService.getReply(id);
+		
+		if (reply == null) {
+			return Ut.jsHitoryBack("F-1", Ut.f("%d번 댓글이 존재하지 않습니다.", id));
+		}
+		if (reply.getMemberId() != rq.getLoginedMemberId()) {
+			return Ut.jsHitoryBack("F-1", Ut.f("%d번 댓글에 대한 권한이 없습니다", id));
+		}
+		
+		ResultData deleteReplyRd = replyService.deleteReply(id);
+		
+		if(Ut.empty(replaceUri)) {
+			switch(reply.getRelTypecode()) {
+			case "article":
+				replaceUri = Ut.f("../article/detail?id=%d", reply.getRelId());
+				break;
+			}
+		}
+		
+		return Ut.jsReplace(Ut.f("%d번 댓글을 삭제 했습니다", id), replaceUri);
 	}
 }

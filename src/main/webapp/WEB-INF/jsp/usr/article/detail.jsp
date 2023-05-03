@@ -209,13 +209,15 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 								<div class="reply_regDate">${reply.regDate }</div>
 						</div>
 
-						<c:if test="${reply.memberId == loginedMemberId }">
-								<div class="reply-btn-box">
-										<button>수정</button>
-										<button>삭제</button>
-								</div>
-						</c:if>
 
+						<div class="reply-btn-box">
+								<c:if test="${reply.actorCanModify }">
+										<a href="../reply/modify?id=${reply.id }">수정</a>
+								</c:if>
+								<c:if test="${reply.actorCanDelete }">
+										<a onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="../reply/doDelete?id=${reply.id }">삭제</a>
+								</c:if>
+						</div>
 
 						<br />
 						<div class="reply_bottom flex justify-between">
@@ -315,7 +317,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 	text-align: right;
 }
 
-.reply-btn-box>button {
+.reply-btn-box a {
 	font-weight: bold;
 	font-size: 13px;
 	text-decoration: underline;
