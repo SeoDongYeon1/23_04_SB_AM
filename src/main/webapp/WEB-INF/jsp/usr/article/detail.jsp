@@ -10,22 +10,6 @@
 <c:set var="pageTitle" value="Article Detail"/>
 <%@ include file="../common/head.jspf" %>
 
-
-<!-- 메서드 생성 -->
- <script>
-	
-	
-</script>
-
-<!-- 리액션 실행 코드 -->
-<script>
-		
-</script>		
-<script>	
-	   
-</script>
- 
- 
 <!-- 변수 생성 -->
 <script>
 	const params = {};
@@ -77,11 +61,11 @@
 	
 	
 </script>	
+
 <!-- 리액션 실행 코드 -->
 <script>
-        <!-- jsp 실행 이전의 리액션 여부 체크 및 버튼 색상 표현 -->
-		$(function() {
-			checkAddRpBefore();
+     $(function() {
+		checkAddRpBefore();
 		});
 		
 		 function doGoodReaction(articleId) {
@@ -139,10 +123,6 @@
 		          }
 		      });
 		  }
-		
-		$(function() {
-			checkAddRpBefore();
-		});
 </script>   
 
 	<hr />

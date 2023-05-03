@@ -217,7 +217,9 @@ CREATE TABLE reply(
     relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
     `body` TEXT NOT NULL
 );
-ALTER TABLE reply CONVERT TO CHARSET UTF8;
+
+# reply 테이블의 relTypeCode, relId에 인덱스 걸기
+ALTER TABLE `SB_AM_04`.`reply` ADD KEY `relTypeCodeId` (`relTypeCode` , `relId`);
 
 # 2번 회원이 1번 글에 댓글
 INSERT INTO reply
@@ -393,8 +395,8 @@ WHERE memberId = 3 AND relTypeCode = 'article' AND relId = 2
 SELECT IFNULL(SUM(RP.point),0)
 FROM reactionPoint AS RP
 WHERE RP.relTypeCode = 'article'
-AND RP.relId = 1
-AND RP.memberId = 1
+AND RP.relId = 2
+AND RP.memberId = 3
 
 INSERT INTO reactionPoint
 		SET regDate = NOW(),
@@ -427,13 +429,11 @@ IFNULL(SUM(IF(R.`point` < 0, R.`point`, 0)),0) AS 'extra__badReactionPoint'
 FROM article a
 INNER JOIN reactionPoint R
 ON a.id = R.relId AND R.relTypeCode = 'article'
-INNER JOIN reply re
-ON a.id = re.relId
-WHERE R.relId = 1 AND a.memberId = 1
+WHERE R.relId = 2 AND a.memberId = 2
 GROUP BY a.id;
 
 
-SELECT a.id, COUNT(re.id) AS 'repliesCount'
+SELECT a.id, COUNT(re.id)
 FROM article a
 INNER JOIN reply re
 ON a.id = re.relId
