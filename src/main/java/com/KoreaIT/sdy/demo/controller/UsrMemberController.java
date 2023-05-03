@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -96,11 +97,16 @@ public class UsrMemberController {
 	@ResponseBody
 	public String doLogout() {
 		
-		if (rq.isLogined() == false) {
-			return rq.jsHitoryBack("F-A", "로그인 후 이용해주세요.");
-		}
-		
 		rq.logout();
 		return Ut.jsReplace("로그아웃되었습니다.", "../home/main");
+	}
+	
+	@RequestMapping("/usr/member/profile")
+	public String showProfile(Model model) {
+		Member member = rq.getLoginedMember();
+		
+		
+		model.addAttribute("member", member);
+		return "usr/member/profile";
 	}
 }
