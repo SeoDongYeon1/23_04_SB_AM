@@ -169,7 +169,9 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 				</tr>
 				<tr>
 						<th>조회수</th>
-						<th><span class="article-detail__hit-count">${article.hitCount }</span></th>
+						<th>
+								<span class="article-detail__hit-count">${article.hitCount }</span>
+						</th>
 				</tr>
 
 		</table>
@@ -193,7 +195,8 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 				<span id="DislikeCount">${article.badReactionPoint}</span>
 		</button>
 
-		<br /> <br />
+		<br />
+		<br />
 		<!-- ver1 -->
 		<c:if test="${article.actorCanDelete }">
 				<a class="btn btn-outline" onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;"
@@ -233,7 +236,14 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 						<br />
 						<div class="reply_bottom flex justify-between">
 								<div>${reply.body }</div>
-								<div class="btn-box"></div>
+								<div>
+										<button class="re_likeButton btn btn-outline" type="button" onclick="">
+												<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			    									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+			  									</svg>
+												<span id="re_likeCount">${reply.goodReactionPoint}</span>
+										</button>
+								</div>
 						</div>
 						<hr />
 						<br />
@@ -246,11 +256,13 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 				<div style="font-weight: bold; font-size: 17px;">댓글</div>
 				<form method="post" action="../reply/doWrite" onsubmit="return ReplyWrite__SubmitForm(this); return false;"
 						style="width: 700px; height: 250px; border: 2px solid black; display: inline-block; border-radius: 8px;">
-						<br /> <input type="hidden" name="relTypeCode" value="article" /> <input type="hidden" name="relId"
-								value="${article.id }" />
+						<br />
+						<input type="hidden" name="relTypeCode" value="article" />
+						<input type="hidden" name="relId" value="${article.id }" />
 						<div style="display: inline-block; text-align: left;">
 								<div style="font-size: 17px; font-weight: bold;">
-										내용 <br />
+										내용
+										<br />
 										<textarea class="body textarea textarea-bordered"
 												style="border: 2px solid black; border-radius: 8px; border-color: black; width: 650px; height: 80px;"
 												name="body"></textarea>

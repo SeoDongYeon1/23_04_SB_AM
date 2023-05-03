@@ -16,6 +16,8 @@ public class Reply {
 	private String relTypeCode;
 	private int memberId;
 	private int relId;
+	private int goodReactionPoint;
+	private int badReactionPoint;
 	
 	private String extra__writer;
 	
