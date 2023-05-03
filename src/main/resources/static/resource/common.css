@@ -1,12 +1,12 @@
 @font-face {
-    font-family: 'OTWelcomeRA';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
-    font-weight: normal;
+    font-family: 'OAGothic-ExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
     font-style: normal;
 }
 
 html > body {
-	font-family: 'KIMM_Bold';
+	font-family: 'OAGothic-ExtraBold';
 }
 
 /* 라이브러리 */

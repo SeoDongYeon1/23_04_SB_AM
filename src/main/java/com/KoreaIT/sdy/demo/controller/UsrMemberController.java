@@ -109,4 +109,13 @@ public class UsrMemberController {
 		model.addAttribute("member", member);
 		return "usr/member/profile";
 	}
+	
+	@RequestMapping("/usr/member/checkPw")
+	public String showCheckPw(Model model) {
+		Member member = rq.getLoginedMember();
+		
+		model.addAttribute("member", member);
+		
+		return "usr/member/checkPw";
+	}
 }
