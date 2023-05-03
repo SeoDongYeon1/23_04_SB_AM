@@ -9,7 +9,7 @@
 		<div style="font-weight:bold; font-size: 17px;">
 			${article.id }번 게시글 수정
 		</div>
-		<form style="width: 550px; height: 620px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doModify">
+		<form method= "post" action="doModify" onsubmit="ArticleModify__submit(this) return false;" style="width: 550px; height: 620px; border:2px solid black; display: inline-block;  border-radius: 8px;" >
 			<br />
 			<div style="display: inline-block; text-align:left;">
 				<input value= "${article.id }" type="hidden" name="id"/>
@@ -40,6 +40,28 @@
 			</div>
 		</form>
 	</div>
+
+<script>
+let ArticleModify__submitDone = false; 
 	
+function ArticleModify__submit(form) {
+    var title = form.title.value.trim();		
+    var body = form.body.value.trim();
+    
+    if(title.length == 0) {
+        alert('제목을 입력해주세요.');
+        form.title.focus();
+        return false;
+    }
+    if(body.length == 0) {
+        alert('내용을 입력해주세요.');
+        form.body.focus();	
+        return false;
+    }
+    
+    ArticleModify__submitDone = true;
+    form.submit();
+}
+</script>
 	
 <%@ include file="../common/foot.jspf" %>

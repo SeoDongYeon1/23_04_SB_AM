@@ -12,7 +12,7 @@
 		<div style="font-weight:bold; font-size: 17px;">
 			게시글 작성
 		</div>
-		<form style="width: 550px; height: 680px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doWrite" onsubmit = "return Submit(this); return false;">
+		<form style="width: 550px; height: 680px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doWrite" onsubmit = "return ArticleWrite__submit(this); return false;">
 			<br />
 			<div style="text-align: left; margin: 0 25px; font-weight: bold;">
 				작성자: ${rq.loginedMember.nickname }
@@ -56,7 +56,9 @@
 	    });
 	});
 
-function Submit(form) {
+let ArticleWrite__submitDone = false; 
+	
+function ArticleWrite__submit(form) {
     var title = form.title.value.trim();		
     var body = form.body.value.trim();
     var boardId = $('input[name="boardId"]').val().trim();
@@ -76,7 +78,8 @@ function Submit(form) {
         return false;
     }
     
-    return true;
+    ArticleWrite__submitDone = true;
+    form.submit();
 }
 </script>
 <%@ include file="../common/foot.jspf" %>

@@ -21,6 +21,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 
 <!-- 메서드 생성 -->
 <script>
+<!-- 조회수 관련 -->
 	function ArticleDetail__increaseHitCount() {
 		const localStorageKey = 'article__' + params.id + '__alreadyView';
 		
@@ -61,7 +62,8 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
      $(function() {
 		checkAddRpBefore();
 		});
-		
+     
+     <!-- 좋아요, 싫어요 관련 -->		
 		 function doGoodReaction(articleId) {
 		        $.ajax({
 		            url: '/usr/reactionPoint/doGoodReaction',

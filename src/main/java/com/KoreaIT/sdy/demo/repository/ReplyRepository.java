@@ -9,12 +9,13 @@ import com.KoreaIT.sdy.demo.vo.Reply;
 @Mapper
 public interface ReplyRepository {
 
-	void writeReply(String relTypeCode, int relId, String body, int actorId);
+	public void writeReply(String relTypeCode, int relId, String body, int actorId);
 
-	List<Reply> getForPrintReplies(int actorId, String relTypeCode, int relId);
+	public List<Reply> getForPrintReplies(int actorId, String relTypeCode, int relId);
 	
-	Reply getReply(int id);
+	public Reply getReplyById(int id);
 	
-	void deleteReply(int id);
-
+	public void deleteReply(int id);
+	
+	public Reply getForPrintReply(int id);
 }

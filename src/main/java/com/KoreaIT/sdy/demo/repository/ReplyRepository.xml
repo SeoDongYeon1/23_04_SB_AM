@@ -24,7 +24,7 @@
 		ORDER BY R.id ASC
 	</select>
 	
-	<select id="getReply" resultType="Reply">
+	<select id="getReplyById" resultType="Reply">
 		SELECT R.*
 		FROM reply AS R
 		WHERE R.id = #{id}
@@ -34,5 +34,13 @@
 		DELETE FROM reply
 		WHERE id = #{id}
 	</delete>
+	
+	<select id="getForPrintReply" resultType="Reply">
+		SELECT R.*, M.nickname AS extra__writer
+			FROM reply AS R
+			INNER JOIN `member` AS M
+			ON R.memberId = M.id
+			WHERE R.id = #{id}
+	</select>
 	
 </mapper>
