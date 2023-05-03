@@ -65,6 +65,10 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
      
      <!-- 좋아요, 싫어요 관련 -->		
 		 function doGoodReaction(articleId) {
+			 if(params.memberId==0) {
+				 alert('로그인 후 이용해주세요.');
+				 return;
+			 }
 		        $.ajax({
 		            url: '/usr/reactionPoint/doGoodReaction',
 		            type: 'POST',
@@ -82,7 +86,8 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		                        likeButton.removeClass('btn-outline').addClass('btn-danger');
 		                        likeCount.text(parseInt(likeCount.text()) + 1);
 		                    }
-		                } else {
+		                } 
+		                else {
 		                    alert(data.msg);
 		                }
 		            },
@@ -93,6 +98,10 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		    }
 			
 		function doBadReaction(articleId) {
+			if(params.memberId==0) {
+				 alert('로그인 후 이용해주세요.');
+				 return;
+			 }
 		      $.ajax({
 		          url: '/usr/reactionPoint/doBadReaction',
 		          type: 'POST',
