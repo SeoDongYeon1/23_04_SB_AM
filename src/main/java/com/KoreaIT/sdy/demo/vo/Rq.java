@@ -117,13 +117,13 @@ public class Rq {
 		return Ut.getEncodedCurrentUri(getCurrentUri());
 	}
 
-	// Rq 객체 생성 유도
-	// 삭제 x, BeforeActionInterceptor 에서 강제 호출
-	public void initOnBeforeActionInterceptor() {
-
-	}
-	
 	public boolean isNotLogined() {
 		return !isLogined;
+	}
+	
+	// Rq 객체 생성
+	// 삭제 x
+	public void run() {
+		System.out.println("=======================run A ==========================");
 	}
 }

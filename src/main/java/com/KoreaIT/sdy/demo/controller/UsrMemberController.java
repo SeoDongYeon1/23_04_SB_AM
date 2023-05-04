@@ -156,16 +156,16 @@ public class UsrMemberController {
 			loginPw = null;
 		}
 		if (Ut.empty(name)) {
-			return rq.jsHitoryBack("F-1","이름을 입력해주세요.");
+			return rq.jsHitoryBack("F-1", "이름을 입력해주세요.");
 		}
 		if (Ut.empty(nickname)) {
-			return rq.jsHitoryBackOnView("닉네임을 입력해주세요.");
+			return rq.jsHitoryBack("F-2", "닉네임을 입력해주세요.");
 		}
 		if (Ut.empty(cellphoneNum)) {
-			return rq.jsHitoryBackOnView("전화번호를 입력해주세요.");
+			return rq.jsHitoryBack("F-3", "전화번호를 입력해주세요.");
 		}
 		if (Ut.empty(email)) {
-			return rq.jsHitoryBackOnView("이메일을 입력해주세요.");
+			return rq.jsHitoryBack("F-4", "이메일을 입력해주세요.");
 		}
 		
 		ResultData modifyRd = memberService.modifyMember(id, loginPw, name, nickname, cellphoneNum, email);
