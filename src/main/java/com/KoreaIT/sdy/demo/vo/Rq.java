@@ -163,6 +163,7 @@ public class Rq {
 		case "/usr/member/doLogout":
 			return Ut.getEncodedUri(paramMap.get("afterLogoutUri"));
 			
+			
 		}
 		
 		return getEncodedCurrentUri();
