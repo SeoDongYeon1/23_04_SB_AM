@@ -9,6 +9,7 @@
 		</div>
 		<form style="width: 350px; height: 270px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doLogin">
 			<br />
+			<input type="hidden" name="afterLoginUri" value=${param.afterLoginUri } />
 			<div style="display: inline-block; text-align:left;">
 				<div style="font-size: 15px; font-weight: bold; ">
 					아이디
@@ -29,5 +30,6 @@
 			</div>
 		</form>
 	</div>
+
 	
 <%@ include file="../common/foot.jspf" %>

@@ -57,6 +57,11 @@ public class Rq {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsHitoryBack("F-B", msg));
 	}
+	
+	public void printReplaceLoginJs(String msg, String afterLoginUri) throws IOException {
+		resp.setContentType("text/html; charset=UTF-8");
+		print(Ut.jsReplace(msg, "../member/login?afterLoginUri=" + afterLoginUri));
+	}
 
 	public void print(String str) {
 		try {
