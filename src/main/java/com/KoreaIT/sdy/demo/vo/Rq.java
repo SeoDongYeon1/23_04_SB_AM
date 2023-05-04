@@ -1,6 +1,7 @@
 package com.KoreaIT.sdy.demo.vo;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,11 +30,15 @@ public class Rq {
 	private HttpServletResponse resp;
 	private HttpSession session;
 
+	private Map<String, String> paramMap;
+
 	public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
 		this.req = req;
 		this.resp = resp;
 
 		this.session = req.getSession();
+
+		paramMap = Ut.getParamMap(req);
 
 		boolean isLogined = false;
 		int loginedMemberId = 0;
@@ -57,7 +62,7 @@ public class Rq {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsHitoryBack("F-B", msg));
 	}
-	
+
 	public void printReplaceLoginJs(String msg, String afterLoginUri) throws IOException {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsReplace(msg, "../member/login?afterLoginUri=" + afterLoginUri));
@@ -97,7 +102,7 @@ public class Rq {
 	public String jsReplace(String msg, String uri) {
 		return Ut.jsReplace(msg, uri);
 	}
-	
+
 	public String jsReplace(String uri) {
 		return Ut.jsReplace(uri);
 	}
@@ -105,10 +110,10 @@ public class Rq {
 	public String getCurrentUri() {
 		String currentUri = req.getRequestURI();
 		String queryString = req.getQueryString();
-		
+
 		System.out.println(currentUri);
 		System.out.println(queryString);
-		
+
 		if (queryString != null && queryString.length() > 0) {
 			currentUri += "?" + queryString;
 		}
@@ -117,29 +122,35 @@ public class Rq {
 		return currentUri;
 
 	}
-	
+
 	public boolean isNotLogined() {
 		return !isLogined;
 	}
-	
+
 	// Rq 객체 생성
 	// 삭제 x
 	public void run() {
 		System.out.println("=======================run A ==========================");
 	}
-	
+
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
 	}
-	
-	public String getLogoutUri() {
-		return "../member/doLogout?afterLoginUri=" + getAfterLoginUri();
-	}
 
 	private String getAfterLoginUri() {
+//		로그인 후 접근 불가 페이지
+		String requestUri = req.getRequestURI();
+
+		switch (requestUri) {
+		case "/usr/member/login":
+		case "/usr/member/join":
+			return Ut.getEncodedUri(paramMap.get("afterLoginUri"));
+
+		}
+
 		return getEncodedCurrentUri();
 	}
-	
+
 	public String getEncodedCurrentUri() {
 		return Ut.getEncodedCurrentUri(getCurrentUri());
 	}

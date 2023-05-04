@@ -216,7 +216,12 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		%>
 		<button class="btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
 </div>
-
+<br />
+<c:if test="${rq.notLogined }">
+		<div style="text-align: center;">
+				<a class="btn-text-link btn btn-outline" href="${rq.loginUri}">로그인</a> 후 댓글을 작성할 수 있습니다.
+		</div>
+</c:if>
 <div class="reply_text">
 		댓글
 		<div class="mt-8 text-xl mx-auto px-3 reply_box" style="width: 700px;">
@@ -258,11 +263,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 </div>
 
 <br />
-<c:if test="${rq.notLogined }">
-		<div style="text-align: center;">
-				<a class="btn-text-link btn btn-active btn-ghost" href="${rq.loginUri}">로그인</a> 후 댓글을 작성할 수 있습니다.
-		</div>
-</c:if>
+
 
 <c:if test="${rq.logined }">
 		<div style="text-align: center; margin-top: 30px;">
