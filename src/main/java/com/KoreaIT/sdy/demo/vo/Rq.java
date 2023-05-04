@@ -136,9 +136,13 @@ public class Rq {
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
 	}
+	
+	public String getLogoutUri() {
+		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+	}
 
 	private String getAfterLoginUri() {
-//		로그인 후 접근 불가 페이지
+		//로그인 후 접근 불가 페이지 방지
 		String requestUri = req.getRequestURI();
 
 		switch (requestUri) {
@@ -148,6 +152,19 @@ public class Rq {
 
 		}
 
+		return getEncodedCurrentUri();
+	}
+	
+	private String getAfterLogoutUri() {
+		//로그아웃 후 접근 불가 페이지 방지
+		String requestUri = req.getRequestURI();
+		
+		switch (requestUri) {
+		case "/usr/member/doLogout":
+			return Ut.getEncodedUri(paramMap.get("afterLogoutUri"));
+			
+		}
+		
 		return getEncodedCurrentUri();
 	}
 
