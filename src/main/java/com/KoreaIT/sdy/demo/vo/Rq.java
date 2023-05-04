@@ -118,10 +118,6 @@ public class Rq {
 
 	}
 	
-	public String getEncodedCurrentUri() {
-		return Ut.getEncodedCurrentUri(getCurrentUri());
-	}
-
 	public boolean isNotLogined() {
 		return !isLogined;
 	}
@@ -130,5 +126,17 @@ public class Rq {
 	// 삭제 x
 	public void run() {
 		System.out.println("=======================run A ==========================");
+	}
+	
+	public String getLoginUri() {
+		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+	}
+
+	private String getAfterLoginUri() {
+		return getEncodedCurrentUri();
+	}
+	
+	public String getEncodedCurrentUri() {
+		return Ut.getEncodedCurrentUri(getCurrentUri());
 	}
 }
