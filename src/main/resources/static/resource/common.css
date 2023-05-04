@@ -31,15 +31,29 @@
 		format('woff');
 }
 
+@font-face {
+	font-family: 'GmarketSansMedium';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 .lottemartdream * {
 	font-family: 'LotteMartDream', sans-serif;
+}
+
+html>body .toastui-editor-contents, html>body .ProseMirror, html>body .toastui-editor-md-mode
+	{
+	font-family: 'GmarketSansMedium', sans-serif;
 }
 
 html>body {
 	font-family: 'LotteMartDream', sans-serif;
 }
 
-/* 라이브러리 */
+/* 커스텀 */
 .table-box-type-1 th{
 	border: 2px solid black;
 	padding: 10px;
