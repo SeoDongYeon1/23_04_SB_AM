@@ -5,12 +5,58 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="Article Write"/>
 <%@ include file="../common/head.jspf" %>
+<%@ include file="../common/toastUIEditorLib.jspf"%>
+
+<!-- Article write 관련 -->
+<script type="text/javascript">
+	$(document).ready(function() {
+	    $('#boardId').on('change', function() {
+	        $('input[name="boardId"]').val($(this).val());
+	    });
+	});
+
+let ArticleWrite__submitDone = false; 
+	
+function ArticleWrite__submit(form) {
+    var title = form.title.value.trim();		
+    var body = form.body.value.trim();
+    var boardId = $('input[name="boardId"]').val().trim();
+    
+    if(boardId.length == 0) {
+        alert('게시판을 선택해주세요.');
+        return false;
+    }
+    
+    if(title.length == 0) {
+        alert('제목을 입력해주세요.');
+        form.title.focus(); 
+        return false;
+    }
+    
+	const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+	const markdown = editor.getMarkdown().trim();
+	
+	if (markdown.length == 0) {
+		alert('내용을 입력해주세요.');
+		editor.focus();
+		return false;
+	}
+
+	form.body.value = markdown;
+    
+    ArticleWrite__submitDone = true;
+    form.submit();
+}
+</script>
+
+
 	<div style="text-align:center;">
 		<div style="font-weight:bold; font-size: 17px;">
 			게시글 작성
 		</div>
-		<form style="width: 550px; height: 680px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doWrite" onsubmit = "return ArticleWrite__submit(this); return false;">
+		<form style="width: 850px; height: 1000px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doWrite" onsubmit = "return ArticleWrite__submit(this); return false;">
 			<br />
+			<input type="hidden" name="body">
 			<div style="text-align: left; margin: 0 25px; font-weight: bold;">
 				작성자: ${rq.loginedMember.nickname }
 			</div>
@@ -35,7 +81,9 @@
 				<div style="font-size: 17px; font-weight: bold;">
 					내용
 					<br />
-					<textarea class="body textarea textarea-bordered" style="border: 2px solid black; border-radius: 8px; border-color:black; width: 500px; height: 300px;" name="body"></textarea>
+					<div style="width: 800px;" class="toast-ui-editor">
+						<script type="text/x-template"></script>
+					</div>
 				</div>
 				<br />
 			</div>
@@ -46,37 +94,6 @@
 			</div>
 		</form>
 	</div>
-<script>
-	$(document).ready(function() {
-	    $('#boardId').on('change', function() {
-	        $('input[name="boardId"]').val($(this).val());
-	    });
-	});
-
-let ArticleWrite__submitDone = false; 
 	
-function ArticleWrite__submit(form) {
-    var title = form.title.value.trim();		
-    var body = form.body.value.trim();
-    var boardId = $('input[name="boardId"]').val().trim();
-    
-    if(boardId.length == 0) {
-        alert('게시판을 선택해주세요.');
-        return false;
-    }
-    if(title.length == 0) {
-        alert('제목을 입력해주세요.');
-        form.title.focus(); 
-        return false;
-    }
-    if(body.length == 0) {
-        alert('내용을 입력해주세요.');
-        form.body.focus();	
-        return false;
-    }
-    
-    ArticleWrite__submitDone = true;
-    form.submit();
-}
-</script>
+
 <%@ include file="../common/foot.jspf" %>
