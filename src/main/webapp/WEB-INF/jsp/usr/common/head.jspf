@@ -50,10 +50,16 @@
 										<a class="h-full px-3 flex items-center" href="/usr/article/list">
 												<span>LIST</span>
 										</a>
-										<ul>
-											<li class="hover:underline"><a href="/usr/article/list?boardId=1">공지사항</a></li>
-											<li class="hover:underline"><a href="/usr/article/list?boardId=2">자유게시판</a></li>
-											<li class="hover:underline"><a href="/usr/article/list?boardId=3">QnA</a></li>
+										<ul class="z-10">
+											<li class="hover:underline">
+												<a href="/usr/article/list?boardId=1">공지사항</a>
+											</li>
+											<li class="hover:underline">
+												<a href="/usr/article/list?boardId=2">자유게시판</a>
+											</li>
+											<li class="hover:underline">
+												<a href="/usr/article/list?boardId=3">QnA</a>
+											</li>
 										</ul>
 								</li>
 								<c:if test="${rq.isLogined() }">
@@ -94,4 +100,7 @@
 						</ul>
 				</div>
 		</header>
+		<hr />
+		<br />
+		<br />
 		<main>

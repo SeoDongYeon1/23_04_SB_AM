@@ -12,7 +12,6 @@ int endPage = startPage+displayPage-1;
 %>
 <c:set var="pageTitle" value="${board.name }"/>
 <%@ include file="../common/head.jspf" %>
-	<hr />
 	
 	<div class="mt-8 text-xl mx-auto px-3">
 		<div style="text-align:center;">전체 게시물 갯수 : ${articlesCount }개</div>

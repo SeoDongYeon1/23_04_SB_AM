@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="Member Modify"/>
 <%@ include file="../common/head.jspf" %>
-	<hr />
 
 <!-- Member modify 관련 -->
 <script type="text/javascript">

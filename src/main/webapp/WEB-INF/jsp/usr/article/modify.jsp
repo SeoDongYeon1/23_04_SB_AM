@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" value="Article Modify"/>
 <%@ include file="../common/head.jspf" %>
-	<hr />
 	
 	<div style="text-align:center;">
 		<div style="font-weight:bold; font-size: 17px;">

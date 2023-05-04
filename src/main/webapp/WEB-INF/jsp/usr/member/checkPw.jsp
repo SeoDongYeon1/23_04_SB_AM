@@ -4,9 +4,7 @@
 <c:set var="pageTitle" value="LOGIN"/>
 <%@ include file="../common/head.jspf" %>
 <%@ page import="com.KoreaIT.sdy.demo.vo.Member" %>
-	<hr />
-	<br />
-	<br />
+
 <%
 Member member = (Member) request.getAttribute("member");
 String loginPw = member.getLoginPw();

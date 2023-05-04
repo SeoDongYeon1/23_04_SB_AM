@@ -149,11 +149,28 @@ public class UsrMemberController {
 		Member member = memberService.getMemberById(id);
 		
 		if (member == null) {
-			return Ut.jsHitoryBack("F-E", "존재하지 않는 회원입니다.");
+			return rq.jsHitoryBack("F-E", "존재하지 않는 회원입니다.");
 		}
 		
-		memberService.modifyMember(id, loginPw, name, nickname, cellphoneNum, email);
+		if (Ut.empty(loginPw)) {
+			loginPw = null;
+		}
+		if (Ut.empty(name)) {
+			return rq.jsHitoryBack("F-1","이름을 입력해주세요.");
+		}
+		if (Ut.empty(nickname)) {
+			return rq.jsHitoryBackOnView("닉네임을 입력해주세요.");
+		}
+		if (Ut.empty(cellphoneNum)) {
+			return rq.jsHitoryBackOnView("전화번호를 입력해주세요.");
+		}
+		if (Ut.empty(email)) {
+			return rq.jsHitoryBackOnView("이메일을 입력해주세요.");
+		}
+		
+		ResultData modifyRd = memberService.modifyMember(id, loginPw, name, nickname, cellphoneNum, email);
+		
+		return rq.jsReplace(modifyRd.getMsg(), "../member/profile");
 
-		return Ut.jsReplace(Ut.f("%s님 회원정보가 수정되었습니다.", member.getName()), "../member/profile");
 	}
 }
