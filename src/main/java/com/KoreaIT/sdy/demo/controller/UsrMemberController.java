@@ -92,10 +92,10 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout() {
+	public String doLogout(@RequestParam(defaultValue = "/") String afterLoginUri) {
 		
 		rq.logout();
-		return Ut.jsReplace("로그아웃되었습니다.", "../home/main");
+		return Ut.jsReplace("로그아웃되었습니다.", afterLoginUri);
 	}
 	
 	@RequestMapping("/usr/member/profile")

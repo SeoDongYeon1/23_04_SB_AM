@@ -131,6 +131,10 @@ public class Rq {
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
 	}
+	
+	public String getLogoutUri() {
+		return "../member/doLogout?afterLoginUri=" + getAfterLoginUri();
+	}
 
 	private String getAfterLoginUri() {
 		return getEncodedCurrentUri();
