@@ -86,7 +86,7 @@
 								<%}%>
 								<c:if test="${!rq.isLogined() }">
 								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/usr/member/doJoin">
+										<a class="h-full px-3 flex items-center" href="/usr/member/join">
 												<span>Sign Up</span>
 										</a>
 								</li>

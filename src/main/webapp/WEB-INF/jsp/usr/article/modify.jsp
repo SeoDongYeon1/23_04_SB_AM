@@ -39,6 +39,7 @@
 				style="width: 850px; height: 1000px; border: 2px solid black; display: inline-block; border-radius: 8px;">
 				<br />
 				<div style="display: inline-block; text-align: left;">
+						<input type="hidden" name="replaceUri" value="${param.replaceUri }" />
 						<input value="${article.id }" type="hidden" name="id" />
 						<input type="hidden" name="body">
 						<div style="text-align: right; font-size: 14px; font-weight: bold">

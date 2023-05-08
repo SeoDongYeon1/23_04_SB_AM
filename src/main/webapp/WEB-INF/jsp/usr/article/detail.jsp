@@ -72,6 +72,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		        }
 		        return;
 		    }
+
  		$.ajax({
              url: '/usr/reactionPoint/doGoodReaction',
              type: 'POST',
@@ -227,7 +228,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		<%
 		if (loginedMemberId == article.getMemberId()) {
 		%>
-		<a class="btn btn-outline" href="modify?id=${article.id }">수정</a>
+		<a class="btn btn-outline" href="modify?id=${article.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>
 		<%
 		}
 		%>
@@ -251,10 +252,10 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 
 						<div class="reply-btn-box">
 								<c:if test="${reply.actorCanModify }">
-										<a href="../reply/modify?id=${reply.id }&replaceUri=${rq.EncodedCurrentUri }">수정</a>
+										<a href="../reply/modify?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>
 								</c:if>
 								<c:if test="${reply.actorCanDelete }">
-										<a onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="../reply/doDelete?id=${reply.id }">삭제</a>
+										<a onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="../reply/doDelete?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">삭제</a>
 								</c:if>
 						</div>
 
@@ -287,7 +288,9 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 				<div style="font-weight: bold; font-size: 17px;">댓글</div>
 				<form method="post" action="../reply/doWrite" onsubmit="return ReplyWrite__SubmitForm(this); return false;"
 						style="width: 700px; height: 250px; border: 2px solid black; display: inline-block; border-radius: 8px;">
-						<br /> <input type="hidden" name="relTypeCode" value="article" /> <input type="hidden" name="relId"
+						<br /> 
+						<input type="hidden" name="replaceUri" value="${rq.currentUri }" />
+						<input type="hidden" name="relTypeCode" value="article" /> <input type="hidden" name="relId"
 								value="${article.id }" />
 						<div style="display: inline-block; text-align: left;">
 								<div style="font-size: 17px; font-weight: bold;">
