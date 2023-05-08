@@ -39,12 +39,10 @@ public class UsrArticleController {
 
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(int id, Model model, int boardId) {
+	public String showDetail(int id, Model model) {
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
-		boardId = article.getBoardId();
-		
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMemberId(), "article", id);
@@ -89,7 +87,7 @@ public class UsrArticleController {
 		Board board = boardService.getBoardById(boardId);
 
 		if (board == null) {
-			return rq.jsHitoryBackOnView("없는 게시판이야");
+			return rq.jsHistoryBackOnView("없는 게시판이야");
 		}
 
 		int articlesCount = articleService.articlesCount(boardId, searchKeywordTypeCode, searchKeyword);
@@ -134,10 +132,10 @@ public class UsrArticleController {
 	public String doWrite(String title, String body, int boardId, String replaceUri) {
 
 		if (Ut.empty(title)) {
-			return rq.jsHitoryBack("F-1", "제목을 입력해주세요.");
+			return rq.jsHistoryBack("F-1", "제목을 입력해주세요.");
 		}
 		if (Ut.empty(body)) {
-			return rq.jsHitoryBack("F-2", "내용을 입력해주세요.");
+			return rq.jsHistoryBack("F-2", "내용을 입력해주세요.");
 		}
 
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
@@ -174,13 +172,13 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {
-			return rq.jsHitoryBackOnView(Ut.f("%d번 게시글은 존재하지 않습니다.", id));
+			return rq.jsHistoryBackOnView(Ut.f("%d번 게시글은 존재하지 않습니다.", id));
 		}
 
 		ResultData<String> actorCanModifyRd = articleService.actorCanModifyRd(rq.getLoginedMemberId(), article);
 
 		if (actorCanModifyRd.isFail()) {
-			return rq.jsHitoryBackOnView(actorCanModifyRd.getMsg());
+			return rq.jsHistoryBackOnView(actorCanModifyRd.getMsg());
 		}
 
 		model.addAttribute("article", article);

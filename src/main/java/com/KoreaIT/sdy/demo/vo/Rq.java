@@ -58,7 +58,7 @@ public class Rq {
 
 	}
 
-	public void printHitoryBackJs(String msg) throws IOException {
+	public void printHistoryBackJs(String msg) throws IOException {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsHitoryBack("F-B", msg));
 	}
@@ -88,14 +88,14 @@ public class Rq {
 		session.removeAttribute("loginedMemberId");
 	}
 
-	public String jsHitoryBackOnView(String msg) {
+	public String jsHistoryBackOnView(String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
 		return "usr/common/js";
 
 	}
 
-	public String jsHitoryBack(String resultCode, String msg) {
+	public String jsHistoryBack(String resultCode, String msg) {
 		return Ut.jsHitoryBack(resultCode, msg);
 	}
 
@@ -134,15 +134,6 @@ public class Rq {
 	}
 
 	public String getLoginUri() {
-		return "../member/login?afterLoginUri=" + getAfterLoginUri();
-	}
-	
-	public String getLogoutUri() {
-		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
-	}
-
-	private String getAfterLoginUri() {
-		//로그인 후 접근 불가 페이지 방지
 		String requestUri = req.getRequestURI();
 
 		switch (requestUri) {
@@ -150,24 +141,39 @@ public class Rq {
 		case "/usr/member/join":
 			return Ut.getEncodedUri(Ut.getAttr(paramMap, "afterLoginUri", ""));
 		}
-		
-		return getEncodedCurrentUri();
+		return "../member/login?afterLoginUri=" + getAfterLoginUri();
 	}
 	
-	private String getAfterLogoutUri() {
-		//로그아웃 후 접근 불가 페이지 방지
+	public String getLogoutUri() {
 		String requestUri = req.getRequestURI();
 		
 		switch (requestUri) {
-		case "/usr/member/doLogout":
-		case "/usr/article/modify":
 		case "/usr/article/write":
-			return Ut.getEncodedUri(paramMap.get("afterLogoutUri"));
+		case "/usr/article/modify":
+			return "../member/doLogout?afterLogoutUri=" + getAfterLoginUri();
 		}
+		
+		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+	}
+	
+	public String getJoinUri() {
+		return "../member/join?afterLoginUri=" + getAfterLoginUri();
+	}
+	
+	private String getAfterLoginUri() {
+		return getEncodedCurrentUri();
+	}
+	
+	public String getAfterLogoutUri() {
 		return getEncodedCurrentUri();
 	}
 
 	public String getEncodedCurrentUri() {
 		return Ut.getEncodedCurrentUri(getCurrentUri());
+	}
+	
+	public String getArticleDetailUriFromArticleList(Article article) {
+		
+		return Ut.f("../article/detail?id=%d&boardId=%s", article.getId(), article.getBoardId());
 	}
 }

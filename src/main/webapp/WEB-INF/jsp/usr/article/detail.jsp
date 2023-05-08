@@ -251,7 +251,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 
 						<div class="reply-btn-box">
 								<c:if test="${reply.actorCanModify }">
-										<a href="../reply/modify?id=${reply.id }">수정</a>
+										<a href="../reply/modify?id=${reply.id }&replaceUri=${rq.EncodedCurrentUri }">수정</a>
 								</c:if>
 								<c:if test="${reply.actorCanDelete }">
 										<a onclick="if(confirm('정말 삭제하시겠습니까?')==false) return false;" href="../reply/doDelete?id=${reply.id }">삭제</a>

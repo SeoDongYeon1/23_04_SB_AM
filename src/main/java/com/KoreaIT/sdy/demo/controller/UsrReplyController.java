@@ -31,7 +31,7 @@ public class UsrReplyController {
 	public String doWrite(String relTypeCode, int relId, String body, String replaceUri) {
 
 		if (Ut.empty(body)) {
-			return rq.jsHitoryBack("F-2", "내용을 입력해주세요.");
+			return rq.jsHistoryBack("F-2", "내용을 입력해주세요.");
 		}
 
 		ResultData writeReplyRd = replyService.writeReply(relTypeCode, relId, body, rq.getLoginedMemberId());
@@ -76,13 +76,13 @@ public class UsrReplyController {
 		Reply reply = replyService.getForPrintReply(rq.getLoginedMemberId(), id);
 
 		if (reply == null) {
-			return rq.jsHitoryBackOnView(Ut.f("%d번 댓글은 존재하지 않습니다!", id));
+			return rq.jsHistoryBackOnView(Ut.f("%d번 댓글은 존재하지 않습니다!", id));
 		}
 
 		ResultData actorCanModifyRd = replyService.actorCanModify(rq.getLoginedMemberId(), reply);
 
 		if (actorCanModifyRd.isFail()) {
-			return rq.jsHitoryBackOnView(actorCanModifyRd.getMsg());
+			return rq.jsHistoryBackOnView(actorCanModifyRd.getMsg());
 		}
 
 		Article article = articleService.getArticleById(reply.getRelId());
@@ -100,13 +100,13 @@ public class UsrReplyController {
 		Reply reply = replyService.getReplyById(id);
 
 		if (reply == null) {
-			return rq.jsHitoryBack("F-1", Ut.f("%d번 댓글은 존재하지 않습니다", id));
+			return rq.jsHistoryBack("F-1", Ut.f("%d번 댓글은 존재하지 않습니다", id));
 		}
 
 		ResultData actorCanModifyRd = replyService.actorCanModify(rq.getLoginedMemberId(), reply);
 
 		if (actorCanModifyRd.isFail()) {
-			return rq.jsHitoryBack(actorCanModifyRd.getResultCode(), actorCanModifyRd.getMsg());
+			return rq.jsHistoryBack(actorCanModifyRd.getResultCode(), actorCanModifyRd.getMsg());
 		}
 
 		ResultData modifyReplyRd = replyService.modifyReply(id, body);
