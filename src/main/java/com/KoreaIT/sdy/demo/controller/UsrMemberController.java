@@ -75,6 +75,10 @@ public class UsrMemberController {
 		if (Ut.empty(loginPw)) {
 			return rq.jsHitoryBack("F-2", "비밀번호를 입력해주세요");
 		}
+		
+		if(afterLoginUri==null) {
+			afterLoginUri ="/";
+		}
 
 		Member member = memberService.getMemberByLoginId(loginId);
 

@@ -64,76 +64,79 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 		});
      
      <!-- 좋아요, 싫어요 관련 -->		
-		 function doGoodReaction(articleId) {
-			 if(params.memberId==0) {
-			        if(confirm('로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?')) {
-			            var currentUri = encodeURIComponent(window.location.href);
-			            window.location.href = '../member/login?afterLoginUri=' + currentUri; // 로그인 페이지 URI에 원래 페이지의 URI를 포함하여 이동
-			        }
-			        return;
-			    }
-			 
-		        $.ajax({
-		            url: '/usr/reactionPoint/doGoodReaction',
-		            type: 'POST',
-		            data: {relTypeCode: 'article', relId: articleId},
-		            dataType: 'json',
-		            success: function(data) {
-		                if (data.resultCode.startsWith('S-')) {
-		                    var likeButton = $('#likeButton');
-		                    var likeCount = $('#likeCount');
-		
-		                    if (data.resultCode == 'S-1') {
-		                        likeButton.removeClass('btn-danger').addClass('btn-outline');
-		                        likeCount.text(parseInt(likeCount.text()) - 1);
-		                    } else {
-		                        likeButton.removeClass('btn-outline').addClass('btn-danger');
-		                        likeCount.text(parseInt(likeCount.text()) + 1);
-		                    }
-		                } 
-		                else {
-		                    alert(data.msg);
-		                }
-		            },
-		            error: function(jqXHR, textStatus, errorThrown) {
-		                alert('오류가 발생했습니다: ' + textStatus);
-		            }
-		        });
-		    }
-			
-		function doBadReaction(articleId) {
-			if(params.memberId==0) {
-		        if(confirm('로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?')) {
-		            window.location.href = '../member/login'; // 로그인 페이지 URI로 이동
-		        }
-		        return;
-		    }
-		      $.ajax({
-		          url: '/usr/reactionPoint/doBadReaction',
-		          type: 'POST',
-		          data: {relTypeCode: 'article', relId: articleId},
-		          dataType: 'json',
-		          success: function(data) {
-		              if (data.resultCode.startsWith('S-')) {
-		                  var DislikeButton = $('#DislikeButton');
-		                  var DislikeCount = $('#DislikeCount');
-		                  
-		                  if (data.resultCode == 'S-1') {
-		                  	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
-		                    DislikeCount.text(parseInt(DislikeCount.text()) - 1);
-		                  } else {
-		                  	DislikeButton.removeClass('btn-outline').addClass('btn-danger');
-		                    DislikeCount.text(parseInt(DislikeCount.text()) + 1);
-		                  }
-		              } else {
-		                  alert(data.msg);
-		              }
-		          },
-		          error: function(jqXHR, textStatus, errorThrown) {
-		              alert('오류가 발생했습니다: ' + textStatus);
-		          }
-		      });
-		  }
+     function doGoodReaction(articleId) {
+ 		$.ajax({
+             url: '/usr/reactionPoint/doGoodReaction',
+             type: 'POST',
+             data: {relTypeCode: 'article', relId: articleId},
+             dataType: 'json',
+             success: function(data) {
+                 if (data.resultCode.startsWith('S-')) {
+                     var likeButton = $('#likeButton');
+                     var likeCount = $('#likeCount');
+                     var DislikeButton = $('#DislikeButton');
+                     var DislikeCount = $('#DislikeCount');
+
+                     if (data.resultCode == 'S-1') {
+                         likeButton.removeClass('btn-danger').addClass('btn-outline');
+                         likeCount.text(parseInt(likeCount.text()) - 1);
+                     } 
+                     else if (data.resultCode == 'S-2') {
+                     	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
+                         DislikeCount.text(parseInt(DislikeCount.text()) - 1);
+                         likeButton.removeClass('btn-outline').addClass('btn-danger');
+                         likeCount.text(parseInt(likeCount.text()) + 1);
+                     }
+                     else {
+                         likeButton.removeClass('btn-outline').addClass('btn-danger');
+                         likeCount.text(parseInt(likeCount.text()) + 1);
+                     }
+                 } 
+                 else {
+                     alert(data.msg);
+                 }
+             },
+             error: function(jqXHR, textStatus, errorThrown) {
+                 alert('오류가 발생했습니다: ' + textStatus);
+             }
+         });
+ 	}
+ 	
+ 	function doBadReaction(articleId) {
+ 		$.ajax({
+             url: '/usr/reactionPoint/doBadReaction',
+             type: 'POST',
+             data: {relTypeCode: 'article', relId: articleId},
+             dataType: 'json',
+             success: function(data) {
+                 if (data.resultCode.startsWith('S-')) {
+                 	var likeButton = $('#likeButton');
+                     var likeCount = $('#likeCount');                	
+                     var DislikeButton = $('#DislikeButton');
+                     var DislikeCount = $('#DislikeCount');
+
+                     if (data.resultCode == 'S-1') {
+                     	DislikeButton.removeClass('btn-danger').addClass('btn-outline');
+                     	DislikeCount.text(parseInt(DislikeCount.text()) - 1);
+                     } else if (data.resultCode == 'S-2') {
+                     	likeButton.removeClass('btn-danger').addClass('btn-outline');
+                     	likeCount.text(parseInt(likeCount.text()) - 1);
+                     	DislikeButton.removeClass('btn-outline').addClass('btn-danger');
+                         DislikeCount.text(parseInt(DislikeCount.text()) + 1);
+                     } else {
+                     	DislikeButton.removeClass('btn-outline').addClass('btn-danger');
+                         DislikeCount.text(parseInt(DislikeCount.text()) + 1);
+                     }
+                 } 
+                 else {
+                     alert(data.msg);
+                 }
+             },
+             error: function(jqXHR, textStatus, errorThrown) {
+                 alert('오류가 발생했습니다: ' + textStatus);
+             }
+         });
+ 	}
 </script>
 
 
