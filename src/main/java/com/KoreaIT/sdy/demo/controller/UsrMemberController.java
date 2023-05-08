@@ -75,10 +75,6 @@ public class UsrMemberController {
 		if (Ut.empty(loginPw)) {
 			return rq.jsHitoryBack("F-2", "비밀번호를 입력해주세요");
 		}
-		
-		if(afterLoginUri==null) {
-			afterLoginUri ="/";
-		}
 
 		Member member = memberService.getMemberByLoginId(loginId);
 
@@ -91,6 +87,8 @@ public class UsrMemberController {
 		}
 		
 		rq.login(member);
+		
+		// 우리가 갈 수 있는 경로를 경우의 수로 표현, 인코딩, 그 외에는 처리 불가 -> 메인으로 보낸다.
 		return Ut.jsReplace(Ut.f("%s님 로그인 되었습니다.", member.getNickname()), afterLoginUri);
 	}
 

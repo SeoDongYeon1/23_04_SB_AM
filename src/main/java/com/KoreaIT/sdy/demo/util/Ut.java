@@ -141,4 +141,12 @@ public class Ut {
 		return param;
 	}
 
+	public static String getAttr(Map<String, String> paramMap, String attrName, String defaultValue) {
+		
+		if(paramMap.containsKey(attrName)) {
+			return (String) paramMap.get(attrName);
+		}
+		return defaultValue;
+	}
+
 }

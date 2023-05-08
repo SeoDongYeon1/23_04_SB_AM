@@ -65,6 +65,13 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
      
      <!-- 좋아요, 싫어요 관련 -->		
      function doGoodReaction(articleId) {
+    	 if(params.memberId==0) {
+		        if(confirm('로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?')) {
+		            var currentUri = encodeURIComponent(window.location.href);
+		            window.location.href = '../member/login?afterLoginUri=' + currentUri; // 로그인 페이지 URI에 원래 페이지의 URI를 포함하여 이동
+		        }
+		        return;
+		    }
  		$.ajax({
              url: '/usr/reactionPoint/doGoodReaction',
              type: 'POST',
@@ -103,6 +110,13 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
  	}
  	
  	function doBadReaction(articleId) {
+ 		 if(params.memberId==0) {
+		        if(confirm('로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?')) {
+		            var currentUri = encodeURIComponent(window.location.href);
+		            window.location.href = '../member/login?afterLoginUri=' + currentUri; // 로그인 페이지 URI에 원래 페이지의 URI를 포함하여 이동
+		        }
+		        return;
+		    }
  		$.ajax({
              url: '/usr/reactionPoint/doBadReaction',
              type: 'POST',

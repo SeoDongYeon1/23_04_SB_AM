@@ -29,7 +29,7 @@ int endPage = startPage+displayPage-1;
 			<tr>
 				<th><div class="badge badge-outline">${article.id }</div></th>
 				<th>
-					<a class="title" href="detail?id=${article.id }">
+					<a class="title" href="detail?id=${article.id }&boardId=${article.boardId }">
 						${article.title } 
 					</a>
 					<c:if test="${article.repliesCount!=0}">

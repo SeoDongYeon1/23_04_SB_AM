@@ -39,10 +39,11 @@ public class UsrArticleController {
 
 	// 액션 메서드
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(int id, Model model) {
+	public String showDetail(int id, Model model, int boardId) {
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
+		boardId = article.getBoardId();
 		
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
