@@ -1,5 +1,8 @@
 package com.KoreaIT.sdy.demo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +22,10 @@ import com.KoreaIT.sdy.demo.vo.Rq;
 public class UsrMemberController {
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private Rq rq;
+
 	@RequestMapping("/usr/member/join")
 	public String showJoin() {
 		return "usr/member/join";
@@ -66,18 +70,18 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/login")
 	public String showLogin(HttpServletRequest req, String loginId, String loginPw) {
-		
+
 		return "usr/member/login";
 	}
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw, @RequestParam(defaultValue = "/") String afterLoginUri) {
-		
+
 		if (Ut.empty(loginId)) {
 			return rq.jsHistoryBack("F-1", "아이디를 입력해주세요");
 		}
-		
+
 		if (Ut.empty(loginPw)) {
 			return rq.jsHistoryBack("F-2", "비밀번호를 입력해주세요");
 		}
@@ -91,9 +95,9 @@ public class UsrMemberController {
 		if (member.getLoginPw().equals(loginPw) == false) {
 			return rq.jsHistoryBack("F-4", "아이디 또는 비밀번호를 확인해주세요.");
 		}
-		
+
 		rq.login(member);
-		
+
 		// 우리가 갈 수 있는 경로를 경우의 수로 표현, 인코딩, 그 외에는 처리 불가 -> 메인으로 보낸다.
 		return Ut.jsReplace(Ut.f("%s님 로그인 되었습니다.", member.getNickname()), afterLoginUri);
 	}
@@ -101,29 +105,28 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
 	public String doLogout(@RequestParam(defaultValue = "/") String afterLogoutUri) {
-		
+
 		rq.logout();
 		return Ut.jsReplace("로그아웃되었습니다.", afterLogoutUri);
 	}
-	
+
 	@RequestMapping("/usr/member/profile")
 	public String showProfile(Model model) {
 		Member member = rq.getLoginedMember();
-		
-		
+
 		model.addAttribute("member", member);
 		return "usr/member/profile";
 	}
-	
+
 	@RequestMapping("/usr/member/checkPw")
 	public String showCheckPw(Model model) {
 		Member member = rq.getLoginedMember();
-		
+
 		model.addAttribute("member", member);
-		
+
 		return "usr/member/checkPw";
 	}
-	
+
 //	@RequestMapping("/usr/member/doCheckPw")
 //	@ResponseBody
 //	public String doCheckPw(String loginPw) {
@@ -140,27 +143,27 @@ public class UsrMemberController {
 //		
 //		return rq.jsReplace("../member/modify");
 //	}
-	
+
 	@RequestMapping("/usr/member/modify")
 	public String modify(Model model) {
-		
+
 		Member member = rq.getLoginedMember();
-		
+
 		model.addAttribute("member", member);
-		
+
 		return "usr/member/modify";
 	}
-	
+
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public String doModify(int id, String loginPw, String name, String nickname, String cellphoneNum, String email) {
-		
+
 		Member member = memberService.getMemberById(id);
-		
+
 		if (member == null) {
 			return rq.jsHistoryBack("F-E", "존재하지 않는 회원입니다.");
 		}
-		
+
 		if (Ut.empty(loginPw)) {
 			loginPw = null;
 		}
@@ -176,10 +179,26 @@ public class UsrMemberController {
 		if (Ut.empty(email)) {
 			return rq.jsHistoryBack("F-4", "이메일을 입력해주세요.");
 		}
-		
-		ResultData modifyRd = memberService.modifyMember(id, loginPw, name, nickname, cellphoneNum, email);
-		
-		return rq.jsReplace(modifyRd.getMsg(), "../member/profile");
 
+		ResultData modifyRd = memberService.modifyMember(id, loginPw, name, nickname, cellphoneNum, email);
+
+		return rq.jsReplace(modifyRd.getMsg(), "../member/profile");
+	}
+
+	@RequestMapping("/usr/member/getLoginIdDup")
+	@ResponseBody
+	public ResultData getLoginIdDup(String loginId) {
+		
+		if(Ut.empty(loginId)) {
+			return ResultData.from("F-1", "아이디를 입력해주세요.");
+		}
+		
+		Member existsMember = memberService.getMemberByLoginId(loginId);
+		
+		if(existsMember != null) {
+			return ResultData.from("F-2", "해당 아이디는 이미 사용중인 아이디입니다.", "loginId", loginId);
+		}
+
+		return ResultData.from("S-1", "사용 가능한 아이디입니다.", "loginId", loginId);
 	}
 }

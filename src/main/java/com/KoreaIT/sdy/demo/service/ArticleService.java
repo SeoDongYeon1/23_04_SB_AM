@@ -74,10 +74,10 @@ public class ArticleService {
 		articleRepository.deleteArticle(id);
 	}
 
-	public String modifyArticle(int id, String title, String body) {
+	public String modifyArticle(int id, String title, String body, String replaceUri) {
 		articleRepository.modifyArticle(id, title, body);
 		
-		return Ut.jsReplace(Ut.f("%d번 게시글이 수정되었습니다.", id),Ut.f("../article/detail?id=%d", id)); 
+		return Ut.jsReplace(Ut.f("%d번 게시글이 수정되었습니다.", id), replaceUri); 
 	}
 
 	public ResultData<String> actorCanModifyRd(int loginedMemberId, Article article) {

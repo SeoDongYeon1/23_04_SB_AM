@@ -31,6 +31,7 @@
 			<br />
 			<div style="display: inline-block; text-align:left;">
 				<input value= "${reply.id }" type="hidden" name="id"/>
+				<input type="hidden" name="replaceUri" value="${param.replaceUri }" />
 				<div style="text-align: right; font-size:14px; font-weight:bold">
 					작성날짜 : ${reply.regDate }
 					<br />

@@ -188,7 +188,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public String doModify(int id, String title, String body, String replaceUri) {
 
 		Article article = articleService.getForPrintArticle(id);
 
@@ -207,7 +207,7 @@ public class UsrArticleController {
 		}
 
 		article = articleService.getForPrintArticle(id);
-		return articleService.modifyArticle(id, title, body);
+		return articleService.modifyArticle(id, title, body, replaceUri);
 	}
 
 }
