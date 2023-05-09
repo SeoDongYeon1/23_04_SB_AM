@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="JOIN" />
 <%@ include file="../common/head.jspf"%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" referrerpolicy="no-referrer"></script>
 
 <script>
 	let submitJoinFormDone = false;
@@ -63,6 +64,9 @@
 		submitJoinFormDone = true;
 		form.submit();
 	}
+	
+	// 로그인 아이디 체크 시간을 강제 0.6초 대기
+	const checkLoginIdDupDebounced = _.debounce(checkLoginIdDup, 600);
 
 	function checkLoginIdDup(el) {
 		const form = $(el).closest('form').get(0);
@@ -113,7 +117,7 @@
 												<th>아이디</th>
 										</tr>
 										<tr>
-												<td><input onkeyup="checkLoginIdDup(this);" autocomplete="off" style="display: inline-block;"
+												<td><input onkeyup="checkLoginIdDupDebounced(this);" autocomplete="off" style="display: inline-block;"
 														name="loginId" class="w-full input input-bordered  max-w-xs" placeholder="아이디를 입력해주세요" />
 														<div class="checkDup-msg"></div></td>
 										</tr>
