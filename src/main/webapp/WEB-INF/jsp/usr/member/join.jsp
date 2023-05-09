@@ -88,12 +88,13 @@
 				loginId : form.loginId.value
 
 			}, function(data) {
-				$('.checkDup-msg').text(data.msg);
-
+				
 				if (data.success) {
+				$('.checkDup-msg').html('<div class="mt-2">' + data.msg + '</div>');
 					validLoginId = data.data1;
+					
 				} else {
-
+					$('.checkDup-msg').html('<div class="mt-2 text-red-500">' + data.msg + '</div>');
 					validLoginId = "";
 				}
 
