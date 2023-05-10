@@ -5,8 +5,9 @@
 <%@ include file="../common/head.jspf" %>
 <%@ page import="com.KoreaIT.sdy.demo.vo.Member" %>
 
-<!-- 암호화 sha256 -->
+<!-- 자바스크립트에서 암호화 sha256 -->
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 <%
 Member member = (Member) request.getAttribute("member");
 String loginPw = member.getLoginPw();

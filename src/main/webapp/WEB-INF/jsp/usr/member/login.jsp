@@ -7,7 +7,7 @@
 		<div style="font-weight:bold; font-size: 17px;">
 			로그인
 		</div>
-		<form style="width: 350px; height: 270px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doLogin">
+		<form style="width: 350px; height: 300px; border:2px solid black; display: inline-block;  border-radius: 8px;" method= "post" action="doLogin">
 			<br />
 			<input type="hidden" name="afterLoginUri" value=${param.afterLoginUri } />
 			<div style="display: inline-block; text-align:left;">
@@ -27,6 +27,16 @@
 			<br />
 			<div style="border-radius: 8px; display: inline-block; width: 200px;">
 				<button class="btn btn-outline" style="padding: 0 40px; " type="submit">로그인</button>
+			</div>
+			<br />
+			<div style="border-radius: 8px; display: inline-block; margin: 20px 10px; text-decoration: underline;">
+				<a href="${rq.findLoginIdUri }">아이디 찾기</a>
+			</div>
+			<div style="border-radius: 8px; display: inline-block; margin: 20px 10px; text-decoration: underline;">
+				<a href="${rq.findLoginPwUri }">비밀번호 찾기</a>
+			</div>
+			<div style="border-radius: 8px; display: inline-block; margin: 20px 10px; text-decoration: underline;">
+				<a href="../member/join" >회원가입</a>
 			</div>
 		</form>
 	</div>

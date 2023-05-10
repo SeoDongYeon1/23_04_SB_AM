@@ -199,4 +199,22 @@ public class UsrMemberController {
 
 		return ResultData.from("S-1", "사용 가능한 아이디입니다.", "loginId", loginId);
 	}
+	
+	@RequestMapping("/usr/member/findLoginId")
+	public String showLoginId() {
+		
+		return "usr/member/findLoginId";
+	}
+	
+	@RequestMapping("/usr/member/doFindLoginId")
+	@ResponseBody
+	public String doFindLoginId(@RequestParam(defaultValue = "/") String afterFindLoginIdUri, String name, String email) {
+		Member member = memberService.getMemberByNameAndEmail(name, email);
+		
+		if(member==null) {
+			return Ut.jsHitoryBack("F-1", "입력된 정보로 가입된 아이디가 없습니다.");
+		}
+		
+		return Ut.jsReplace("S-1", Ut.f("아이디 : %s", member.getLoginId()), afterFindLoginIdUri);
+	}
 }
