@@ -3,17 +3,18 @@
 <%@ page import="com.KoreaIT.sdy.demo.vo.Rq"%>
 
 <%
-	Rq rq = (Rq) request.getAttribute("rq");
-	boolean isLogined = rq.isLogined();
+Rq rq = (Rq) request.getAttribute("rq");
+boolean isLogined = rq.isLogined();
 %>
 <!DOCTYPE html>
 <html>
-<head>
+<head data-theme="light">
 <meta charset="UTF-8">
 <title>${pageTitle }</title>
 
 <!-- 테일윈드 불러오기 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" />
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" /> -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
 
 <!-- 데이지 UI -->
 <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css" />
@@ -24,84 +25,107 @@
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-
 <link rel="stylesheet" href="/resource/common.css" />
 <link rel="shortcut icon" href="/resource/favicon.ico" />
 <script src="/resource/common.js" defer="defer"></script>
 
+<script>
+function Theme__toggle() {
+	const theme = localStorage.getItem("theme") ?? "light";
+
+	if( theme == 'light'){
+		localStorage.setItem("theme","dark");
+		//Theme__applyTo('dark');
+	}
+	else {
+	    localStorage.setItem("theme", "light");
+	    //Theme__applyTo('light');
+	}
+
+	function Theme__applyTo(themeName) {
+		  $('html').attr('data-theme', themeName);
+	}
+
+
+	function Theme__init() {
+	  const theme = localStorage.getItem("theme") ?? "light";
+	  Theme__applyTo(theme);
+	}
+
+	//Theme__init();
+	location.reload();
+
+}
+function Theme__applyTo(themeName) {
+	  $('html').attr('data-theme', themeName);
+	}
+
+	function Theme__init() {
+	  const theme = localStorage.getItem("theme") ?? "light";
+	  Theme__applyTo(theme);
+	}
+
+	Theme__init();
+</script>
+
+
+
+
 </head>
 <body>
 		<br />
-		<h1 style="background-color: #e1e2e3; text-align: center; font-size: 35px;">${pageTitle }</h1>
+		<h1 style="text-align: center; font-size: 35px;">${pageTitle }</h1>
 		<header>
 				<div class=" h-20 flex container mx-auto text-2xl font-bold">
-						<a href="#" class=" flex items-center px-3">
-								<span>로고</span>
+						<a href="#" class=" flex items-center px-3"> <span>로고</span>
 						</a>
 
 						<div class="flex-grow"></div>
 
 						<ul class="flex">
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/usr/home/APITest4">
-												<span>API</span>
-										</a>
-								</li>
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/">
-												<span>HOME</span>
-										</a>
-								</li>
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/usr/article/list">
-												<span>LIST</span>
-										</a>
+								<li class=""><a class="h-full px-3 flex items-center btn-theme-toggle" href="javascript:Theme__toggle();">
+												<span>🌞</span> <span>🌚</span>
+								</a></li>
+								<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/home/APITest4"> <span>API</span>
+								</a></li>
+								<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/"> <span>HOME</span>
+								</a></li>
+								<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/article/list"> <span>LIST</span>
+								</a>
 										<ul class="z-10">
-											<li class="hover:underline">
-												<a href="/usr/article/list?boardId=1">공지사항</a>
-											</li>
-											<li class="hover:underline">
-												<a href="/usr/article/list?boardId=2">자유게시판</a>
-											</li>
-											<li class="hover:underline">
-												<a href="/usr/article/list?boardId=3">QnA</a>
-											</li>
-										</ul>
-								</li>
+												<li class="hover:underline"><a href="/usr/article/list?boardId=1">공지사항</a></li>
+												<li class="hover:underline"><a href="/usr/article/list?boardId=2">자유게시판</a></li>
+												<li class="hover:underline"><a href="/usr/article/list?boardId=3">QnA</a></li>
+										</ul></li>
 								<c:if test="${rq.isLogined() }">
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/usr/article/write">
-												<span>글 쓰기</span>
-										</a>
-								</li>
+										<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/article/write"> <span>글
+																쓰기</span>
+										</a></li>
 								</c:if>
-								<%if(isLogined==false) {%>
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="${rq.loginUri}">
-												<span>LOGIN</span>
-										</a>
-								</li>
-								<%}%>
-								<%if(isLogined) {%>
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="${rq.logoutUri }">
-												<span>LOGOUT</span>
-										</a>
-								</li>
-								<%}%>
+								<%
+								if (isLogined == false) {
+								%>
+								<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${rq.loginUri}"> <span>LOGIN</span>
+								</a></li>
+								<%
+								}
+								%>
+								<%
+								if (isLogined) {
+								%>
+								<li class="hover:underline"><a class="h-full px-3 flex items-center" href="${rq.logoutUri }"> <span>LOGOUT</span>
+								</a></li>
+								<%
+								}
+								%>
 								<c:if test="${!rq.isLogined() }">
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/usr/member/join">
-												<span>Sign Up</span>
-										</a>
-								</li>
+										<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/join"> <span>Sign
+																Up</span>
+										</a></li>
 								</c:if>
 								<c:if test="${rq.isLogined() }">
-								<li class="hover:underline">
-										<a class="h-full px-3 flex items-center" href="/usr/member/profile">
-											MYPAGE(${rq.loginedMember.nickname })
-										</a>
-								</li>
+										<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/usr/member/profile">
+														MYPAGE(${rq.loginedMember.nickname }) </a></li>
 								</c:if>
 						</ul>
 				</div>
