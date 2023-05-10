@@ -5,6 +5,8 @@
 <%@ include file="../common/head.jspf" %>
 <%@ page import="com.KoreaIT.sdy.demo.vo.Member" %>
 
+<!-- 암호화 sha256 -->
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 <%
 Member member = (Member) request.getAttribute("member");
 String loginPw = member.getLoginPw();
@@ -24,9 +26,10 @@ function MemberCheckPw__submit(form) {
 		form.loginPw.focus();
 		return;
 	}
-    if(form.loginPw.value !== '<%=loginPw%>') {
+    if(sha256(form.loginPw.value) !== '<%=loginPw%>') {
         alert('비밀번호를 확인해주세요.');
         form.loginPw.focus(); 
+        console.log(form.loginPw.value);
         return;
     }
     

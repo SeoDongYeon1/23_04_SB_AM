@@ -7,7 +7,7 @@
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		loginId = #{loginId},
-		loginPw = SHA2(#{loginPw}, 256),
+		loginPw = #{loginPw},
 		`name` = #{name},
 		nickname = #{nickname},
 		cellphoneNum = #{cellphoneNum},
@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="getMemberByLoginId" resultType="Member">
-		SELECT id, regDate, updateDate, loginId, CONVERT(UNHEX(HEX(#{loginPw})) USING UTF8) AS loginPw, authLevel, `name`, nickname, cellphoneNum, email, delStatus
+		SELECT *
 		FROM `member`
 		WHERE loginId = #{loginId}
 	</select>

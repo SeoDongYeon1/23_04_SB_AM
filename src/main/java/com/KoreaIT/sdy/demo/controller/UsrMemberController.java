@@ -1,8 +1,5 @@
 package com.KoreaIT.sdy.demo.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +89,7 @@ public class UsrMemberController {
 			return rq.jsHistoryBack("F-3", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 
-		if (member.getLoginPw().equals(loginPw) == false) {
+		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
 			return rq.jsHistoryBack("F-4", "아이디 또는 비밀번호를 확인해주세요.");
 		}
 
@@ -121,7 +118,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/checkPw")
 	public String showCheckPw(Model model) {
 		Member member = rq.getLoginedMember();
-
+		
 		model.addAttribute("member", member);
 
 		return "usr/member/checkPw";
@@ -167,6 +164,7 @@ public class UsrMemberController {
 		if (Ut.empty(loginPw)) {
 			loginPw = null;
 		}
+
 		if (Ut.empty(name)) {
 			return rq.jsHistoryBack("F-1", "이름을 입력해주세요.");
 		}

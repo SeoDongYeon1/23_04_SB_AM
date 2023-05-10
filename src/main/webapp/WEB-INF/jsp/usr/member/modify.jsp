@@ -12,6 +12,7 @@ function MemberModify__submit(form) {
 		return;
 	}
 	form.loginPw.value = form.loginPw.value.trim();
+	
 	if (form.loginPw.value.length > 0) {
 		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
 		if (form.loginPwConfirm.value.length == 0) {
@@ -25,10 +26,12 @@ function MemberModify__submit(form) {
 			return;
 		}
 	}
+	
 	form.name.value = form.name.value.trim();
 	form.nickname.value = form.nickname.value.trim();
 	form.cellphoneNum.value = form.cellphoneNum.value.trim();
 	form.email.value = form.email.value.trim();
+	
 	if (form.name.value.length < 2) {
 		alert('이름을 2글자 이상 입력해주세요.');
 		form.name.focus();
