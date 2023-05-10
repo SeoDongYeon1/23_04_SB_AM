@@ -84,6 +84,7 @@ header>div>ul>li {
 
 header>div>ul>li>ul {
 	display: none;
+	background-color: white;
 }
 
 header>div>ul>li:hover>ul {

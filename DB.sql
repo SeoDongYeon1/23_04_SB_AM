@@ -257,8 +257,11 @@ relTypeCode = 'article',
 relId = 2,
 `body` = "댓글 4";
 
-###########################################################################
+# 기존의 회원 비밀번호를 암호화
+UPDATE `member`
+SET loginPw = SHA2(loginPw, 256);
 
+###########################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
@@ -417,11 +420,6 @@ INNER JOIN `member` m
 ON r.memberId = m.id
 WHERE r.relId = 1;
 
-
-
-
-
-
 SELECT a.id,
 IFNULL(SUM(R.`point`), 0) AS 'extra__sumReactionPoint',
 IFNULL(SUM(IF(R.`point` > 0, R.`point`, 0)),0) AS 'extra__goodReactionPoint',
@@ -432,9 +430,25 @@ ON a.id = R.relId AND R.relTypeCode = 'article'
 WHERE R.relId = 2 AND a.memberId = 2
 GROUP BY a.id;
 
-
 SELECT a.id, COUNT(re.id)
 FROM article a
 INNER JOIN reply re
 ON a.id = re.relId
 GROUP BY a.id;
+
+
+# 회원가입시 패스워드 암호화 되도록
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test3',
+loginPw = SHA2('test3', 256),
+`name` = 'test3',
+nickname = 'test3',
+cellphoneNum = '010-0000-0000',
+email = 'asdfg@gmail.com'
+
+# 로그인 시 복호화 돼서 보여주도록
+SELECT id, regDate, updateDate, loginId, CONVERT(UNHEX(HEX('test1')) USING UTF8) AS loginPw, authLevel, `name`, nickname, cellphoneNum, email, delStatus
+FROM `member`
+WHERE loginId = 'test1'
