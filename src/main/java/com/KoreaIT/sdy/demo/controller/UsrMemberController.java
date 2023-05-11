@@ -58,8 +58,6 @@ public class UsrMemberController {
 			return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
 		}
 
-		Member member = memberService.getMemberById(joinRd.getData1());
-
 		String afterJoinUri = "../member/login?afterLoginUri=" + Ut.getEncodedUri(afterLoginUri);
 
 		return Ut.jsReplace("S-1", Ut.f("회원가입이 완료되었습니다"), afterJoinUri);
@@ -216,5 +214,30 @@ public class UsrMemberController {
 		}
 		
 		return Ut.jsReplace("S-1", Ut.f("아이디 : %s", member.getLoginId()), afterFindLoginIdUri);
+	}
+	
+	@RequestMapping("/usr/member/findLoginPw")
+	public String showLoginPw() {
+		
+		return "usr/member/findLoginPw";
+	}
+	
+	@RequestMapping("/usr/member/doFindLoginPw")
+	@ResponseBody
+	public String doFindLoginPw(@RequestParam(defaultValue = "/") String afterFindLoginPwUri, String loginId, String email) {
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if(member==null) {
+			return Ut.jsHitoryBack("F-1", "입력된 정보로 가입된 아이디가 없습니다.");
+		}
+		
+		if(member.getEmail().equals(email)==false) {
+			return Ut.jsHitoryBack("F-2", "일치하는 이메일이 없습니다.");
+		}
+		
+		ResultData notifyTempLoginPwByEmailRd = memberService.notifyTempLoginPwByEmail(member);
+
+		return Ut.jsReplace(notifyTempLoginPwByEmailRd.getResultCode(), notifyTempLoginPwByEmailRd.getMsg(),
+				afterFindLoginPwUri);
 	}
 }
