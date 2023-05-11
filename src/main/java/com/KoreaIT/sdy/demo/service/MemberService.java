@@ -1,10 +1,13 @@
 package com.KoreaIT.sdy.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.sdy.demo.repository.MemberRepository;
 import com.KoreaIT.sdy.demo.util.Ut;
+import com.KoreaIT.sdy.demo.vo.Article;
 import com.KoreaIT.sdy.demo.vo.Member;
 import com.KoreaIT.sdy.demo.vo.ResultData;
 
@@ -84,6 +87,21 @@ public class MemberService {
 
 	private void setTempPassword(Member actor, String tempPassword) {
 		memberRepository.modifyMember(actor.getId(), Ut.sha256(tempPassword), null, null, null, null);
+	}
+
+	public int getMembersCount(String authLevel, String searchKeywordTypeCode, String searchKeyword) {
+		return memberRepository.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
+	}
+
+	public List<Member> getForPrintMembers(String authLevel, String searchKeywordTypeCode, String searchKeyword,
+			int itemsInAPage, int page) {
+
+		int limitStart = (page - 1) * itemsInAPage;
+		int limitTake = itemsInAPage;
+		List<Member> members = memberRepository.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
+				limitStart, limitTake);
+
+		return members;
 	}
 
 

@@ -20,6 +20,8 @@ import lombok.Getter;
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Rq {
 	@Getter
+	boolean isAjax;
+	@Getter
 	private boolean isLogined;
 	@Getter
 	private int loginedMemberId;
@@ -55,6 +57,24 @@ public class Rq {
 		this.loginedMember = loginedMember;
 
 		this.req.setAttribute("rq", this);
+		
+		String requestUri = req.getRequestURI();
+
+		boolean isAjax = requestUri.endsWith("Ajax");
+
+		if (isAjax == false) {
+			if (paramMap.containsKey("ajax") && paramMap.get("ajax").equals("Y")) {
+				isAjax = true;
+			} else if (paramMap.containsKey("isAjax") && paramMap.get("isAjax").equals("Y")) {
+				isAjax = true;
+			}
+		}
+		if (isAjax == false) {
+			if (requestUri.contains("/get")) {
+				isAjax = true;
+			}
+		}
+		this.isAjax = isAjax;
 
 	}
 
@@ -126,6 +146,11 @@ public class Rq {
 	public boolean isNotLogined() {
 		return !isLogined;
 	}
+	
+	public void jsprintReplace(String msg, String replaceUri) {
+		resp.setContentType("text/html; charset=UTF-8");
+		print(Ut.jsReplace(msg, replaceUri));
+	}
 
 	// Rq 객체 생성
 	// 삭제 x
@@ -141,7 +166,7 @@ public class Rq {
 		case "/usr/member/join":
 			return Ut.getEncodedUri(Ut.getAttr(paramMap, "afterLoginUri", ""));
 		}
-		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+		return "usr/member/login?afterLoginUri=" + getAfterLoginUri();
 	}
 	
 	public String getLogoutUri() {
@@ -150,17 +175,17 @@ public class Rq {
 		switch (requestUri) {
 		case "/usr/article/write":
 		case "/usr/article/modify":
-			return "../member/doLogout?afterLogoutUri=" + getAfterLoginUri();
+			return "usr/member/doLogout?afterLogoutUri=" + getAfterLoginUri();
 		}
 		
-		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+		return "usr/member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
 	
 	public String getJoinUri() {
-		return "../member/join?afterLoginUri=" + getAfterLoginUri();
+		return "usr/member/join?afterLoginUri=" + getAfterLoginUri();
 	}
 	
-	private String getAfterLoginUri() {
+	public String getAfterLoginUri() {
 		return getEncodedCurrentUri();
 	}
 	
@@ -174,11 +199,11 @@ public class Rq {
 	
 	public String getArticleDetailUriFromArticleList(Article article) {
 		
-		return Ut.f("../article/detail?id=%d&boardId=%s", article.getId(), article.getBoardId());
+		return Ut.f("usr/article/detail?id=%d&boardId=%s", article.getId(), article.getBoardId());
 	}
 	
 	public String getFindLoginIdUri() {
-		return "../member/findLoginId?afterFindLoginIdUri=" + getAfterFindLoginIdUri();
+		return "usr/member/findLoginId?afterFindLoginIdUri=" + getAfterFindLoginIdUri();
 	}
 
 	private String getAfterFindLoginIdUri() {
@@ -186,11 +211,19 @@ public class Rq {
 	}
 
 	public String getFindLoginPwUri() {
-		return "../member/findLoginPw?afterFindLoginPwUri=" + getAfterFindLoginPwUri();
+		return "usr/member/findLoginPw?afterFindLoginPwUri=" + getAfterFindLoginPwUri();
 	}
 
 	private String getAfterFindLoginPwUri() {
 		return getEncodedCurrentUri();
+	}
+	
+	public boolean isAdmin() {
+		if (isLogined == false) {
+			return false;
+		}
+
+		return loginedMember.isAdmin();
 	}
 
 }

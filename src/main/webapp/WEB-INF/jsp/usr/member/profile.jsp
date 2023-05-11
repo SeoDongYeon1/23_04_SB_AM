@@ -37,13 +37,16 @@
 						<th>가입날짜</th>
 						<th>${member.regDate }</th>
 				</tr>
-
+				
 		</table>
 		<br />
 		<div class="btn_box">
 				<button class="btn btn-outline" type="button" onclick="history.back()">뒤로가기</button>
 				<a class="btn btn-outline" href="../member/checkPw">회원정보 수정</a>
 				<a class="btn btn-outline" onclick="if(confirm('정말로 회원탈퇴 하시겠습니까?')==false) return false;" href="../member/doDelete?id=${member.id }">회원탈퇴</a>
+				<c:if test="${member.authLevel==7 }">
+					<a class="btn btn-outline" href="../admin/member/showAdminPage">관리자 페이지</a>
+				</c:if>
 		</div>
 </div>
 
